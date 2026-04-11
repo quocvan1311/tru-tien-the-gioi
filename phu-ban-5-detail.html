@@ -31,6 +31,27 @@
           return String(v);
         }
 
+        /** Hiển thị tên boss: mảng 2 tên → xuống dòng; chuỗi có " / " → tách dòng */
+        function bossNameForDisplay(row, key) {
+          var v = row[key];
+          if (v != null && Array.isArray(v)) return cellText(v);
+          var s = cellText(v);
+          if (!s) return "";
+          return s.replace(/\s*\/\s*/g, "\n");
+        }
+
+        function bossImageSrc(path) {
+          var s = String(path == null ? "" : path).trim();
+          if (!s) return s;
+          if (/^https?:\/\//i.test(s)) return s;
+          return s
+            .split("/")
+            .map(function (seg) {
+              return encodeURIComponent(seg);
+            })
+            .join("/");
+        }
+
         function findRowByDetailId(rows, wantId) {
           if (!wantId) return null;
           var idFn = window.BOSS_TABLE_PHU_BAN_DETAIL_ROW_ID;
@@ -123,7 +144,7 @@
           dd.className = "boss-detail__boss-cell";
           var nameEl = document.createElement("div");
           nameEl.className = "boss-detail__pre";
-          nameEl.textContent = cellText(row[k]);
+          nameEl.textContent = bossNameForDisplay(row, k);
           dd.appendChild(nameEl);
           var paths = row.__bossImages && row.__bossImages[k];
           var list = Array.isArray(paths)
@@ -132,16 +153,24 @@
               ? [paths]
               : [];
           if (list.length) {
+            var scroll = document.createElement("div");
+            scroll.className = "boss-detail__phu-img-scroll";
             var fig = document.createElement("div");
-            fig.className = "boss-detail__gallery boss-detail__gallery--inline";
+            fig.className = "boss-detail__gallery";
+            if (list.length >= 2) {
+              fig.classList.add("boss-detail__gallery--phu-stack");
+            } else {
+              fig.classList.add("boss-detail__gallery--phu-single");
+            }
             list.forEach(function (src) {
               var img = document.createElement("img");
-              img.src = src;
-              img.alt = cellText(row[k]);
+              img.src = bossImageSrc(src);
+              img.alt = bossNameForDisplay(row, k);
               img.loading = "lazy";
               fig.appendChild(img);
             });
-            dd.appendChild(fig);
+            scroll.appendChild(fig);
+            dd.appendChild(scroll);
           }
           wrap.appendChild(dt);
           wrap.appendChild(dd);

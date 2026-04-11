@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="table-app.css" />
     <link rel="stylesheet" href="ac-mong-10.css" />
   </head>
-  <body class="excel-boss-page boss-detail-page">
+  <body class="excel-boss-page boss-detail-page boss-detail-page--ac-mong-detail">
     <nav class="site-nav">
       <a href="index.html">← Trang chủ</a>
       ·
@@ -24,6 +24,20 @@
     <script src="ac-mong-10.js"></script>
     <script src="table-app.js"></script>
     <script>
+      /**
+       * Video theo id dòng (cùng khóa với ?id= từ BOSS_TABLE_DETAIL_ROW_ID).
+       * Mỗi BOSS tối đa 3 mục: URL YouTube (watch/embed), youtu.be, hoặc 11 ký tự video id.
+       * Sau này có thể thêm file .mp4/.webm — xử lý trong resolveVideoEmbeds.
+       */
+      window.AC_MONG_BOSS_VIDEOS = Object.assign(
+        {
+          "nien-lao-dai-123": [
+            "https://www.youtube.com/watch?v=OY_RlbR4o4E",
+          ],
+        },
+        window.AC_MONG_BOSS_VIDEOS || {}
+      );
+
       (function () {
         var COLS = [
           "No.",
@@ -54,6 +68,33 @@
           if (Array.isArray(v)) return v.join("\n");
           if (typeof v === "object") return JSON.stringify(v);
           return String(v);
+        }
+
+        function youtubeVideoId(input) {
+          var s = String(input == null ? "" : input).trim();
+          if (!s) return "";
+          if (/^[a-zA-Z0-9_-]{11}$/.test(s)) return s;
+          var m = s.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+          if (m) return m[1];
+          m = s.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+          if (m) return m[1];
+          m = s.match(/youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/);
+          return m ? m[1] : "";
+        }
+
+        function videoEntriesForRow(row) {
+          var idFn = window.BOSS_TABLE_DETAIL_ROW_ID;
+          if (typeof idFn !== "function") return [];
+          var rid = idFn(row);
+          var raw = window.AC_MONG_BOSS_VIDEOS && window.AC_MONG_BOSS_VIDEOS[rid];
+          if (raw == null || raw === "") return [];
+          var arr = Array.isArray(raw) ? raw : [raw];
+          var out = [];
+          for (var i = 0; i < arr.length && out.length < 3; i++) {
+            var y = youtubeVideoId(arr[i]);
+            if (y) out.push({ kind: "youtube", id: y });
+          }
+          return out;
         }
 
         function findRowByDetailId(rows, wantId) {
@@ -114,7 +155,10 @@
         var fmtTuan = window.BOSS_TABLE_FORMAT_TUAN_TIEU_DIET;
 
         var main = document.createElement("div");
-        main.className = "boss-detail__main";
+        main.className = "boss-detail__main boss-detail__main--ac-split";
+
+        var infoCol = document.createElement("div");
+        infoCol.className = "boss-detail__info-col";
 
         var fieldsInner = document.createElement("div");
         fieldsInner.className = "boss-detail__fields-inner";
@@ -160,11 +204,10 @@
           fieldsInner.appendChild(wrap);
         });
 
-        main.appendChild(fieldsInner);
+        infoCol.appendChild(fieldsInner);
 
-        var aside = document.createElement("aside");
-        aside.className = "boss-detail__aside";
-        aside.setAttribute("aria-label", "Ảnh BOSS");
+        var imagesBlock = document.createElement("section");
+        imagesBlock.className = "boss-detail__images-block";
 
         var gallery = document.createElement("div");
         gallery.className = "boss-detail__gallery";
@@ -183,10 +226,62 @@
             gallery.appendChild(img);
           });
         }
-        aside.appendChild(gallery);
+        imagesBlock.appendChild(gallery);
+
+        var imagesCol = document.createElement("div");
+        imagesCol.className = "boss-detail__images-col";
+        imagesCol.setAttribute("aria-label", "Ảnh BOSS");
+        imagesCol.appendChild(imagesBlock);
+
+        main.appendChild(infoCol);
+        main.appendChild(imagesCol);
+
+        var videos = videoEntriesForRow(row);
+        if (videos.length === 0) {
+          contentEl.classList.add("boss-detail__layout--no-video");
+        } else {
+          var aside = document.createElement("aside");
+          aside.className = "boss-detail__aside boss-detail__aside--videos";
+          aside.setAttribute("aria-label", "Video BOSS");
+
+          var vHeading = document.createElement("h2");
+          vHeading.className = "boss-detail__video-heading";
+          vHeading.textContent = "Video";
+          aside.appendChild(vHeading);
+
+          var stack = document.createElement("div");
+          stack.className = "boss-detail__video-stack";
+          videos.forEach(function (entry, vi) {
+            var frame = document.createElement("div");
+            frame.className = "boss-detail__video-frame";
+            var iframe = document.createElement("iframe");
+            var q = new URLSearchParams();
+            if (vi === 0) {
+              q.set("autoplay", "1");
+              q.set("mute", "1");
+            }
+            q.set("rel", "0");
+            q.set("playsinline", "1");
+            iframe.src =
+              "https://www.youtube.com/embed/" + entry.id + "?" + q.toString();
+            iframe.title =
+              bossName + (videos.length > 1 ? " — video " + (vi + 1) : "");
+            iframe.loading = vi === 0 ? "eager" : "lazy";
+            iframe.setAttribute("allowfullscreen", "");
+            iframe.allow =
+              "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+            iframe.referrerPolicy = "strict-origin-when-cross-origin";
+            frame.appendChild(iframe);
+            stack.appendChild(frame);
+          });
+          aside.appendChild(stack);
+
+          contentEl.appendChild(main);
+          contentEl.appendChild(aside);
+          return;
+        }
 
         contentEl.appendChild(main);
-        contentEl.appendChild(aside);
       })();
     </script>
   </body>
