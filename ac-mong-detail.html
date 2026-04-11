@@ -24,16 +24,12 @@
       /**
        * Video theo id dòng (cùng khóa với ?id= từ BOSS_TABLE_DETAIL_ROW_ID).
        * Mỗi BOSS tối đa 3 mục: URL YouTube (watch/embed), youtu.be, hoặc 11 ký tự video id.
-       * Sau này có thể thêm file .mp4/.webm — xử lý trong resolveVideoEmbeds.
+       * Nếu không khai báo → dùng DEFAULT_BOSS_DETAIL_VIDEO_URL (đổi link mẫu tại đây).
        */
-      window.AC_MONG_BOSS_VIDEOS = Object.assign(
-        {
-          "nien-lao-dai-123": [
-            "https://www.youtube.com/watch?v=OY_RlbR4o4E",
-          ],
-        },
-        window.AC_MONG_BOSS_VIDEOS || {}
-      );
+      var DEFAULT_BOSS_DETAIL_VIDEO_URL =
+        "https://www.youtube.com/watch?v=OY_RlbR4o4E";
+
+      window.AC_MONG_BOSS_VIDEOS = Object.assign({}, window.AC_MONG_BOSS_VIDEOS || {});
 
       (function () {
         var COLS = [
@@ -84,12 +80,18 @@
           if (typeof idFn !== "function") return [];
           var rid = idFn(row);
           var raw = window.AC_MONG_BOSS_VIDEOS && window.AC_MONG_BOSS_VIDEOS[rid];
-          if (raw == null || raw === "") return [];
-          var arr = Array.isArray(raw) ? raw : [raw];
+          var arr = [];
+          if (raw != null && raw !== "") {
+            arr = Array.isArray(raw) ? raw : [raw];
+          }
           var out = [];
           for (var i = 0; i < arr.length && out.length < 3; i++) {
             var y = youtubeVideoId(arr[i]);
             if (y) out.push({ kind: "youtube", id: y });
+          }
+          if (out.length === 0) {
+            var def = youtubeVideoId(DEFAULT_BOSS_DETAIL_VIDEO_URL);
+            if (def) out.push({ kind: "youtube", id: def });
           }
           return out;
         }
@@ -143,6 +145,8 @@
         }
 
         contentEl.hidden = false;
+        contentEl.className =
+          "boss-detail__layout boss-detail__layout--ac-mong-3col";
 
         var bossName = cellText(row["Tên BOSS (Ác mộng)"]).trim() || "BOSS";
         titleEl.textContent = bossName;
@@ -156,11 +160,10 @@
             ? window.BOSS_TABLE_AC_MONG_DETAIL_FIELD_BG(row, rows)
             : null;
 
-        var main = document.createElement("div");
-        main.className = "boss-detail__main boss-detail__main--ac-split";
-
-        var infoCol = document.createElement("div");
-        infoCol.className = "boss-detail__info-col";
+        var infoCol = document.createElement("aside");
+        infoCol.className =
+          "boss-detail__aside boss-detail__info-col";
+        infoCol.setAttribute("aria-label", "Thông tin BOSS");
 
         var fieldsInner = document.createElement("div");
         fieldsInner.className = "boss-detail__fields-inner";
@@ -192,12 +195,22 @@
             var chipSeason = document.createElement("span");
             chipSeason.className = "boss-data-chip";
             chipSeason.style.backgroundColor = acMongFieldBg.season;
+            chipSeason.style.borderColor =
+              typeof window.BOSS_TABLE_BOSS_CHIP_BORDER_FOR_BG === "function"
+                ? window.BOSS_TABLE_BOSS_CHIP_BORDER_FOR_BG(acMongFieldBg.season)
+                : acMongFieldBg.season;
             chipSeason.textContent = text;
             dd.appendChild(chipSeason);
           } else if (acMongFieldBg && k === "Độ khó") {
             var chipDiff = document.createElement("span");
             chipDiff.className = "boss-data-chip";
             chipDiff.style.backgroundColor = acMongFieldBg.difficultyTier;
+            chipDiff.style.borderColor =
+              typeof window.BOSS_TABLE_BOSS_CHIP_BORDER_FOR_BG === "function"
+                ? window.BOSS_TABLE_BOSS_CHIP_BORDER_FOR_BG(
+                    acMongFieldBg.difficultyTier
+                  )
+                : acMongFieldBg.difficultyTier;
             chipDiff.textContent = text;
             dd.appendChild(chipDiff);
           } else if (k === "Tuần tiêu diệt") {
@@ -242,60 +255,53 @@
         }
         imagesBlock.appendChild(gallery);
 
-        var imagesCol = document.createElement("div");
-        imagesCol.className = "boss-detail__images-col";
+        var imagesCol = document.createElement("aside");
+        imagesCol.className =
+          "boss-detail__aside boss-detail__images-col";
         imagesCol.setAttribute("aria-label", "Ảnh BOSS");
         imagesCol.appendChild(imagesBlock);
 
-        main.appendChild(infoCol);
-        main.appendChild(imagesCol);
-
         var videos = videoEntriesForRow(row);
-        if (videos.length === 0) {
-          contentEl.classList.add("boss-detail__layout--no-video");
-        } else {
-          var aside = document.createElement("aside");
-          aside.className = "boss-detail__aside boss-detail__aside--videos";
-          aside.setAttribute("aria-label", "Video BOSS");
 
-          var vHeading = document.createElement("h2");
-          vHeading.className = "boss-detail__video-heading";
-          vHeading.textContent = "Video";
-          aside.appendChild(vHeading);
+        var aside = document.createElement("aside");
+        aside.className = "boss-detail__aside boss-detail__aside--videos";
+        aside.setAttribute("aria-label", "Video BOSS");
 
-          var stack = document.createElement("div");
-          stack.className = "boss-detail__video-stack";
-          videos.forEach(function (entry, vi) {
-            var frame = document.createElement("div");
-            frame.className = "boss-detail__video-frame";
-            var iframe = document.createElement("iframe");
-            var q = new URLSearchParams();
-            if (vi === 0) {
-              q.set("autoplay", "1");
-              q.set("mute", "1");
-            }
-            q.set("rel", "0");
-            q.set("playsinline", "1");
-            iframe.src =
-              "https://www.youtube.com/embed/" + entry.id + "?" + q.toString();
-            iframe.title =
-              bossName + (videos.length > 1 ? " — video " + (vi + 1) : "");
-            iframe.loading = vi === 0 ? "eager" : "lazy";
-            iframe.setAttribute("allowfullscreen", "");
-            iframe.allow =
-              "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-            iframe.referrerPolicy = "strict-origin-when-cross-origin";
-            frame.appendChild(iframe);
-            stack.appendChild(frame);
-          });
-          aside.appendChild(stack);
+        var vHeading = document.createElement("h2");
+        vHeading.className = "boss-detail__video-heading";
+        vHeading.textContent = "Video";
+        aside.appendChild(vHeading);
 
-          contentEl.appendChild(main);
-          contentEl.appendChild(aside);
-          return;
-        }
+        var stack = document.createElement("div");
+        stack.className = "boss-detail__video-stack";
+        videos.forEach(function (entry, vi) {
+          var frame = document.createElement("div");
+          frame.className = "boss-detail__video-frame";
+          var iframe = document.createElement("iframe");
+          var q = new URLSearchParams();
+          if (vi === 0) {
+            q.set("autoplay", "1");
+            q.set("mute", "1");
+          }
+          q.set("rel", "0");
+          q.set("playsinline", "1");
+          iframe.src =
+            "https://www.youtube.com/embed/" + entry.id + "?" + q.toString();
+          iframe.title =
+            bossName + (videos.length > 1 ? " — video " + (vi + 1) : "");
+          iframe.loading = vi === 0 ? "eager" : "lazy";
+          iframe.setAttribute("allowfullscreen", "");
+          iframe.allow =
+            "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+          iframe.referrerPolicy = "strict-origin-when-cross-origin";
+          frame.appendChild(iframe);
+          stack.appendChild(frame);
+        });
+        aside.appendChild(stack);
 
-        contentEl.appendChild(main);
+        contentEl.appendChild(infoCol);
+        contentEl.appendChild(imagesCol);
+        contentEl.appendChild(aside);
       })();
     </script>
   </body>

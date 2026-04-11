@@ -142,6 +142,48 @@
     return "#ccffcc";
   }
 
+  /** Viền chip cùng tông với nền, đậm hơn một chút (không dùng xám trung tính cố định). */
+  function bossChipBorderForBackground(bg) {
+    const s = String(bg ?? "").trim();
+    let r;
+    let g;
+    let b;
+    const hex = s.match(/^#([\da-f]{3}|[\da-f]{6})$/i);
+    if (hex) {
+      let h = hex[1];
+      if (h.length === 3) {
+        h = h
+          .split("")
+          .map(function (c) {
+            return c + c;
+          })
+          .join("");
+      }
+      r = parseInt(h.slice(0, 2), 16);
+      g = parseInt(h.slice(2, 4), 16);
+      b = parseInt(h.slice(4, 6), 16);
+    } else {
+      const m = s.match(/^rgba?\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i);
+      if (m) {
+        r = +m[1];
+        g = +m[2];
+        b = +m[3];
+      } else {
+        return s;
+      }
+    }
+    const t = 0.72;
+    return (
+      "rgb(" +
+      Math.max(0, Math.min(255, Math.round(r * t))) +
+      "," +
+      Math.max(0, Math.min(255, Math.round(g * t))) +
+      "," +
+      Math.max(0, Math.min(255, Math.round(b * t))) +
+      ")"
+    );
+  }
+
   function isTuanTieuDietMissing(row) {
     const v = row["Tuần tiêu diệt"];
     if (v == null) return true;
@@ -483,7 +525,9 @@
           const chip = document.createElement("span");
           chip.className = "boss-data-chip";
           chip.textContent = text;
-          chip.style.backgroundColor = difficultyColumnBgAcMong(raw);
+          const tierBg = difficultyColumnBgAcMong(raw);
+          chip.style.backgroundColor = tierBg;
+          chip.style.borderColor = bossChipBorderForBackground(tierBg);
           td.appendChild(chip);
           if (spec && spec.noWrap) td.style.whiteSpace = "nowrap";
         } else {
@@ -845,6 +889,7 @@
   };
 
   window.BOSS_TABLE_DIFFICULTY_TIER_BG = difficultyColumnBgAcMong;
+  window.BOSS_TABLE_BOSS_CHIP_BORDER_FOR_BG = bossChipBorderForBackground;
 
   if (!window.__BOSS_TABLE_DETAIL_NAV__) {
     window.__BOSS_TABLE_DETAIL_NAV__ = true;

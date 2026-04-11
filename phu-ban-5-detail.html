@@ -22,6 +22,26 @@
     <script src="table-app.js"></script>
     <script>
       (function () {
+        var DEFAULT_BOSS_DETAIL_VIDEO_URL =
+          "https://www.youtube.com/watch?v=OY_RlbR4o4E";
+
+        function youtubeVideoId(input) {
+          var s = String(input == null ? "" : input).trim();
+          if (!s) return "";
+          if (/^[a-zA-Z0-9_-]{11}$/.test(s)) return s;
+          var m = s.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+          if (m) return m[1];
+          m = s.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+          if (m) return m[1];
+          m = s.match(/youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/);
+          return m ? m[1] : "";
+        }
+
+        function defaultVideoEntries() {
+          var y = youtubeVideoId(DEFAULT_BOSS_DETAIL_VIDEO_URL);
+          return y ? [{ kind: "youtube", id: y }] : [];
+        }
+
         var COLS = ["No.", "Mùa", "Tên phụ bản", "Boss 1", "Boss 2", "Boss 3"];
 
         function cellText(v) {
@@ -179,7 +199,44 @@
         fieldsInner.appendChild(bossesWrap);
 
         main.appendChild(fieldsInner);
+
+        var videos = defaultVideoEntries();
+        var asideVid = document.createElement("aside");
+        asideVid.className = "boss-detail__aside boss-detail__aside--videos";
+        asideVid.setAttribute("aria-label", "Video phụ bản");
+        var vHeading = document.createElement("h2");
+        vHeading.className = "boss-detail__video-heading";
+        vHeading.textContent = "Video";
+        asideVid.appendChild(vHeading);
+        var stack = document.createElement("div");
+        stack.className = "boss-detail__video-stack";
+        videos.forEach(function (entry, vi) {
+          var frame = document.createElement("div");
+          frame.className = "boss-detail__video-frame";
+          var iframe = document.createElement("iframe");
+          var q = new URLSearchParams();
+          if (vi === 0) {
+            q.set("autoplay", "1");
+            q.set("mute", "1");
+          }
+          q.set("rel", "0");
+          q.set("playsinline", "1");
+          iframe.src =
+            "https://www.youtube.com/embed/" + entry.id + "?" + q.toString();
+          iframe.title =
+            mapName + (videos.length > 1 ? " — video " + (vi + 1) : "");
+          iframe.loading = vi === 0 ? "eager" : "lazy";
+          iframe.setAttribute("allowfullscreen", "");
+          iframe.allow =
+            "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+          iframe.referrerPolicy = "strict-origin-when-cross-origin";
+          frame.appendChild(iframe);
+          stack.appendChild(frame);
+        });
+        asideVid.appendChild(stack);
+
         contentEl.appendChild(main);
+        contentEl.appendChild(asideVid);
       })();
     </script>
   </body>
