@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Phụ bản 5</title>
+    <link rel="stylesheet" href="table-app.css" />
+    <link rel="stylesheet" href="ac-mong-10.css" />
+  </head>
+  <body class="excel-boss-page">
+    <nav class="site-nav"><a href="index.html">← Trang chủ</a></nav>
+    <h1 id="page-title">Phụ bản 5</h1>
+    <div class="toolbar">
+      <label>
+        Search
+        <input type="search" id="search" placeholder="Mùa, phụ bản, boss…" autocomplete="off" />
+      </label>
+      <span id="status">Loading…</span>
+    </div>
+    <div class="table-scroll" id="table-wrap"></div>
+    <script src="phu-ban-5.js"></script>
+    <script src="table-app.js"></script>
+    <script>
+      (function () {
+        var cols = ["No.", "Mùa", "Tên phụ bản", "Boss 1", "Boss 2", "Boss 3"];
+        // Tỉ lệ % (tổng 100%) — ảnh nằm trong ô Boss (dưới tên), giống Excel
+        var w = {
+          "No.": "5%",
+          Mùa: "8%",
+          "Tên phụ bản": "20%",
+          "Boss 1": "22%",
+          "Boss 2": "22%",
+          "Boss 3": "23%",
+        };
+        initBossTable({
+          title: "Phụ bản 5",
+          columns: cols,
+          columnWidths: w,
+          searchKeys: ["Mùa", "Tên phụ bản", "Boss 1", "Boss 2", "Boss 3"],
+          seasonChipPrefix: "Mùa",
+          detailPage: "phu-ban-5-detail.html",
+          detailRowId: window.BOSS_TABLE_PHU_BAN_DETAIL_ROW_ID,
+          columnDisplay: {
+            "No.": { noWrap: true },
+            Mùa: { noWrap: true },
+            "Tên phụ bản": { preWrap: true },
+            "Boss 1": { type: "bossWithImage" },
+            "Boss 2": { type: "bossWithImage" },
+            "Boss 3": { type: "bossWithImage" },
+          },
+          tableExtraClass: "excel-ac-mong excel-phu-ban",
+          skipBlankRows: true,
+          seasonKey: "Mùa",
+          statusLocale: "vi",
+          cellBgMode: "phu-ban",
+        });
+      })();
+    </script>
+  </body>
+</html>

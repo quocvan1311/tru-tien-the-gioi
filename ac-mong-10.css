@@ -1,0 +1,981 @@
+/* Trang chủ */
+body.home-page {
+  position: relative;
+  font-family: Calibri, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: #1a1d26;
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.home-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(1200px 600px at 15% -10%, rgba(0, 112, 192, 0.14), transparent 55%),
+    radial-gradient(900px 500px at 100% 20%, rgba(99, 102, 241, 0.12), transparent 50%),
+    linear-gradient(165deg, #f4f6fb 0%, #e8ecf6 45%, #dfe6f4 100%);
+  pointer-events: none;
+}
+
+.home-shell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: min(38rem, 100%);
+  margin: 0 auto;
+}
+
+.home-header {
+  text-align: center;
+  margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.home-kicker {
+  margin: 0 0 0.35rem;
+  font-size: clamp(0.8rem, 2.2vw, 0.95rem);
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #0070c0;
+}
+
+.home-title {
+  margin: 0 0 0.5rem;
+  font-size: clamp(2.5rem, 9vw, 3.75rem);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  line-height: 1.02;
+  color: #0f1419;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.home-intro {
+  margin: 0 auto;
+  max-width: 26rem;
+  font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+  font-weight: 500;
+  line-height: 1.45;
+  color: #475569;
+}
+
+.home-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.85rem, 2.5vw, 1.15rem);
+}
+
+.home-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 4.5rem;
+  padding: clamp(1.1rem, 3vw, 1.35rem) clamp(1.15rem, 3.5vw, 1.5rem);
+  text-decoration: none;
+  color: inherit;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.home-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(15, 23, 42, 0.06);
+}
+
+.home-card:focus-visible {
+  outline: 2px solid #0070c0;
+  outline-offset: 3px;
+}
+
+.home-card__label {
+  font-size: clamp(1.15rem, 3.2vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: #0f172a;
+}
+
+.home-card__hint {
+  font-size: clamp(0.9rem, 2.2vw, 1.05rem);
+  line-height: 1.4;
+  color: #64748b;
+}
+
+.home-card--ac {
+  border-left: 5px solid #0070c0;
+}
+
+.home-card--ln {
+  border-left: 5px solid #6366f1;
+}
+
+.home-card--pb {
+  border-left: 5px solid #0d9488;
+}
+
+.home-card--ac:hover {
+  border-left-color: #005a9e;
+}
+
+.home-card--ln:hover {
+  border-left-color: #4f46e5;
+}
+
+.home-card--pb:hover {
+  border-left-color: #0f766e;
+}
+
+.site-nav {
+  margin: 0 0 0.75rem;
+  font-size: 11pt;
+}
+
+body.excel-boss-page > .site-nav {
+  display: inline-block;
+  margin-bottom: 0.55rem;
+  padding: 0.3rem 0.65rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+}
+
+.site-nav a {
+  color: #0563c1;
+  text-decoration: none;
+}
+
+.site-nav a:hover {
+  text-decoration: underline;
+}
+
+/* Excel-style tables (shared: Ác mộng, Luyện ngục, Phụ bản) */
+
+body.excel-boss-page {
+  font-family: Calibri, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 11pt;
+  line-height: 1.35;
+  color: #141820;
+  background: radial-gradient(900px 480px at 12% -5%, rgba(0, 112, 192, 0.06), transparent 50%),
+    linear-gradient(180deg, #f0f3fa 0%, #e8ecf4 100%);
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 0.65rem 1rem 1rem;
+  box-sizing: border-box;
+}
+
+body.excel-boss-page h1 {
+  font-size: 16pt;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.55rem;
+  letter-spacing: 0.02em;
+}
+
+body.excel-boss-page .excel-page-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.85rem;
+  margin: 0 0 0.75rem;
+}
+
+body.excel-boss-page .excel-page-heading h1 {
+  margin: 0;
+}
+
+.ac-mong-note {
+  margin: 0;
+  padding: 0.35rem 0.5rem;
+  background: #fff9e6;
+  border: 1px solid #c9c9c9;
+  border-left: 4px solid #0070c0;
+  font-size: 11pt;
+  font-weight: 700;
+  color: #0070c0;
+}
+
+body.excel-boss-page #status {
+  font-size: 10.5pt;
+  color: #333333;
+  line-height: 1.45;
+  max-width: 100%;
+}
+
+/* Tóm tắt tổng + chip theo mùa (toolbar #status) */
+body.excel-boss-page #status.table-status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  align-items: stretch;
+}
+
+body.excel-boss-page .table-status__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.55rem;
+  width: 100%;
+}
+
+body.excel-boss-page .table-status__row--filter {
+  padding-top: 0.4rem;
+  margin-top: 0.05rem;
+  border-top: 1px dashed #c5c5c5;
+}
+
+body.excel-boss-page .table-status__total {
+  color: #222222;
+  white-space: nowrap;
+}
+
+body.excel-boss-page .table-status__total-num {
+  font-variant-numeric: tabular-nums;
+  color: #0070c0;
+}
+
+body.excel-boss-page .table-status__sep {
+  color: #bbbbbb;
+  font-weight: 700;
+  user-select: none;
+  line-height: 1;
+}
+
+body.excel-boss-page .table-status__season-intro {
+  font-weight: 600;
+  color: #444444;
+  flex-shrink: 0;
+}
+
+body.excel-boss-page .table-status__chips {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+body.excel-boss-page .table-status__chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.22rem 0.55rem 0.24rem;
+  background: linear-gradient(180deg, #fbfcfe 0%, #e8eef6 100%);
+  border: 1px solid #a8b8cc;
+  border-radius: 6px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.75) inset;
+  font-size: 10pt;
+  line-height: 1.35;
+  max-width: 100%;
+}
+
+body.excel-boss-page .table-status__chip-name {
+  color: #1a1a1a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: min(18rem, 100%);
+}
+
+body.excel-boss-page .table-status__chip-num {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #0b5cad;
+  flex-shrink: 0;
+}
+
+body.excel-boss-page .table-status__chip-num::before {
+  content: "·";
+  display: inline-block;
+  margin-right: 0.35rem;
+  color: #8a9aab;
+  font-weight: 700;
+}
+
+body.excel-boss-page .table-status__hint {
+  font-size: 10pt;
+  color: #666666;
+}
+
+body.excel-boss-page .table-status__filter {
+  font-style: normal;
+  font-weight: 600;
+  color: #1f5f0a;
+}
+
+body.excel-boss-page .toolbar {
+  margin-bottom: 0.75rem;
+  padding: 0.45rem 0.65rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
+  align-items: center;
+}
+
+body.excel-boss-page .toolbar label {
+  font-size: 11pt;
+}
+
+body.excel-boss-page #search {
+  font-size: 11pt;
+  border-radius: 8px;
+  border: 1px solid #c5ccd8;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+body.excel-boss-page .table-scroll {
+  /* Cùng độ dày + màu với viền ô (divider) bên trong */
+  border: 0.5px solid #9aa8b8;
+  border-radius: 6px;
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04);
+  background: #ffffff;
+  overflow: auto;
+  background-clip: padding-box;
+}
+
+/* Excel-like table — separate + viền phải/dưới để góc không đè đôi, bo góc nét */
+body.excel-boss-page table.excel-ac-mong {
+  font-family: Calibri, "Segoe UI", sans-serif;
+  font-size: 11pt;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: none;
+}
+
+body.excel-boss-page table.excel-ac-mong th,
+body.excel-boss-page table.excel-ac-mong td {
+  border: none;
+  border-right: 0.5px solid #9aa8b8;
+  border-bottom: 0.5px solid #9aa8b8;
+  padding: 0.3rem 0.48rem;
+  vertical-align: top;
+}
+
+body.excel-boss-page table.excel-ac-mong thead tr:first-child th {
+  border-top: 0.5px solid #9aa8b8;
+}
+
+body.excel-boss-page table.excel-ac-mong thead tr th:first-child,
+body.excel-boss-page table.excel-ac-mong tbody tr td:first-child {
+  border-left: 0.5px solid #9aa8b8;
+}
+
+body.excel-boss-page table.excel-ac-mong thead tr:first-child th:first-child {
+  border-top-left-radius: 5px;
+}
+
+body.excel-boss-page table.excel-ac-mong thead tr:first-child th:last-child {
+  border-top-right-radius: 5px;
+}
+
+body.excel-boss-page table.excel-ac-mong tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 5px;
+}
+
+body.excel-boss-page table.excel-ac-mong tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 5px;
+}
+
+body.excel-boss-page table.excel-ac-mong thead th {
+  background: linear-gradient(180deg, #e2e9f6 0%, #d4dff0 100%);
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 11pt;
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: normal;
+  word-wrap: normal;
+  hyphens: none;
+  cursor: pointer;
+}
+
+body.excel-boss-page table.excel-ac-mong thead th:hover {
+  background: linear-gradient(180deg, #d6e0f2 0%, #c8d4ea 100%);
+}
+
+body.excel-boss-page table.excel-ac-mong:not(.excel-ac-mong--fills) tbody tr:nth-child(even) {
+  background: #f4f6fa;
+}
+
+body.excel-boss-page table.excel-ac-mong:not(.excel-ac-mong--fills) tbody tr:nth-child(odd) {
+  background: #ffffff;
+}
+
+body.excel-boss-page table.excel-ac-mong:not(.excel-ac-mong--fills) tbody tr:hover {
+  background: #e8f4ff;
+}
+
+body.excel-boss-page tbody tr.data-table__row--detail {
+  cursor: pointer;
+}
+
+body.excel-boss-page tbody tr.data-table__row--detail:focus {
+  outline: 2px solid #0070c0;
+  outline-offset: -2px;
+}
+
+body.excel-boss-page tbody tr.data-table__row--detail:hover {
+  background: #ddebf7 !important;
+}
+
+body.excel-boss-page table.excel-ac-mong td.cell-tuan-tieu-diet {
+  line-height: 1.35;
+  vertical-align: top;
+}
+
+/* Per-cell fills from Excel — không ghi đè bằng zebra */
+body.excel-boss-page table.excel-ac-mong.excel-ac-mong--fills tbody tr {
+  background: transparent;
+}
+
+body.excel-boss-page table.excel-ac-mong.excel-ac-mong--fills tbody tr:hover td {
+  filter: brightness(0.97);
+}
+
+body.excel-boss-page table.excel-ac-mong thead th.sort-asc::after,
+body.excel-boss-page table.excel-ac-mong thead th.sort-desc::after {
+  color: #000;
+}
+
+/* Cột dài — chữ nhỏ hơn một chút để vừa ô */
+body.excel-boss-page table.excel-ac-mong th[data-col="Kỹ năng"],
+body.excel-boss-page table.excel-ac-mong td[data-col="Kỹ năng"],
+body.excel-boss-page table.excel-ac-mong th[data-col="Ghi chú"],
+body.excel-boss-page table.excel-ac-mong td[data-col="Ghi chú"] {
+  font-size: 10pt;
+}
+
+/* Phụ bản 5 — tiêu đề cột Boss */
+body.excel-boss-page table.excel-phu-ban th[data-col^="Boss "] {
+  font-size: 10.5pt;
+}
+
+/* Phụ bản 5 — tên boss + ảnh bên dưới (giống layout Excel) */
+body.excel-boss-page table.excel-phu-ban td.cell-boss-with-img {
+  vertical-align: top;
+}
+
+body.excel-boss-page table.excel-phu-ban .boss-cell__name {
+  font-size: 10pt;
+  line-height: 1.38;
+  margin-bottom: 0.28rem;
+}
+
+body.excel-boss-page table.excel-phu-ban .boss-cell__fig {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: flex-start;
+  align-content: flex-start;
+  line-height: 0;
+  margin-top: 0.1rem;
+}
+
+/* Không flex-grow — viền ôm sát kích thước ảnh (tránh kéo giãn ô rỗng trong border) */
+body.excel-boss-page table.excel-phu-ban .boss-cell__fig img {
+  display: block;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  max-height: 176px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  box-sizing: border-box;
+  border: 1px solid #aeb6c4;
+  border-radius: 4px;
+  background: transparent;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+body.excel-boss-page table.excel-phu-ban .boss-cell__fig img:only-child {
+  max-width: 100%;
+}
+
+body.excel-boss-page table.excel-phu-ban .boss-cell__fig img:not(:only-child) {
+  max-width: calc(50% - 2px);
+}
+
+/* Multiline cells (Kỹ năng, BOSS) — giữ xuống dòng như Excel */
+body.excel-boss-page table.excel-ac-mong td[style*="white-space"] {
+  line-height: 1.4;
+}
+
+/* Cột ảnh BOSS — padding gọn, ảnh lớn hơn */
+body.excel-boss-page table.excel-ac-mong td.cell-images {
+  vertical-align: middle;
+  padding: 0.12rem 0.2rem;
+  line-height: 0;
+}
+
+body.excel-boss-page .boss-image-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+body.excel-boss-page .boss-image-strip img {
+  max-height: 148px;
+  max-width: 148px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  box-sizing: border-box;
+  border: 1px solid #6d7480;
+  border-radius: 6px;
+  background: transparent;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Cột %: bảng full width; ô chữ xuống dòng trong khung cột (tránh tràn ngang) */
+body.excel-boss-page table.excel-ac-mong.data-table--fixed {
+  width: 100%;
+  min-width: 100%;
+}
+
+/* Tiêu đề cột: chỉ xuống dòng giữa các từ, không ngắt giữa một từ */
+body.excel-boss-page table.excel-ac-mong.data-table--fixed th {
+  overflow-wrap: normal;
+  word-wrap: normal;
+  word-break: normal;
+}
+
+body.excel-boss-page table.excel-ac-mong.data-table--fixed td {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+body.excel-boss-page table.excel-ac-mong.data-table--fixed td.cell-images {
+  overflow: visible;
+}
+
+/* Trang chi tiết — viewport: cuộn trong panel, ít scroll cả trang */
+html:has(body.boss-detail-page) {
+  height: 100%;
+}
+
+body.boss-detail-page {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
+  padding: 0.55rem 0.85rem 0.55rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  overflow: hidden;
+  background: radial-gradient(900px 420px at 8% 0%, rgba(0, 112, 192, 0.09), transparent 55%),
+    radial-gradient(700px 380px at 100% 30%, rgba(99, 102, 241, 0.07), transparent 50%),
+    linear-gradient(180deg, #e9edf6 0%, #e4e9f3 100%);
+  color: #141820;
+}
+
+body.boss-detail-page .site-nav {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0.35rem 0.75rem;
+  font-size: 10.5pt;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 999px;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+  width: fit-content;
+  max-width: 100%;
+}
+
+body.boss-detail-page article.boss-detail {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  max-width: none;
+  width: 100%;
+}
+
+body.boss-detail-page .boss-detail__back {
+  flex: 0 0 auto;
+  margin: 0 0 0.35rem;
+  font-size: 10.5pt;
+}
+
+body.boss-detail-page .boss-detail__back a {
+  color: #0b4f8a;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+body.boss-detail-page .boss-detail__back a:hover {
+  text-decoration: underline;
+}
+
+body.boss-detail-page .boss-detail__title {
+  flex: 0 0 auto;
+  font-size: clamp(1.05rem, 2.2vw, 1.45rem);
+  font-weight: 800;
+  margin: 0 0 0.5rem;
+  line-height: 1.25;
+  padding: 0.45rem 0.65rem 0.5rem 0.75rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f3f7ff 100%);
+  border-left: 4px solid #0070c0;
+  border-radius: 0 10px 10px 0;
+  box-shadow: 0 3px 18px rgba(0, 70, 140, 0.1);
+}
+
+body.boss-detail-page .boss-detail__error {
+  flex: 0 0 auto;
+  padding: 0.65rem 0.85rem;
+  background: #fff8e6;
+  border: 1px solid #e5c76a;
+  border-radius: 8px;
+  margin-bottom: 0.65rem;
+}
+
+body.boss-detail-page .boss-detail__layout {
+  flex: 1 1 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, min(40vw, 480px));
+  gap: 0.75rem 1rem;
+  align-items: stretch;
+  width: 100%;
+}
+
+body.boss-detail-page .boss-detail__main {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  padding: 0.55rem 0.65rem 0.65rem;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: 0 4px 22px rgba(15, 23, 42, 0.07);
+  -webkit-overflow-scrolling: touch;
+}
+
+body.boss-detail-page .boss-detail__aside {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  align-self: stretch;
+  padding: 0.55rem 0.6rem 0.65rem;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: 0 4px 22px rgba(15, 23, 42, 0.07);
+  -webkit-overflow-scrolling: touch;
+}
+
+body.boss-detail-page .boss-detail__fields-inner {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem 0.85rem;
+  margin: 0;
+  font-size: 10.5pt;
+  align-content: start;
+}
+
+@media (min-width: 1180px) {
+  body.boss-detail-page:not(.boss-detail-page--phu-ban) .boss-detail__fields-inner {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+body.boss-detail-page .boss-detail__field {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 9.5rem) minmax(0, 1fr);
+  gap: 0.2rem 0.65rem;
+  align-items: start;
+  min-width: 0;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+body.boss-detail-page .boss-detail__field--wide {
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(6.5rem, 11rem) minmax(0, 1fr);
+}
+
+body.boss-detail-page .boss-detail__field dt {
+  margin: 0;
+  font-weight: 700;
+  font-size: 0.92em;
+  color: #334155;
+  letter-spacing: 0.01em;
+}
+
+body.boss-detail-page .boss-detail__field dd {
+  margin: 0;
+  min-width: 0;
+}
+
+body.boss-detail-page .boss-detail__field dd.boss-detail__pre {
+  white-space: pre-wrap;
+  line-height: 1.42;
+  overflow-wrap: break-word;
+}
+
+body.boss-detail-page .boss-detail__boss {
+  font-weight: 700;
+}
+
+body.boss-detail-page .boss-detail__gallery {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 0.65rem;
+  align-items: stretch;
+  margin: 0;
+  width: 100%;
+}
+
+body.boss-detail-page .boss-detail__gallery-empty {
+  margin: 0;
+  color: #666;
+  font-size: 10.5pt;
+}
+
+body.boss-detail-page .boss-detail__gallery img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: min(50vh, 480px);
+  object-fit: contain;
+  box-sizing: border-box;
+  border: 1px solid #6d7480;
+  background: transparent;
+  border-radius: 6px;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+body.boss-detail-page .boss-detail__gallery--inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+body.boss-detail-page .boss-detail__gallery--inline img {
+  width: auto;
+  max-width: min(48%, 280px);
+  max-height: 220px;
+}
+
+/* Chi tiết Phụ bản 5 — một cột, meta + 3 boss ngang */
+body.boss-detail-page--phu-ban .boss-detail__layout {
+  grid-template-columns: 1fr;
+}
+
+body.boss-detail-page--phu-ban .boss-detail__main {
+  overflow: auto;
+}
+
+body.boss-detail-page--phu-ban .boss-detail__title {
+  margin-bottom: 0.65rem;
+}
+
+body.boss-detail-page--phu-ban .boss-detail__fields-inner--phu-ban {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+body.boss-detail-page--phu-ban .boss-detail__phu-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.7rem 0.8rem 0.75rem;
+  background: linear-gradient(180deg, #fbfcfe 0%, #f1f5f9 100%);
+  border: 1px solid #c5cfde;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+}
+
+body.boss-detail-page--phu-ban .boss-detail__field--phu-meta {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.25rem 0.45rem;
+  align-items: baseline;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-bottom: none;
+}
+
+body.boss-detail-page--phu-ban .boss-detail__field--phu-meta dt {
+  font-weight: 800;
+  font-size: 0.92em;
+  color: #0f172a;
+  letter-spacing: normal;
+  white-space: nowrap;
+}
+
+body.boss-detail-page--phu-ban .boss-detail__field--phu-meta dd {
+  font-size: 1.02em;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.35;
+}
+
+body.boss-detail-page--phu-ban .boss-detail__field--phu-meta dd.boss-detail__pre {
+  line-height: 1.4;
+}
+
+body.boss-detail-page--phu-ban .boss-detail__phu-bosses {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem 0.95rem;
+  align-items: stretch;
+}
+
+body.boss-detail-page--phu-ban .boss-detail__field--phu-boss {
+  display: grid;
+  grid-template-columns: minmax(4rem, 6.25rem) minmax(0, 1fr);
+  margin: 0;
+  border-bottom: none;
+  border: 1px solid #b0bccf;
+  border-radius: 10px;
+  padding: 0.5rem 0.55rem 0.65rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+  box-sizing: border-box;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+  height: 100%;
+}
+
+body.boss-detail-page--phu-ban .boss-detail__field--phu-boss dt {
+  font-weight: 800;
+  font-size: 0.95em;
+  color: #0f172a;
+}
+
+body.boss-detail-page--phu-ban .boss-detail__field--phu-boss .boss-detail__pre {
+  font-size: 1.02em;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.42;
+}
+
+body.boss-detail-page--phu-ban .boss-detail__boss-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+body.boss-detail-page--phu-ban .boss-detail__phu-bosses .boss-detail__gallery--inline {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: min(36vh, 300px);
+  margin-top: 0.25rem;
+  gap: 0.45rem;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
+body.boss-detail-page--phu-ban .boss-detail__phu-bosses .boss-detail__gallery--inline img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: min(62vh, 560px);
+  object-fit: contain;
+  box-sizing: border-box;
+  border: 1px solid #6d7480;
+  border-radius: 6px;
+  background: transparent;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+body.boss-detail-page--phu-ban
+  .boss-detail__phu-bosses
+  .boss-detail__gallery--inline
+  img:not(:only-child) {
+  flex: 1 1 calc(50% - 0.3rem);
+  width: auto;
+  max-width: calc(50% - 0.3rem);
+  max-height: min(54vh, 500px);
+}
+
+@media (max-width: 960px) {
+  html:has(body.boss-detail-page) {
+    height: auto;
+  }
+
+  body.boss-detail-page {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: auto;
+  }
+
+  body.boss-detail-page article.boss-detail {
+    flex: none;
+    min-height: auto;
+  }
+
+  body.boss-detail-page .boss-detail__layout {
+    flex: none;
+    min-height: auto;
+    grid-template-columns: 1fr;
+  }
+
+  body.boss-detail-page .boss-detail__main {
+    max-height: none;
+    overflow: visible;
+  }
+
+  body.boss-detail-page .boss-detail__aside {
+    position: static;
+    max-height: none;
+    order: -1;
+  }
+
+  body.boss-detail-page .boss-detail__fields-inner {
+    grid-template-columns: 1fr;
+  }
+
+  body.boss-detail-page .boss-detail__field {
+    grid-template-columns: minmax(6rem, 10rem) 1fr;
+  }
+
+  body.boss-detail-page--phu-ban .boss-detail__fields-inner--phu-ban {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 900px) {
+  body.boss-detail-page--phu-ban .boss-detail__phu-meta {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  body.boss-detail-page--phu-ban .boss-detail__field--phu-meta:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  body.boss-detail-page--phu-ban .boss-detail__phu-bosses {
+    grid-template-columns: 1fr;
+  }
+}

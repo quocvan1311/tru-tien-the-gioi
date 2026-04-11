@@ -1,0 +1,528 @@
+// Auto-generated from Tru Tien BOSS.xlsm — do not edit by hand.
+// Sheet: "Ác mộng 10"
+window.BOSS_TABLE_DATA = [
+  {
+    "No.": 1,
+    "Index": "123",
+    "Tên season": "Đạo Khởi Thanh Vân",
+    "Ngày ra mắt": "2025-03-19T00:00:00",
+    "Ngày tiêu diệt": "2025-04-15T00:00:00",
+    "Tuần tiêu diệt": "Tuần 4, thứ 3",
+    "Số ngày": 27,
+    "Tên BOSS (Ác mộng)": "Niên Lão Đại",
+    "Tên phụ bản": "Độ Ách Luyện Huyết Đường",
+    "Kỹ năng": [
+      "Ma Tẫn Thương Sinh - Tả/Hữu",
+      "Liên Ảnh Sí Quang - Hợp/Tán",
+      "Huyết Đồng Nhiếp Thế",
+      "Huyết Thạch Thiên Vẫn",
+      "Huyết Mâu Như Nhận",
+      "Ma Huyết Tẫn Nhiên"
+    ],
+    "Độ khó": 1100,
+    "__images": [
+      "phu ban 10/123 do ach nien lao dai.JPG"
+    ]
+  },
+  {
+    "No.": 2,
+    "Index": "233",
+    "Tên season": "Cô Tâm Hám Hải",
+    "Ngày ra mắt": "2025-11-05T00:00:00",
+    "Ngày tiêu diệt": "2025-11-18T00:00:00",
+    "Tuần tiêu diệt": "Tuần 2, thứ 3",
+    "Số ngày": 13,
+    "Tên BOSS (Ác mộng)": "Nhiêm Nô",
+    "Tên phụ bản": "Phục Hung Quỳ Ngưu Đảo",
+    "Kỹ năng": [
+      "Cuồng Lôi Quán Giang - Lôi/Thủy",
+      "Lôi Thú Truy Hồn",
+      "Giá Trần Đạp Phong",
+      "Vô Thường Phong Lôi",
+      "Phong Vân Sất Trá"
+    ],
+    "Độ khó": 1050,
+    "__images": [
+      "phu ban 10/233 quy nguu dao nhiem no.JPG"
+    ]
+  },
+  {
+    "No.": 3,
+    "Index": "234",
+    "Tên season": "Cô Tâm Hám Hải",
+    "Ngày ra mắt": "2025-11-05T00:00:00",
+    "Ngày tiêu diệt": "2025-11-24T00:00:00",
+    "Tuần tiêu diệt": "Tuần 3, thứ 2",
+    "Số ngày": 19,
+    "Tên BOSS (Ác mộng)": "Quỳ Ngưu",
+    "Tên phụ bản": "Phục Hung Quỳ Ngưu Đảo",
+    "Kỹ năng": [
+      "Đề Giác Hám Nhạc",
+      "Lôi Đồng Chước Sát",
+      "Thiên Địa Lôi Kiếp",
+      "Đảo Hải Khuynh Đào",
+      "Cức Động Thương Hải",
+      "Thượng Cổ Thú Hồn",
+      "Cửu Tiêu Lôi / Huyền Nguyên Nịch / Cương Phong Phược"
+    ],
+    "Độ khó": 1000,
+    "__bossColor": "#ff0000",
+    "__images": [
+      "phu ban 10/234 quy nguu dao quy nguu.JPG"
+    ]
+  },
+  {
+    "No.": 4,
+    "Index": "131",
+    "Tên season": "Đạo Khởi Thanh Vân",
+    "Ngày ra mắt": "2025-04-30T00:00:00",
+    "Ngày tiêu diệt": "2025-05-18T00:00:00",
+    "Tuần tiêu diệt": "Tuần 3, chủ nhật",
+    "Số ngày": 18,
+    "Tên BOSS (Ác mộng)": "Cửu U Yêu Thụ",
+    "Tên phụ bản": "U Kiếp Tử Linh Uyên",
+    "Kỹ năng": [
+      "Oán Linh Hiến Tế",
+      "Si Hận Chi Chủng",
+      "Đạp Địa",
+      "Tử Địa Minh Uyên",
+      "Minh Diệt Thiên Địa",
+      "Quỷ Mạn Đột Tập",
+      "Sát Ý Vô Xá"
+    ],
+    "Độ khó": 1000,
+    "__images": [
+      "phu ban 10/131 u kiep cuu u yeu thu.JPG"
+    ]
+  },
+  {
+    "No.": 5,
+    "Index": "331",
+    "Tên season": "Thiện Âm Phá Hiểu",
+    "Tên BOSS (Ác mộng)": "Chu Kỳ",
+    "Tên phụ bản": "Giải Xu Đoạn Vọng Nhai",
+    "Kỹ năng": [
+      "Thần Xu Dẫn Quát",
+      "Phương Tấc Băng Giải",
+      "Lôi Động Thiên La",
+      "Đạo Hí Chúng Sinh",
+      "Khôi Sinh Đồng Tù",
+      "Chung Mạt Vạn Quân"
+    ],
+    "Độ khó": 999,
+    "Ghi chú": "Chỉ Dục Giới Sư",
+    "__images": [
+      "phu ban 10/331 chi duc gioi su.JPG"
+    ]
+  },
+  {
+    "No.": 6,
+    "Index": "132",
+    "Tên season": "Đạo Khởi Thanh Vân",
+    "Ngày ra mắt": "2025-04-30T00:00:00",
+    "Ngày tiêu diệt": "2025-05-20T00:00:00",
+    "Tuần tiêu diệt": "Tuần 3, thứ 3",
+    "Số ngày": 20,
+    "Tên BOSS (Ác mộng)": "Hắc Thủy Huyền Xà",
+    "Tên phụ bản": "U Kiếp Tử Linh Uyên",
+    "Kỹ năng": [
+      "Sấm Độc Chi Nha",
+      "Cửu U Oán Khiếu",
+      "Thôn Hải Chi Qua",
+      "Nộ Triều Hải Dũng",
+      "Kịch Độc Nùng Sang",
+      "Hắc Thủy Chi Thực",
+      "Độc Dịch Phi Tiên",
+      "Độc Triều Phiên Dũng",
+      "Độc Triều Vô Biên"
+    ],
+    "Độ khó": 925,
+    "__bossColor": "#ff0000",
+    "__images": [
+      "phu ban 10/132 u kiep hac thuy huyen xa.JPG"
+    ]
+  },
+  {
+    "No.": 7,
+    "Index": "124",
+    "Tên season": "Đạo Khởi Thanh Vân",
+    "Ngày ra mắt": "2025-03-19T00:00:00",
+    "Ngày tiêu diệt": "2025-04-13T00:00:00",
+    "Tuần tiêu diệt": "Tuần 4, chủ nhật",
+    "Số ngày": 25,
+    "Tên BOSS (Ác mộng)": "Lâm Phong",
+    "Tên phụ bản": "Độ Ách Luyện Huyết Đường",
+    "Kỹ năng": [
+      "Phong Quyển Thiên Sơn - Sơn/Thủy",
+      "Tù Thủy Vi Lao",
+      "Giang Hà Câu Ngã",
+      "Nguy Nham Hồi Oanh",
+      "Địa Phược Tù Khu",
+      "Toái Lãng Triều Kích",
+      "Nham Lãng Bài Không"
+    ],
+    "Độ khó": 800,
+    "__images": [
+      "phu ban 10/124 do ach lam phong.JPG"
+    ]
+  },
+  {
+    "No.": 8,
+    "Index": "231",
+    "Tên season": "Cô Tâm Hám Hải",
+    "Ngày ra mắt": "2025-11-05T00:00:00",
+    "Ngày tiêu diệt": "2025-11-09T00:00:00",
+    "Tuần tiêu diệt": "Tuần 1, chủ nhật",
+    "Số ngày": 4,
+    "Tên BOSS (Ác mộng)": "Vạn Độc Tam Lão",
+    "Tên phụ bản": "Phục Hung Quỳ Ngưu Đảo",
+    "Kỹ năng": [
+      "Lập Địa Thành Phật - Cận/Viễn",
+      "Thải Bổ Tà Thuật",
+      "Tà Phật Kim Chung",
+      "Huyết Trái Huyết Thường",
+      "Ngũ Quỷ Ngự Linh",
+      "Hấp Huyết Đại Pháp",
+      "Thiên Biến Độc Ôn",
+      "Bách Độc Quy Nhất",
+      "Vạn Độc Chướng Vực"
+    ],
+    "Độ khó": 775,
+    "Ghi chú": [
+      "Đoan Mộc Lão Tổ",
+      "Hấp Huyết Lão Yêu",
+      "Bách Độc Tử"
+    ],
+    "__images": [
+      "phu ban 10/231 quy nguu dao doan moc lao to.JPG",
+      "phu ban 10/231 quy nguu dao hap huyet lao yeu.JPG",
+      "phu ban 10/231 quy nguu dao bach doc tu.JPG"
+    ]
+  },
+  {
+    "No.": 9,
+    "Index": "122",
+    "Tên season": "Đạo Khởi Thanh Vân",
+    "Ngày ra mắt": "2025-03-19T00:00:00",
+    "Ngày tiêu diệt": "2025-03-29T00:00:00",
+    "Tuần tiêu diệt": "Tuần 2, thứ 7",
+    "Số ngày": 10,
+    "Tên BOSS (Ác mộng)": "Đậu Nhị Nương",
+    "Tên phụ bản": "Độ Ách Luyện Huyết Đường",
+    "Kỹ năng": [
+      "Xuân Phong Tảo Nhị",
+      "Ngọc Hàn Tỏa Xuân",
+      "Phất Hoa Thúc Hồn",
+      "Bộ Linh Hồi Xuân",
+      "Thiên Niên Hoa Linh"
+    ],
+    "Độ khó": 725,
+    "__images": [
+      "phu ban 10/122 do ach dau nhi nuong.JPG"
+    ]
+  },
+  {
+    "No.": 10,
+    "Index": "213",
+    "Tên season": "Cô Tâm Hám Hải",
+    "Ngày ra mắt": "2025-08-27T00:00:00",
+    "Ngày tiêu diệt": "2025-09-01T00:00:00",
+    "Tuần tiêu diệt": "Tuần 1, thứ 2",
+    "Số ngày": 5,
+    "Tên BOSS (Ác mộng)": "Tiêu Hành Vân",
+    "Tên phụ bản": "Tiềm Uyên Cổ Long Lăng",
+    "Kỹ năng": [
+      "Minh Quang Lệ Tung Hoành",
+      "Truy Ngọc Toái Hàn Y",
+      "Tâm Ngục Đoạn Mộng Hồn",
+      "Nhiên Hồn Phần Oán Thế",
+      "Vẫn Tinh Hận Cao Thiên",
+      "Bàn Long Ngâm",
+      "Minh Đồng Huyền Thương Sinh",
+      "Lệ Điền Hải / Truy Ngọc Toái / Bỉ Hoan Kính"
+    ],
+    "Độ khó": 700,
+    "__images": [
+      "phu ban 10/213 co long lang tieu hanh van.JPG"
+    ]
+  },
+  {
+    "No.": 11,
+    "Index": "111",
+    "Tên season": "Đạo Khởi Thanh Vân",
+    "Ngày ra mắt": "2025-02-19T00:00:00",
+    "Ngày tiêu diệt": "2025-02-23T00:00:00",
+    "Tuần tiêu diệt": "Tuần 1, chủ nhật",
+    "Số ngày": 4,
+    "Tên BOSS (Ác mộng)": "Ích Tà",
+    "Tên phụ bản": "Vân Sa Tỏa Hoàng Hôn",
+    "Kỹ năng": [
+      "Huyền Diễm Phi Mang",
+      "Thiên Địa Chi Tướng - Hỏa/Phong",
+      "Định Phong Châu",
+      "Phong Tù Khung Thương"
+    ],
+    "Độ khó": 600,
+    "__images": [
+      "phu ban 10/111 van sa ich ta.JPG"
+    ]
+  },
+  {
+    "No.": 12,
+    "Index": "232",
+    "Tên season": "Cô Tâm Hám Hải",
+    "Ngày ra mắt": "2025-11-05T00:00:00",
+    "Ngày tiêu diệt": "2025-11-11T00:00:00",
+    "Tuần tiêu diệt": "Tuần 1, thứ 3",
+    "Số ngày": 6,
+    "Tên BOSS (Ác mộng)": "Tinh Quỹ Sư",
+    "Tên phụ bản": "Phục Hung Quỳ Ngưu Đảo",
+    "Kỹ năng": [
+      "Tam Khắc Đoạn Tội",
+      "Nghiệp Hỏa Thời Hải",
+      "Loạn Lưu Chính Tự",
+      "Quang Âm Phiến Cục",
+      "Sơn Lịch Lưu Chuyển",
+      "Tru Diệt Chi Thời",
+      "Lưu Quang Tuyên Phán"
+    ],
+    "Độ khó": 600,
+    "__images": [
+      "phu ban 10/232 quy nguu dao tinh quy su.JPG"
+    ]
+  },
+  {
+    "No.": 13,
+    "Index": "211",
+    "Tên season": "Cô Tâm Hám Hải",
+    "Ngày ra mắt": "2025-08-27T00:00:00",
+    "Ngày tiêu diệt": "2025-08-29T00:00:00",
+    "Tuần tiêu diệt": "Tuần 1, thứ 6",
+    "Số ngày": 2,
+    "Tên BOSS (Ác mộng)": "Hoành Hành Bá Đạo Công",
+    "Tên phụ bản": "Tiềm Uyên Cổ Long Lăng",
+    "Kỹ năng": [
+      "Dương Sa Phi Nê",
+      "Phi Chu Chi Hộ",
+      "Thiên Mang Tỏa Thân",
+      "Ấu Huyết Nhu Lũ",
+      "Trầm Lục Thế",
+      "Nguyện Giả Thượng Câu",
+      "Giải Giải Triều"
+    ],
+    "Độ khó": 575,
+    "Ghi chú": [
+      "Hoành Hành Công",
+      "Bá Đạo Công"
+    ],
+    "__images": [
+      "phu ban 10/211 co long lang hoanh hanh ba dao cong.JPG"
+    ]
+  },
+  {
+    "No.": 14,
+    "Index": "222",
+    "Tên season": "Cô Tâm Hám Hải",
+    "Ngày ra mắt": "2025-10-22T00:00:00",
+    "Ngày tiêu diệt": "2025-10-25T00:00:00",
+    "Tuần tiêu diệt": "Tuần 1, thứ 7",
+    "Số ngày": 3,
+    "Tên BOSS (Ác mộng)": "Du Lân Mặc Xà p2",
+    "Tên phụ bản": "Oản Trung Thiên Địa",
+    "Kỹ năng": [
+      "Hồi Minh Càn Khôn",
+      "Huyền Phúc Tả Ý",
+      "Mặc Diễn Tam Hào",
+      "Lưỡng Nghi Sát Trận",
+      "Độc Tiên Đồng Khế"
+    ],
+    "Độ khó": 575,
+    "__images": [
+      "phu ban 10/222 du lan mac khue p2.JPG"
+    ]
+  },
+  {
+    "No.": 15,
+    "Index": "321",
+    "Tên season": "Thiện Âm Phá Hiểu",
+    "Ngày ra mắt": "2026-03-25T00:00:00",
+    "Ngày tiêu diệt": "2026-03-28T00:00:00",
+    "Tuần tiêu diệt": "Tuần 1, thứ 7",
+    "Số ngày": 3,
+    "Tên BOSS (Ác mộng)": "Phương Đồ",
+    "Tên phụ bản": "Sương Phong Vô Cấu Hải",
+    "Kỹ năng": [
+      "Huyễn Trần Hoặc Tâm",
+      "Mê Trần Hoán Linh",
+      "Niết Bàn Dẫn",
+      "U Hài Dẫn Phách",
+      "Táng Thế Sương Nghi",
+      "Không Hoa Chiếu Dạ",
+      "Xuyên Hài Sát",
+      "Vô Gian Băng Ngục"
+    ],
+    "Độ khó": 575,
+    "__images": [
+      "phu ban 10/321 suong phong phuong do.JPG"
+    ]
+  },
+  {
+    "No.": 16,
+    "Index": "322",
+    "Tên season": "Thiện Âm Phá Hiểu",
+    "Ngày ra mắt": "2026-03-25T00:00:00",
+    "Ngày tiêu diệt": "2026-03-29T00:00:00",
+    "Tuần tiêu diệt": "Tuần 1, chủ nhật",
+    "Số ngày": 4,
+    "Tên BOSS (Ác mộng)": [
+      "Sở Huyền",
+      "Phương Đồ"
+    ],
+    "Tên phụ bản": "Sương Phong Vô Cấu Hải",
+    "Kỹ năng": [
+      "Tàn Hương Trụy Tuyết",
+      "Hàn Nhận Ngưng Quang",
+      "Vãng Sinh Chấp",
+      "Hàn Băng Bạo Phát",
+      "Bạch Cốt Hóa Diễn",
+      "Tịnh Vực Thiên Khuynh",
+      "Hàn Phong Hồi Tảo",
+      "Huyền Băng Tịch Diệt",
+      "Sương Thiên Đồng Tâm"
+    ],
+    "Độ khó": 550,
+    "Ghi chú": [
+      "Thông Tuệ Giới Sư",
+      "Từ Bi Giới Sư"
+    ],
+    "__images": [
+      "phu ban 10/322 suong phong so huyen.JPG",
+      "phu ban 10/322 suong phong phuong do.JPG"
+    ]
+  },
+  {
+    "No.": 17,
+    "Index": "121",
+    "Tên season": "Đạo Khởi Thanh Vân",
+    "Ngày ra mắt": "2025-03-19T00:00:00",
+    "Ngày tiêu diệt": "2025-03-23T00:00:00",
+    "Tuần tiêu diệt": "Tuần 1, chủ nhật",
+    "Số ngày": 4,
+    "Tên BOSS (Ác mộng)": "Song Long Thánh Tượng",
+    "Tên phụ bản": "Độ Ách Luyện Huyết Đường",
+    "Kỹ năng": [
+      "Liệt Uyên Huyết Đồ",
+      "Huyết Vũ Phi Hoa",
+      "Huyết Hải Thao Thiên",
+      "Tật Tiễn Túc Sát",
+      "Huyết Tinh Tiễn",
+      "U Tinh Thích Huyết"
+    ],
+    "Độ khó": 525,
+    "Ghi chú": [
+      "Thiên Sát Thánh Tượng",
+      "Huyền Minh Thánh Tượng"
+    ],
+    "__images": [
+      "phu ban 10/121 do ach thien sat.JPG",
+      "phu ban 10/121 do ach huyen minh.JPG"
+    ]
+  },
+  {
+    "No.": 18,
+    "Index": "311",
+    "Tên season": "Thiện Âm Phá Hiểu",
+    "Ngày ra mắt": "2026-02-04T00:00:00",
+    "Ngày tiêu diệt": "2026-02-06T00:00:00",
+    "Tuần tiêu diệt": "Tuần 1, thứ 6",
+    "Số ngày": 2,
+    "Tên BOSS (Ác mộng)": "Hỏa Tu La",
+    "Tên phụ bản": [
+      "Viêm Tẫn Tỏa Phong Nhận",
+      "Thần Binh Viêm Tẫn"
+    ],
+    "Kỹ năng": [
+      "Lục Uyên Kiếp Triệu",
+      "Tu La Phần Nghiệt",
+      "Chúng Sinh Yên Diệt",
+      "Minh Vương Đồ Nộ",
+      "Kiếp Sổ Nan Đào",
+      "Thập Phương Câu Diệt",
+      "Dung Nghiệp Ma Trảm",
+      "Phần Tội Chúng Sinh",
+      "Huyết Ngục Thương Kiếp Trận"
+    ],
+    "Độ khó": 475,
+    "__images": [
+      "phu ban 10/311 hoa tu la.JPG"
+    ]
+  },
+  {
+    "No.": 19,
+    "Index": "212",
+    "Tên season": "Cô Tâm Hám Hải",
+    "Ngày ra mắt": "2025-08-27T00:00:00",
+    "Ngày tiêu diệt": "2025-08-29T00:00:00",
+    "Tuần tiêu diệt": "Tuần 1, thứ 6",
+    "Số ngày": 2,
+    "Tên BOSS (Ác mộng)": "Nam Tướng Quân",
+    "Tên phụ bản": "Tiềm Uyên Cổ Long Lăng",
+    "Kỹ năng": [
+      "Hồi Phong Hám Địa",
+      "Trường Hồng Quán Nhật",
+      "Đạp Hàn Ngục - Chuy/Mâu",
+      "Hàn Lao Tù Tâm",
+      "Bát Phương Chuyển Viên",
+      "Trọng Khí Tại Ác",
+      "Vạn Táng Quy Khư"
+    ],
+    "Độ khó": 425,
+    "Ghi chú": [
+      "Tướng Quân Hợp Bích (p2)",
+      "Đại Nam Tướng Quân",
+      "Nhị Nam Tướng Quân"
+    ],
+    "__images": [
+      "phu ban 10/212 co long lang nam tuong quan.JPG",
+      "phu ban 10/212 co long lang dai tuong quan.JPG",
+      "phu ban 10/212 co long lang nhi tuong quan.JPG"
+    ]
+  },
+  {
+    "No.": 20,
+    "Index": "221",
+    "Tên season": "Cô Tâm Hám Hải",
+    "Ngày ra mắt": "2025-10-22T00:00:00",
+    "Ngày tiêu diệt": "2025-10-23T00:00:00",
+    "Tuần tiêu diệt": "Tuần 1, thứ 5",
+    "Số ngày": 1,
+    "Tên BOSS (Ác mộng)": "Du Lân Mặc Xà p1",
+    "Tên phụ bản": "Oản Trung Thiên Địa",
+    "Kỹ năng": [
+      "Bàn Ảnh Độc Khiếu",
+      "Hàn Độc Hóa Tủy",
+      "Vạn Vật Đồng Vẫn",
+      "Nghịch Thủ Hồi Phong - Tả/Hữu",
+      "Xích Luyện Độc Vi/Hoàn"
+    ],
+    "Độ khó": 375,
+    "__images": [
+      "phu ban 10/221 du lan mac khue p1.JPG"
+    ]
+  },
+  {
+    "No.": 21,
+    "Index": "341",
+    "Tên season": "Thiện Âm Phá Hiểu",
+    "Tên BOSS (Ác mộng)": "Tam Thiên Kiếp Hải Bất Không Thân",
+    "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư"
+  },
+  {
+    "No.": 22,
+    "Index": "342",
+    "Tên season": "Thiện Âm Phá Hiểu",
+    "Tên BOSS (Ác mộng)": "Vô Lượng Yết Giả",
+    "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư",
+    "__bossColor": "#ff0000"
+  }
+];

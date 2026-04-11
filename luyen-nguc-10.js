@@ -1,0 +1,46 @@
+// Auto-generated from Tru Tien BOSS.xlsm — do not edit by hand.
+// Sheet: "Luyện ngục 10"
+window.BOSS_TABLE_DATA = [
+  {
+    "No.": 1,
+    "Index": "233",
+    "Tên season": "Cô Tâm Hám Hải",
+    "Ngày ra mắt": "2025-11-05T00:00:00",
+    "Ngày tiêu diệt": "2025-12-04T00:00:00",
+    "Tuần tiêu diệt": "Tuần 5, thứ 5",
+    "Số ngày": 29,
+    "Tên BOSS (Ác mộng)": "Nhiêm Nô",
+    "Tên phụ bản": "Luyện Ngục Trục Quỷ Ảnh",
+    "Độ khó": 1000,
+    "__images": [
+      "phu ban 10/233 quy nguu dao nhiem no.JPG"
+    ]
+  },
+  {
+    "No.": 2,
+    "Index": "234",
+    "Tên season": "Cô Tâm Hám Hải",
+    "Ngày ra mắt": "2025-11-05T00:00:00",
+    "Ngày tiêu diệt": "2025-12-07T00:00:00",
+    "Tuần tiêu diệt": "Tuần 5, chủ nhật",
+    "Số ngày": 32,
+    "Tên BOSS (Ác mộng)": "Quỳ Ngưu",
+    "Tên phụ bản": "Luyện Ngục Trục Quỷ Ảnh",
+    "Độ khó": 1000,
+    "__images": [
+      "phu ban 10/234 quy nguu dao quy nguu.JPG"
+    ]
+  },
+  {
+    "No.": 3,
+    "Index": "341",
+    "Tên season": "Thiện Âm Phá Hiểu",
+    "Tên BOSS (Ác mộng)": "Tam Thiên Kiếp Hải Bất Không Thân"
+  },
+  {
+    "No.": 4,
+    "Index": "342",
+    "Tên season": "Thiện Âm Phá Hiểu",
+    "Tên BOSS (Ác mộng)": "Vô Lượng Yết Giả"
+  }
+];

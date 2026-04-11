@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ác mộng 10</title>
+    <link rel="stylesheet" href="table-app.css" />
+    <link rel="stylesheet" href="ac-mong-10.css" />
+  </head>
+  <body class="excel-boss-page">
+    <nav class="site-nav"><a href="index.html">← Trang chủ</a></nav>
+    <header class="excel-page-heading">
+      <h1 id="page-title">Ác mộng 10</h1>
+      <p class="ac-mong-note">Tuần game bắt đầu từ thứ 4</p>
+    </header>
+    <div class="toolbar">
+      <label>
+        Search
+        <input type="search" id="search" placeholder="Mùa, BOSS, phụ bản…" autocomplete="off" />
+      </label>
+      <span id="status">Loading…</span>
+    </div>
+    <div class="table-scroll" id="table-wrap"></div>
+    <script src="ac-mong-10.js"></script>
+    <script src="table-app.js"></script>
+    <script>
+      (function () {
+        var cols = [
+          "No.",
+          "Index",
+          "Tên season",
+          "Ngày ra mắt",
+          "Ngày tiêu diệt",
+          "Tuần tiêu diệt",
+          "Số ngày",
+          "Tên BOSS (Ác mộng)",
+          "Tên phụ bản",
+          "Kỹ năng",
+          "Độ khó",
+          "Ghi chú",
+          "Ảnh",
+        ];
+        // Tỉ lệ % (tổng 100%) — cột Ảnh rộng hơn để hiển thị 1–3 hình
+        var w = {
+          "No.": "2.5%",
+          Index: "3.5%",
+          "Tên season": "10%",
+          "Ngày ra mắt": "6%",
+          "Ngày tiêu diệt": "6%",
+          "Tuần tiêu diệt": "6%",
+          "Số ngày": "4%",
+          "Tên BOSS (Ác mộng)": "11%",
+          "Tên phụ bản": "12%",
+          "Kỹ năng": "14%",
+          "Độ khó": "5%",
+          "Ghi chú": "10%",
+          Ảnh: "10%",
+        };
+        initBossTable({
+          title: "Ác mộng 10",
+          columns: cols,
+          columnWidths: w,
+          detailPage: "ac-mong-detail.html",
+          searchKeys: ["Tên season", "Tên BOSS (Ác mộng)", "Tên phụ bản"],
+          columnDisplay: {
+            "No.": { noWrap: true },
+            Index: { noWrap: true },
+            "Ngày ra mắt": { type: "date", noWrap: true },
+            "Ngày tiêu diệt": { type: "date", noWrap: true },
+            "Số ngày": { noWrap: true },
+            "Độ khó": { noWrap: true },
+            "Kỹ năng": { preWrap: true },
+            "Tên BOSS (Ác mộng)": { preWrap: true, bossExcel: true },
+            "Ghi chú": { preWrap: true },
+            Ảnh: { type: "images" },
+          },
+          tableExtraClass: "excel-ac-mong",
+          skipBlankRows: true,
+          seasonKey: "Tên season",
+          statusLocale: "vi",
+          cellBgMode: "ac-mong",
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chi tiết BOSS — Ác mộng 10</title>
+    <link rel="stylesheet" href="table-app.css" />
+    <link rel="stylesheet" href="ac-mong-10.css" />
+  </head>
+  <body class="excel-boss-page boss-detail-page">
+    <nav class="site-nav">
+      <a href="index.html">← Trang chủ</a>
+      ·
+      <a href="ac-mong-10.html">← Bảng Ác mộng 10</a>
+    </nav>
+    <article class="boss-detail" id="detail-root">
+      <p class="boss-detail__back">
+        <a href="ac-mong-10.html">← Quay lại bảng</a>
+      </p>
+      <h1 class="boss-detail__title" id="detail-title">Chi tiết</h1>
+      <div class="boss-detail__error" id="detail-error" hidden></div>
+      <div class="boss-detail__layout" id="detail-content" hidden></div>
+    </article>
+    <script src="ac-mong-10.js"></script>
+    <script src="table-app.js"></script>
+    <script>
+      (function () {
+        var COLS = [
+          "No.",
+          "Index",
+          "Tên season",
+          "Ngày ra mắt",
+          "Ngày tiêu diệt",
+          "Tuần tiêu diệt",
+          "Số ngày",
+          "Tên BOSS (Ác mộng)",
+          "Tên phụ bản",
+          "Kỹ năng",
+          "Độ khó",
+          "Ghi chú",
+          "Ảnh",
+        ];
+        var columnDisplay = {
+          "Ngày ra mắt": { type: "date" },
+          "Ngày tiêu diệt": { type: "date" },
+          "Kỹ năng": { preWrap: true },
+          "Tên BOSS (Ác mộng)": { preWrap: true, bossExcel: true },
+          "Ghi chú": { preWrap: true },
+          Ảnh: { type: "images" },
+        };
+
+        function cellText(v) {
+          if (v === null || v === undefined) return "";
+          if (Array.isArray(v)) return v.join("\n");
+          if (typeof v === "object") return JSON.stringify(v);
+          return String(v);
+        }
+
+        function findRowByDetailId(rows, wantId) {
+          if (!wantId) return null;
+          var idFn = window.BOSS_TABLE_DETAIL_ROW_ID;
+          if (typeof idFn !== "function") return null;
+          for (var i = 0; i < rows.length; i++) {
+            if (idFn(rows[i]) === wantId) return rows[i];
+          }
+          var dec = wantId;
+          try {
+            dec = decodeURIComponent(wantId);
+          } catch (e) {}
+          if (dec !== wantId) {
+            for (var j = 0; j < rows.length; j++) {
+              if (idFn(rows[j]) === dec) return rows[j];
+            }
+          }
+          return null;
+        }
+
+        var errEl = document.getElementById("detail-error");
+        var titleEl = document.getElementById("detail-title");
+        var contentEl = document.getElementById("detail-content");
+
+        if (!window.BOSS_TABLE_PREPARE || !window.BOSS_TABLE_DATA) {
+          errEl.hidden = false;
+          errEl.textContent = "Thiếu dữ liệu hoặc table-app.js.";
+          titleEl.textContent = "Lỗi";
+          return;
+        }
+
+        var prep = window.BOSS_TABLE_PREPARE(window.BOSS_TABLE_DATA, {
+          columns: COLS,
+          skipBlankRows: true,
+        });
+        var rows = prep.rows;
+        var params = new URLSearchParams(window.location.search);
+        var rawId = params.get("id");
+        var row = findRowByDetailId(rows, rawId);
+
+        if (!row) {
+          errEl.hidden = false;
+          errEl.textContent =
+            "Không tìm thấy BOSS (thiếu hoặc sai tham số ?id= trong URL).";
+          titleEl.textContent = "Không tìm thấy";
+          document.title = "Không tìm thấy — Ác mộng 10";
+          return;
+        }
+
+        contentEl.hidden = false;
+
+        var bossName = cellText(row["Tên BOSS (Ác mộng)"]).trim() || "BOSS";
+        titleEl.textContent = bossName;
+        document.title = bossName + " — Ác mộng 10";
+
+        var fmt = window.BOSS_TABLE_FORMAT_DATE;
+        var fmtTuan = window.BOSS_TABLE_FORMAT_TUAN_TIEU_DIET;
+
+        var main = document.createElement("div");
+        main.className = "boss-detail__main";
+
+        var fieldsInner = document.createElement("div");
+        fieldsInner.className = "boss-detail__fields-inner";
+
+        COLS.forEach(function (k) {
+          if (k === "Ảnh") return;
+          var spec = columnDisplay[k];
+          var rawVal = row[k];
+          var text;
+          if (spec && spec.type === "date") {
+            text = fmt(rawVal);
+          } else {
+            text = cellText(rawVal);
+          }
+          if (k === "Tuần tiêu diệt" && typeof fmtTuan === "function") {
+            text = fmtTuan(text);
+          }
+
+          var wrap = document.createElement("div");
+          wrap.className = "boss-detail__field";
+          if (k === "Kỹ năng" || k === "Ghi chú" || k === "Tên phụ bản") {
+            wrap.classList.add("boss-detail__field--wide");
+          }
+
+          var dt = document.createElement("dt");
+          dt.textContent = k;
+          var dd = document.createElement("dd");
+          if (k === "Tuần tiêu diệt") {
+            dd.className = "boss-detail__pre";
+            dd.textContent = text;
+          } else if (spec && spec.preWrap) {
+            dd.className = "boss-detail__pre";
+            dd.textContent = text;
+          } else if (spec && spec.bossExcel) {
+            dd.className = "boss-detail__boss";
+            dd.style.color = row.__bossColor || "#000000";
+            dd.textContent = text;
+          } else {
+            dd.textContent = text;
+          }
+          wrap.appendChild(dt);
+          wrap.appendChild(dd);
+          fieldsInner.appendChild(wrap);
+        });
+
+        main.appendChild(fieldsInner);
+
+        var aside = document.createElement("aside");
+        aside.className = "boss-detail__aside";
+        aside.setAttribute("aria-label", "Ảnh BOSS");
+
+        var gallery = document.createElement("div");
+        gallery.className = "boss-detail__gallery";
+        var imageList = (row.__images || []).slice();
+        if (imageList.length === 0) {
+          var empty = document.createElement("p");
+          empty.className = "boss-detail__gallery-empty";
+          empty.textContent = "(Chưa có ảnh trong export)";
+          gallery.appendChild(empty);
+        } else {
+          imageList.forEach(function (src) {
+            var img = document.createElement("img");
+            img.src = src;
+            img.alt = bossName;
+            img.loading = "lazy";
+            gallery.appendChild(img);
+          });
+        }
+        aside.appendChild(gallery);
+
+        contentEl.appendChild(main);
+        contentEl.appendChild(aside);
+      })();
+    </script>
+  </body>
+</html>

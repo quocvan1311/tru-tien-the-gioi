@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chi tiết phụ bản — Phụ bản 5</title>
+    <link rel="stylesheet" href="table-app.css" />
+    <link rel="stylesheet" href="ac-mong-10.css" />
+  </head>
+  <body class="excel-boss-page boss-detail-page boss-detail-page--phu-ban">
+    <nav class="site-nav">
+      <a href="index.html">← Trang chủ</a>
+      ·
+      <a href="phu-ban-5.html">← Bảng Phụ bản 5</a>
+    </nav>
+    <article class="boss-detail" id="detail-root">
+      <h1 class="boss-detail__title" id="detail-title">Chi tiết</h1>
+      <div class="boss-detail__error" id="detail-error" hidden></div>
+      <div class="boss-detail__layout" id="detail-content" hidden></div>
+    </article>
+    <script src="phu-ban-5.js"></script>
+    <script src="table-app.js"></script>
+    <script>
+      (function () {
+        var COLS = ["No.", "Mùa", "Tên phụ bản", "Boss 1", "Boss 2", "Boss 3"];
+
+        function cellText(v) {
+          if (v === null || v === undefined) return "";
+          if (Array.isArray(v)) return v.join("\n");
+          if (typeof v === "object") return JSON.stringify(v);
+          return String(v);
+        }
+
+        function findRowByDetailId(rows, wantId) {
+          if (!wantId) return null;
+          var idFn = window.BOSS_TABLE_PHU_BAN_DETAIL_ROW_ID;
+          if (typeof idFn !== "function") return null;
+          for (var i = 0; i < rows.length; i++) {
+            if (idFn(rows[i]) === wantId) return rows[i];
+          }
+          var dec = wantId;
+          try {
+            dec = decodeURIComponent(wantId);
+          } catch (e) {}
+          if (dec !== wantId) {
+            for (var j = 0; j < rows.length; j++) {
+              if (idFn(rows[j]) === dec) return rows[j];
+            }
+          }
+          return null;
+        }
+
+        var errEl = document.getElementById("detail-error");
+        var titleEl = document.getElementById("detail-title");
+        var contentEl = document.getElementById("detail-content");
+
+        if (!window.BOSS_TABLE_PREPARE || !window.BOSS_TABLE_DATA) {
+          errEl.hidden = false;
+          errEl.textContent = "Thiếu dữ liệu hoặc table-app.js.";
+          titleEl.textContent = "Lỗi";
+          return;
+        }
+
+        var prep = window.BOSS_TABLE_PREPARE(window.BOSS_TABLE_DATA, {
+          columns: COLS,
+          skipBlankRows: true,
+        });
+        var rows = prep.rows;
+        var params = new URLSearchParams(window.location.search);
+        var rawId = params.get("id");
+        var row = findRowByDetailId(rows, rawId);
+
+        if (!row) {
+          errEl.hidden = false;
+          errEl.textContent =
+            "Không tìm thấy dòng (thiếu hoặc sai tham số ?id= trong URL).";
+          titleEl.textContent = "Không tìm thấy";
+          document.title = "Không tìm thấy — Phụ bản 5";
+          return;
+        }
+
+        contentEl.hidden = false;
+
+        var mapName = cellText(row["Tên phụ bản"]).trim() || "Phụ bản";
+        titleEl.textContent = mapName;
+        document.title = mapName + " — Phụ bản 5";
+
+        var main = document.createElement("div");
+        main.className = "boss-detail__main";
+
+        var fieldsInner = document.createElement("div");
+        fieldsInner.className =
+          "boss-detail__fields-inner boss-detail__fields-inner--phu-ban";
+
+        var metaWrap = document.createElement("div");
+        metaWrap.className = "boss-detail__phu-meta";
+
+        ["No.", "Mùa", "Tên phụ bản"].forEach(function (k) {
+          var wrap = document.createElement("div");
+          wrap.className = "boss-detail__field boss-detail__field--phu-meta";
+          var dt = document.createElement("dt");
+          dt.textContent = k;
+          var dd = document.createElement("dd");
+          if (k === "Tên phụ bản") {
+            dd.className = "boss-detail__pre";
+          }
+          dd.textContent = cellText(row[k]);
+          wrap.appendChild(dt);
+          wrap.appendChild(dd);
+          metaWrap.appendChild(wrap);
+        });
+        fieldsInner.appendChild(metaWrap);
+
+        var bossesWrap = document.createElement("div");
+        bossesWrap.className = "boss-detail__phu-bosses";
+
+        ["Boss 1", "Boss 2", "Boss 3"].forEach(function (k) {
+          var wrap = document.createElement("div");
+          wrap.className = "boss-detail__field boss-detail__field--phu-boss";
+          var dt = document.createElement("dt");
+          dt.textContent = k;
+          var dd = document.createElement("dd");
+          dd.className = "boss-detail__boss-cell";
+          var nameEl = document.createElement("div");
+          nameEl.className = "boss-detail__pre";
+          nameEl.textContent = cellText(row[k]);
+          dd.appendChild(nameEl);
+          var paths = row.__bossImages && row.__bossImages[k];
+          var list = Array.isArray(paths)
+            ? paths.slice(0, 2)
+            : paths
+              ? [paths]
+              : [];
+          if (list.length) {
+            var fig = document.createElement("div");
+            fig.className = "boss-detail__gallery boss-detail__gallery--inline";
+            list.forEach(function (src) {
+              var img = document.createElement("img");
+              img.src = src;
+              img.alt = cellText(row[k]);
+              img.loading = "lazy";
+              fig.appendChild(img);
+            });
+            dd.appendChild(fig);
+          }
+          wrap.appendChild(dt);
+          wrap.appendChild(dd);
+          bossesWrap.appendChild(wrap);
+        });
+        fieldsInner.appendChild(bossesWrap);
+
+        main.appendChild(fieldsInner);
+        contentEl.appendChild(main);
+      })();
+    </script>
+  </body>
+</html>
