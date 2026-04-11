@@ -53,6 +53,11 @@ h1 {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
+/* Khớp layout bảng Excel khi chỉ dùng table-app; trang boss ghi đè/ bổ sung trong ac-mong-10.css */
+.table-scroll > table {
+  min-width: 1500px;
+}
+
 .data-table {
   width: 100%;
   border-collapse: collapse;
