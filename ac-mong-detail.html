@@ -14,9 +14,6 @@
       <a href="ac-mong-10.html">← Bảng Ác mộng 10</a>
     </nav>
     <article class="boss-detail" id="detail-root">
-      <p class="boss-detail__back">
-        <a href="ac-mong-10.html">← Quay lại bảng</a>
-      </p>
       <h1 class="boss-detail__title" id="detail-title">Chi tiết</h1>
       <div class="boss-detail__error" id="detail-error" hidden></div>
       <div class="boss-detail__layout" id="detail-content" hidden></div>
@@ -154,6 +151,11 @@
         var fmt = window.BOSS_TABLE_FORMAT_DATE;
         var fmtTuan = window.BOSS_TABLE_FORMAT_TUAN_TIEU_DIET;
 
+        var acMongFieldBg =
+          typeof window.BOSS_TABLE_AC_MONG_DETAIL_FIELD_BG === "function"
+            ? window.BOSS_TABLE_AC_MONG_DETAIL_FIELD_BG(row, rows)
+            : null;
+
         var main = document.createElement("div");
         main.className = "boss-detail__main boss-detail__main--ac-split";
 
@@ -164,7 +166,7 @@
         fieldsInner.className = "boss-detail__fields-inner";
 
         COLS.forEach(function (k) {
-          if (k === "Ảnh") return;
+          if (k === "Ảnh" || k === "No.") return;
           var spec = columnDisplay[k];
           var rawVal = row[k];
           var text;
@@ -186,7 +188,19 @@
           var dt = document.createElement("dt");
           dt.textContent = k;
           var dd = document.createElement("dd");
-          if (k === "Tuần tiêu diệt") {
+          if (acMongFieldBg && k === "Tên season") {
+            var chipSeason = document.createElement("span");
+            chipSeason.className = "boss-data-chip";
+            chipSeason.style.backgroundColor = acMongFieldBg.season;
+            chipSeason.textContent = text;
+            dd.appendChild(chipSeason);
+          } else if (acMongFieldBg && k === "Độ khó") {
+            var chipDiff = document.createElement("span");
+            chipDiff.className = "boss-data-chip";
+            chipDiff.style.backgroundColor = acMongFieldBg.difficultyTier;
+            chipDiff.textContent = text;
+            dd.appendChild(chipDiff);
+          } else if (k === "Tuần tiêu diệt") {
             dd.className = "boss-detail__pre";
             dd.textContent = text;
           } else if (spec && spec.preWrap) {

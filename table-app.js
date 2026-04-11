@@ -179,13 +179,12 @@
           ? WEEK_BG_PALETTE[(w - 1) % WEEK_BG_PALETTE.length]
           : "#eeeeee";
       if (colKey === "Ghi chú") return "#ffffff";
-      /* Ác mộng 10: chưa nhập Tuần tiêu diệt → ô theo tuần + Độ khó trắng */
+      /* Ác mộng 10: chưa nhập Tuần tiêu diệt → các ô ngày/tuần/số ngày trắng (Độ khó vẫn nền season + chip tier) */
       if (useTierDifficultyBg && isTuanTieuDietMissing(row)) {
         if (
           colKey === "Ngày tiêu diệt" ||
           colKey === "Tuần tiêu diệt" ||
-          colKey === "Số ngày" ||
-          colKey === "Độ khó"
+          colKey === "Số ngày"
         ) {
           return "#ffffff";
         }
@@ -197,9 +196,9 @@
       ) {
         return weekBg;
       }
+      /* Độ khó: nền ô trắng; màu tier hiển thị bằng chip trong renderTable */
       if (colKey === "Độ khó") {
-        if (useTierDifficultyBg) return difficultyColumnBgAcMong(row["Độ khó"]);
-        return seasonBg;
+        return "#ffffff";
       }
       return seasonBg;
     };
@@ -381,7 +380,8 @@
     columnDisplay,
     detailBaseUrl,
     resolveCellBg,
-    getRowDetailId
+    getRowDetailId,
+    cellBgMode
   ) {
     columnDisplay = columnDisplay || {};
     container.innerHTML = "";
@@ -476,6 +476,16 @@
             });
             td.appendChild(fig);
           }
+        } else if (
+          k === "Độ khó" &&
+          (cellBgMode === "ac-mong" || cellBgMode === "luyen-nguc")
+        ) {
+          const chip = document.createElement("span");
+          chip.className = "boss-data-chip";
+          chip.textContent = text;
+          chip.style.backgroundColor = difficultyColumnBgAcMong(raw);
+          td.appendChild(chip);
+          if (spec && spec.noWrap) td.style.whiteSpace = "nowrap";
         } else {
           td.textContent = text;
           if (k === "Tuần tiêu diệt") {
@@ -521,7 +531,8 @@
     searchFold,
     paintStatus,
     resolveCellBg,
-    getRowDetailId
+    getRowDetailId,
+    cellBgMode
   ) {
     let rows = filterRows(
       rawRows,
@@ -539,7 +550,8 @@
       columnDisplay,
       detailBaseUrl,
       resolveCellBg,
-      getRowDetailId
+      getRowDetailId,
+      cellBgMode
     );
     if (typeof paintStatus === "function") paintStatus(rows.length);
   }
@@ -556,6 +568,7 @@
     const statusLocale = tableOptions.statusLocale || "en";
     const detailBaseUrl = tableOptions.detailPage || "";
     const seasonChipPrefix = tableOptions.seasonChipPrefix || "";
+    const cellBgMode = tableOptions.cellBgMode;
 
     const statusEl = document.getElementById("status");
     const tableWrap = document.getElementById("table-wrap");
@@ -699,7 +712,8 @@
       searchFold,
       paintStatus,
       resolveCellBg,
-      getRowDetailId
+      getRowDetailId,
+      cellBgMode
     );
 
     if (searchInput) {
@@ -716,7 +730,8 @@
           searchFold,
           paintStatus,
           resolveCellBg,
-          getRowDetailId
+          getRowDetailId,
+          cellBgMode
         );
       });
     }
@@ -748,7 +763,8 @@
         searchFold,
         paintStatus,
         resolveCellBg,
-        getRowDetailId
+        getRowDetailId,
+        cellBgMode
       );
     });
   }
@@ -807,6 +823,28 @@
   window.BOSS_TABLE_FORMAT_TUAN_TIEU_DIET = formatTuanTieuDietTwoLines;
   window.BOSS_TABLE_DETAIL_ROW_ID = bossDetailRowId;
   window.BOSS_TABLE_PHU_BAN_DETAIL_ROW_ID = phuBanDetailRowId;
+
+  /**
+   * Màu nền Tên season / Độ khó cho ac-mong-detail.html — khớp bảng Ác mộng (cellBgMode "ac-mong").
+   * @param {object} row — dòng đang xem
+   * @param {object[]} allRows — toàn bộ dòng (thứ tự như bảng, dùng map màu theo tên season)
+   */
+  window.BOSS_TABLE_AC_MONG_DETAIL_FIELD_BG = function (row, allRows) {
+    const seasonKey = "Tên season";
+    const seasonMap = buildSeasonBgMap(allRows, seasonKey);
+    const sn = String(row[seasonKey] ?? "").trim();
+    let seasonBg = seasonMap[sn];
+    if (!seasonBg) {
+      seasonBg =
+        SEASON_BG_PALETTE[hashString(sn) % SEASON_BG_PALETTE.length];
+    }
+    return {
+      season: seasonBg,
+      difficultyTier: difficultyColumnBgAcMong(row["Độ khó"]),
+    };
+  };
+
+  window.BOSS_TABLE_DIFFICULTY_TIER_BG = difficultyColumnBgAcMong;
 
   if (!window.__BOSS_TABLE_DETAIL_NAV__) {
     window.__BOSS_TABLE_DETAIL_NAV__ = true;

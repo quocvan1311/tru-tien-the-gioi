@@ -14,9 +14,6 @@
       <a href="luyen-nguc-10.html">← Bảng Luyện ngục 10</a>
     </nav>
     <article class="boss-detail" id="detail-root">
-      <p class="boss-detail__back">
-        <a href="luyen-nguc-10.html">← Quay lại bảng</a>
-      </p>
       <h1 class="boss-detail__title" id="detail-title">Chi tiết</h1>
       <div class="boss-detail__error" id="detail-error" hidden></div>
       <div class="boss-detail__layout" id="detail-content" hidden></div>
@@ -119,7 +116,7 @@
         fieldsInner.className = "boss-detail__fields-inner";
 
         COLS.forEach(function (k) {
-          if (k === "Ảnh") return;
+          if (k === "Ảnh" || k === "No.") return;
           var spec = columnDisplay[k];
           var rawVal = row[k];
           var text;

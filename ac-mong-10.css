@@ -186,10 +186,11 @@ body.excel-boss-page h1 {
 
 body.excel-boss-page .excel-page-heading {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.45rem 0.85rem;
-  margin: 0 0 0.75rem;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  gap: 1.35rem;
+  margin: 0 0 1rem;
 }
 
 body.excel-boss-page .excel-page-heading h1 {
@@ -303,6 +304,34 @@ body.excel-boss-page .table-status__chip-num::before {
   margin-right: 0.35rem;
   color: #8a9aab;
   font-weight: 700;
+}
+
+/* Chip trong bảng (Độ khó: nền tier + chữ đen) & chi tiết — ôm sát nội dung */
+body.excel-boss-page .boss-data-chip,
+body.boss-detail-page--ac-mong-detail .boss-data-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.16rem 0.48rem 0.18rem;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 23, 42, 0.2);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.55) inset;
+  font-size: inherit;
+  line-height: var(--ac-detail-row-lh, 1.45);
+  color: #141820;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+
+body.excel-boss-page table.excel-ac-mong td[data-col="Độ khó"] {
+  vertical-align: top;
+}
+
+body.excel-boss-page table.excel-ac-mong td[data-col="Độ khó"] .boss-data-chip {
+  font-size: 11.75pt;
+  font-weight: 500;
 }
 
 body.excel-boss-page .table-status__hint {
@@ -497,6 +526,8 @@ body.excel-boss-page table.excel-phu-ban .boss-cell__fig img {
   height: auto;
   object-fit: contain;
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
   border: 1px solid #aeb6c4;
   border-radius: 4px;
   background: transparent;
@@ -517,10 +548,10 @@ body.excel-boss-page table.excel-ac-mong td[style*="white-space"] {
   line-height: 1.4;
 }
 
-/* Cột ảnh BOSS — padding gọn, ảnh lớn hơn */
+/* Cột ảnh BOSS — thêm khoảng dọc nhẹ so với hàng (2–4px) */
 body.excel-boss-page table.excel-ac-mong td.cell-images {
   vertical-align: middle;
-  padding: 0.12rem 0.2rem;
+  padding: 3px 0;
   line-height: 0;
 }
 
@@ -533,14 +564,17 @@ body.excel-boss-page .boss-image-strip {
 }
 
 body.excel-boss-page .boss-image-strip img {
+  display: block;
   max-height: 148px;
   max-width: 148px;
   width: auto;
   height: auto;
   object-fit: contain;
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
   border: 1px solid #6d7480;
-  border-radius: 6px;
+  border-radius: 4px;
   background: transparent;
   transform: translateZ(0);
   backface-visibility: hidden;
@@ -744,7 +778,7 @@ body.boss-detail-page .boss-detail__gallery {
   flex-direction: column;
   flex-wrap: nowrap;
   gap: 0.65rem;
-  align-items: stretch;
+  align-items: center;
   margin: 0;
   width: 100%;
 }
@@ -756,15 +790,18 @@ body.boss-detail-page .boss-detail__gallery-empty {
 }
 
 body.boss-detail-page .boss-detail__gallery img {
-  width: 100%;
+  display: block;
+  width: auto;
   max-width: 100%;
   height: auto;
   max-height: min(50vh, 480px);
   object-fit: contain;
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
   border: 1px solid #6d7480;
   background: transparent;
-  border-radius: 6px;
+  border-radius: 4px;
   transform: translateZ(0);
   backface-visibility: hidden;
 }
@@ -776,9 +813,12 @@ body.boss-detail-page .boss-detail__gallery--inline {
 }
 
 body.boss-detail-page .boss-detail__gallery--inline img {
+  display: block;
   width: auto;
   max-width: min(48%, 280px);
   max-height: 220px;
+  margin: 0;
+  padding: 0;
 }
 
 /* Chi tiết Ác mộng — trong main: trái info | phải ảnh; cột ngoài cùng phải: video. Cuộn trong panel. */
@@ -788,7 +828,7 @@ body.boss-detail-page--ac-mong-detail .boss-detail__layout {
 }
 
 body.boss-detail-page--ac-mong-detail .boss-detail__layout:not(.boss-detail__layout--no-video) {
-  grid-template-columns: minmax(0, 1fr) minmax(220px, min(38vw, 520px));
+  grid-template-columns: minmax(17rem, 1fr) minmax(260px, min(46vw, 600px));
 }
 
 body.boss-detail-page--ac-mong-detail .boss-detail__layout--no-video {
@@ -797,8 +837,9 @@ body.boss-detail-page--ac-mong-detail .boss-detail__layout--no-video {
 
 body.boss-detail-page--ac-mong-detail .boss-detail__main--ac-split {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(160px, min(28vw, 300px));
-  gap: 0.65rem 0.85rem;
+  /* Cột info không dùng minmax(0,…) — co về 0 làm chữ 1 ký tự / dòng */
+  grid-template-columns: minmax(17rem, 1fr) minmax(200px, min(34vw, 420px));
+  gap: 0.65rem 0.9rem;
   align-items: stretch;
   min-width: 0;
   min-height: 0;
@@ -809,11 +850,16 @@ body.boss-detail-page--ac-mong-detail .boss-detail__main--ac-split {
 
 body.boss-detail-page--ac-mong-detail .boss-detail__info-col,
 body.boss-detail-page--ac-mong-detail .boss-detail__images-col {
-  min-width: 0;
   min-height: 0;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+body.boss-detail-page--ac-mong-detail .boss-detail__info-col {
+  min-width: 12rem;
+  --ac-detail-row-lh: 1.45;
+  font-size: 11.25pt;
 }
 
 body.boss-detail-page--ac-mong-detail .boss-detail__images-col {
@@ -822,14 +868,73 @@ body.boss-detail-page--ac-mong-detail .boss-detail__images-col {
   box-sizing: border-box;
 }
 
+/* Tab Word: cột nhãn cố định (căn phải), cột giá trị thẳng hàng; cùng font-size + line-height */
 body.boss-detail-page--ac-mong-detail .boss-detail__fields-inner {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  font-size: inherit;
 }
 
-@media (min-width: 1320px) {
-  body.boss-detail-page--ac-mong-detail .boss-detail__fields-inner {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field {
+  display: grid;
+  grid-template-columns: 12.5rem minmax(0, 1fr);
+  column-gap: 1.5rem;
+  row-gap: 0;
+  align-items: baseline;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.38rem 0;
+  margin: 0;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field--wide {
+  grid-template-columns: 12.5rem minmax(0, 1fr);
+}
+
+body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field dt {
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  font-size: 1em;
+  color: #334155;
+  text-align: right;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+  line-height: var(--ac-detail-row-lh);
+}
+
+body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field dt::after {
+  content: ':';
+  font-weight: inherit;
+}
+
+body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field dd {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  font-size: 1em;
+  font-weight: 500;
+  color: #1e293b;
+  word-break: normal;
+  overflow-wrap: normal;
+  line-height: var(--ac-detail-row-lh);
+  min-width: 0;
+}
+
+body.boss-detail-page--ac-mong-detail .boss-detail__info-col dd.boss-detail__boss {
+  font-weight: 700;
+  line-height: var(--ac-detail-row-lh);
+}
+
+body.boss-detail-page--ac-mong-detail .boss-detail__info-col dd.boss-detail__pre {
+  white-space: pre-wrap;
+  word-break: normal;
+  overflow-wrap: normal;
+  line-height: var(--ac-detail-row-lh);
 }
 
 body.boss-detail-page--ac-mong-detail .boss-detail__images-block {
@@ -840,7 +945,9 @@ body.boss-detail-page--ac-mong-detail .boss-detail__images-block {
 }
 
 body.boss-detail-page--ac-mong-detail .boss-detail__images-col .boss-detail__gallery img {
-  max-height: min(38vh, 340px);
+  max-height: min(52vh, 520px);
+  margin: 0;
+  padding: 0;
 }
 
 body.boss-detail-page--ac-mong-detail .boss-detail__aside--videos {
@@ -890,32 +997,84 @@ body.boss-detail-page--ac-mong-detail .boss-detail__video-frame iframe {
   border: none;
 }
 
+@media (max-width: 1180px) {
+  body.boss-detail-page--ac-mong-detail .boss-detail__layout:not(.boss-detail__layout--no-video) {
+    grid-template-columns: minmax(15rem, 1fr) minmax(220px, min(44vw, 540px));
+  }
+}
+
+/* Hẹp ngang: ảnh xuống dòng dưới info — info rộng full, chữ không bị ép 2 cột quá hẹp */
 @media (max-width: 1100px) {
   body.boss-detail-page--ac-mong-detail .boss-detail__main--ac-split {
-    grid-template-columns: minmax(0, 1fr) minmax(140px, min(34vw, 260px));
+    grid-template-columns: 1fr;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    gap: 0.75rem 0;
+  }
+
+  body.boss-detail-page--ac-mong-detail .boss-detail__info-col {
+    min-width: 0;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  body.boss-detail-page--ac-mong-detail .boss-detail__images-col {
+    min-width: 0;
+    padding-left: 0;
+    border-left: none;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 0.65rem;
+    max-height: min(52vh, 480px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Rất hẹp: mỗi field = nhãn một dòng, giá trị dòng dưới full width */
+@media (max-width: 720px) {
+  body.boss-detail-page--ac-mong-detail .boss-detail__info-col {
+    font-size: 10.75pt;
+  }
+
+  body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field,
+  body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field--wide {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: 0.2rem;
+    align-items: start;
+    padding: 0.42rem 0;
+  }
+
+  body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field dt {
+    text-align: left;
+  }
+
+  body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field dd {
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  body.boss-detail-page--ac-mong-detail .boss-detail__info-col dd.boss-detail__pre {
+    overflow-wrap: break-word;
   }
 }
 
 @media (max-width: 960px) {
   body.boss-detail-page--ac-mong-detail .boss-detail__main--ac-split {
     grid-template-columns: 1fr;
-    height: auto;
-    max-height: none;
-    overflow: visible;
   }
 
-  body.boss-detail-page--ac-mong-detail .boss-detail__info-col,
-  body.boss-detail-page--ac-mong-detail .boss-detail__images-col {
+  body.boss-detail-page--ac-mong-detail .boss-detail__info-col {
     overflow: visible;
   }
 
   body.boss-detail-page--ac-mong-detail .boss-detail__images-col {
-    padding-left: 0;
-    border-left: none;
-    border-top: 1px solid #e2e8f0;
-    padding-top: 0.55rem;
     max-height: min(48vh, 420px);
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -1083,8 +1242,10 @@ body.boss-detail-page--phu-ban .boss-detail__phu-bosses .boss-detail__gallery--p
   max-height: none;
   object-fit: contain;
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
   border: 1px solid #6d7480;
-  border-radius: 6px;
+  border-radius: 4px;
   background: transparent;
   transform: translateZ(0);
   backface-visibility: hidden;
@@ -1110,8 +1271,10 @@ body.boss-detail-page--phu-ban .boss-detail__phu-bosses .boss-detail__gallery--p
   max-height: none;
   object-fit: contain;
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
   border: 1px solid #6d7480;
-  border-radius: 6px;
+  border-radius: 4px;
   background: transparent;
   transform: translateZ(0);
   backface-visibility: hidden;
