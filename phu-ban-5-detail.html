@@ -20,6 +20,7 @@
     </article>
     <script src="phu-ban-5.js"></script>
     <script src="table-app.js"></script>
+    <script src="boss-table-hotkeys.js"></script>
     <script>
       (function () {
         var DEFAULT_BOSS_DETAIL_VIDEO_URL =
@@ -139,8 +140,13 @@
         contentEl.hidden = false;
 
         var mapName = cellText(row["Tên phụ bản"]).trim() || "Phụ bản";
-        titleEl.textContent = mapName;
-        document.title = mapName + " — Phụ bản 5";
+        var seasonRaw = cellText(row["Mùa"]).trim();
+        var titleText =
+          seasonRaw !== ""
+            ? "Mùa " + seasonRaw + " - " + mapName
+            : mapName;
+        titleEl.textContent = titleText;
+        document.title = titleText + " — Phụ bản 5";
 
         var main = document.createElement("div");
         main.className = "boss-detail__main";
@@ -148,25 +154,6 @@
         var fieldsInner = document.createElement("div");
         fieldsInner.className =
           "boss-detail__fields-inner boss-detail__fields-inner--phu-ban";
-
-        var metaWrap = document.createElement("div");
-        metaWrap.className = "boss-detail__phu-meta";
-
-        ["Mùa", "Tên phụ bản"].forEach(function (k) {
-          var wrap = document.createElement("div");
-          wrap.className = "boss-detail__field boss-detail__field--phu-meta";
-          var dt = document.createElement("dt");
-          dt.textContent = k;
-          var dd = document.createElement("dd");
-          if (k === "Tên phụ bản") {
-            dd.className = "boss-detail__pre";
-          }
-          dd.textContent = cellText(row[k]);
-          wrap.appendChild(dt);
-          wrap.appendChild(dd);
-          metaWrap.appendChild(wrap);
-        });
-        fieldsInner.appendChild(metaWrap);
 
         var bossesWrap = document.createElement("div");
         bossesWrap.className = "boss-detail__phu-bosses";
@@ -241,7 +228,7 @@
           iframe.src =
             "https://www.youtube.com/embed/" + entry.id + "?" + q.toString();
           iframe.title =
-            mapName + (videos.length > 1 ? " — video " + (vi + 1) : "");
+            titleText + (videos.length > 1 ? " — video " + (vi + 1) : "");
           iframe.loading = vi === 0 ? "eager" : "lazy";
           iframe.setAttribute("allowfullscreen", "");
           iframe.allow =

@@ -337,7 +337,7 @@ body.excel-boss-page .table-status__chip-num::before {
 
 /* Chip trong bảng (Độ khó: nền tier + chữ đen) & chi tiết — ôm sát nội dung */
 body.excel-boss-page .boss-data-chip,
-body.boss-detail-page--ac-mong-detail .boss-data-chip {
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail) .boss-data-chip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -361,7 +361,7 @@ body.boss-detail-page--ac-mong-detail .boss-data-chip {
 
 /* Chip Độ khó (bảng + chi tiết Ác mộng) — đậm hơn chip season */
 body.excel-boss-page .boss-data-chip--difficulty,
-body.boss-detail-page--ac-mong-detail .boss-data-chip--difficulty {
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail) .boss-data-chip--difficulty {
   font-weight: 700;
 }
 
@@ -935,14 +935,14 @@ body.boss-detail-page .boss-detail__gallery--inline img {
 }
 
 /* Chi tiết Ác mộng — 3 cột: info (hơi rộng) | ảnh (sát hình) | video (nhận phần fr lớn). Màn hẹp vẫn dùng auto-fit bên dưới. */
-body.boss-detail-page--ac-mong-detail .boss-detail__layout {
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail) .boss-detail__layout {
   --boss-detail-section-min: 400px;
   grid-template-rows: minmax(0, 1fr);
   min-height: 0;
 }
 
 @media (min-width: 1150px) {
-  body.boss-detail-page--ac-mong-detail
+  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
     .boss-detail__layout:not(.boss-detail__layout--no-video) {
     grid-template-columns:
       minmax(550px, 1.35fr)
@@ -951,33 +951,33 @@ body.boss-detail-page--ac-mong-detail .boss-detail__layout {
   }
 }
 
-body.boss-detail-page--ac-mong-detail .boss-detail__layout--no-video {
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail) .boss-detail__layout--no-video {
   grid-template-columns: repeat(
     auto-fit,
     minmax(min(100%, var(--boss-detail-section-min)), 1fr)
   );
 }
 
-body.boss-detail-page--ac-mong-detail .boss-detail__info-col,
-body.boss-detail-page--ac-mong-detail .boss-detail__images-col {
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail) .boss-detail__info-col,
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail) .boss-detail__images-col {
   min-height: 0;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-body.boss-detail-page--ac-mong-detail .boss-detail__info-col {
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail) .boss-detail__info-col {
   min-width: 0;
   --ac-detail-row-lh: 1.45;
   font-size: 11.25pt;
 }
 
-body.boss-detail-page--ac-mong-detail .boss-detail__images-col {
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail) .boss-detail__images-col {
   box-sizing: border-box;
   padding: 0.55rem 6px 0.65rem;
 }
 
-body.boss-detail-page--ac-mong-detail
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   .boss-detail__images-col
   .boss-detail__gallery {
   width: fit-content;
@@ -987,7 +987,7 @@ body.boss-detail-page--ac-mong-detail
 }
 
 /* Tab Word: cột nhãn cố định (căn phải), cột giá trị thẳng hàng; cùng font-size + line-height */
-body.boss-detail-page--ac-mong-detail .boss-detail__fields-inner {
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail) .boss-detail__fields-inner {
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -995,7 +995,7 @@ body.boss-detail-page--ac-mong-detail .boss-detail__fields-inner {
   font-size: inherit;
 }
 
-body.boss-detail-page--ac-mong-detail
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   .boss-detail__info-col
   .boss-detail__field {
   display: grid;
@@ -1010,13 +1010,13 @@ body.boss-detail-page--ac-mong-detail
   border-bottom: 1px solid #e8e8e8;
 }
 
-body.boss-detail-page--ac-mong-detail
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   .boss-detail__info-col
   .boss-detail__field--wide {
   grid-template-columns: 12.5rem minmax(0, 1fr);
 }
 
-body.boss-detail-page--ac-mong-detail
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   .boss-detail__info-col
   .boss-detail__field
   dt {
@@ -1032,7 +1032,7 @@ body.boss-detail-page--ac-mong-detail
   line-height: var(--ac-detail-row-lh);
 }
 
-body.boss-detail-page--ac-mong-detail
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   .boss-detail__info-col
   .boss-detail__field
   dt::after {
@@ -1040,7 +1040,7 @@ body.boss-detail-page--ac-mong-detail
   font-weight: inherit;
 }
 
-body.boss-detail-page--ac-mong-detail
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   .boss-detail__info-col
   .boss-detail__field
   dd {
@@ -1056,14 +1056,14 @@ body.boss-detail-page--ac-mong-detail
   min-width: 0;
 }
 
-body.boss-detail-page--ac-mong-detail
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   .boss-detail__info-col
   dd.boss-detail__boss {
   font-weight: 700;
   line-height: var(--ac-detail-row-lh);
 }
 
-body.boss-detail-page--ac-mong-detail
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   .boss-detail__info-col
   dd.boss-detail__pre {
   white-space: pre-wrap;
@@ -1072,14 +1072,14 @@ body.boss-detail-page--ac-mong-detail
   line-height: var(--ac-detail-row-lh);
 }
 
-body.boss-detail-page--ac-mong-detail .boss-detail__images-block {
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail) .boss-detail__images-block {
   margin: 0;
   padding: 0;
   border: none;
   min-width: 0;
 }
 
-body.boss-detail-page--ac-mong-detail
+body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   .boss-detail__images-col
   .boss-detail__gallery
   img {
@@ -1212,21 +1212,21 @@ body.boss-detail-page--phu-ban
 }
 
 @media (max-width: 1000px) {
-  body.boss-detail-page--ac-mong-detail .boss-detail__images-col {
+  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail) .boss-detail__images-col {
     max-height: min(48vh, 420px);
   }
 }
 
 /* Rất hẹp: mỗi field = nhãn một dòng, giá trị dòng dưới full width */
 @media (max-width: 720px) {
-  body.boss-detail-page--ac-mong-detail .boss-detail__info-col {
+  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail) .boss-detail__info-col {
     font-size: 10.75pt;
   }
 
-  body.boss-detail-page--ac-mong-detail
+  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
     .boss-detail__info-col
     .boss-detail__field,
-  body.boss-detail-page--ac-mong-detail
+  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
     .boss-detail__info-col
     .boss-detail__field--wide {
     grid-template-columns: 1fr;
@@ -1236,14 +1236,14 @@ body.boss-detail-page--phu-ban
     padding: 0.42rem 0;
   }
 
-  body.boss-detail-page--ac-mong-detail
+  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
     .boss-detail__info-col
     .boss-detail__field
     dt {
     text-align: left;
   }
 
-  body.boss-detail-page--ac-mong-detail
+  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
     .boss-detail__info-col
     .boss-detail__field
     dd {
@@ -1251,7 +1251,7 @@ body.boss-detail-page--phu-ban
     word-break: normal;
   }
 
-  body.boss-detail-page--ac-mong-detail
+  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
     .boss-detail__info-col
     dd.boss-detail__pre {
     overflow-wrap: break-word;
@@ -1523,13 +1523,12 @@ body.boss-detail-page--phu-ban
     order: -1;
   }
 
-  /* Luyện ngục: mobile — nội dung trước, ảnh, rồi video */
-  body.boss-detail-page--luyen-detail .boss-detail__main {
+  /* Luyện ngục: mobile — nội dung trước, ảnh, rồi video (cùng cấu trúc 3 cột Ác mộng) */
+  body.boss-detail-page--luyen-detail .boss-detail__info-col {
     order: 1;
   }
 
-  body.boss-detail-page--luyen-detail
-    .boss-detail__aside:not(.boss-detail__aside--videos) {
+  body.boss-detail-page--luyen-detail .boss-detail__images-col {
     order: 2;
   }
 
@@ -1649,4 +1648,29 @@ body.boss-detail-page--phu-ban
   body.boss-detail-page--phu-ban .boss-detail__phu-img-scroll {
     overflow: visible;
   }
+}
+
+/* boss-table-hotkeys.js — overlay số Index khi gõ trên listing */
+#boss-index-jump-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99998;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  font-family: Calibri, "Segoe UI", system-ui, sans-serif;
+  font-size: clamp(2.75rem, 14vmin, 5.5rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  color: #0f172a;
+  text-shadow:
+    0 0 2px #fff,
+    0 0 12px #fff,
+    0 2px 24px rgba(255, 255, 255, 0.92);
+}
+
+#boss-index-jump-overlay.boss-index-jump-overlay--visible {
+  display: flex;
 }

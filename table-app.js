@@ -614,6 +614,13 @@
       cellBgMode
     );
     if (typeof paintStatus === "function") paintStatus(rows.length);
+    if (detailBaseUrl && typeof getRowDetailId === "function") {
+      window.__BOSS_TABLE_LISTING_FOR_JUMP__ = {
+        rows: rows,
+        detailBase: detailBaseUrl,
+        detailRowId: getRowDetailId,
+      };
+    }
   }
 
   function runTable(data, title, tableOptions) {
