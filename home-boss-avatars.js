@@ -1,6 +1,7 @@
 /**
  * Trang chủ: avatar BOSS — gom theo Độ khó (≥1000 / ≥750 / ≥500 / <500)
- * mỗi ảnh chỉ hiển thị một lần; cần ac-mong-10.js (BOSS_TABLE_DATA).
+ * mỗi ảnh chỉ hiển thị một lần; mỗi dòng bảng (__images) là một cụm dính (layout 1–4+);
+ * cần ac-mong-10.js (BOSS_TABLE_DATA).
  */
 (function () {
   "use strict";
@@ -75,8 +76,10 @@
     return out;
   }
 
-  /** Mỗi path chỉ gán một tier (dòng đầu gặp được ưu tiên). */
-  function collectPathsByTier(rows) {
+  /**
+   * Mỗi path chỉ một lần; mỗi dòng bảng → một bundle (cùng phụ bản / cùng __images).
+   */
+  function collectBundlesByTier(rows) {
     var tiers = [[], [], [], []];
     var seenPath = Object.create(null);
     if (!Array.isArray(rows)) return tiers;
@@ -85,14 +88,37 @@
       var ti = tierIndex(n);
       var imgs = row.__images;
       if (!Array.isArray(imgs)) return;
+      var paths = [];
       imgs.forEach(function (p) {
         var s = p != null ? String(p).trim() : "";
         if (!s || seenPath[s]) return;
         seenPath[s] = true;
-        tiers[ti].push(s);
+        paths.push(s);
       });
+      if (paths.length === 0) return;
+      tiers[ti].push({ paths: paths });
     });
     return tiers;
+  }
+
+  function tiersFlatFromBundles(bundleTiers) {
+    return bundleTiers.map(function (tier) {
+      var flat = [];
+      tier.forEach(function (b) {
+        b.paths.forEach(function (p) {
+          flat.push(p);
+        });
+      });
+      return flat;
+    });
+  }
+
+  function bundleLayoutModifier(n) {
+    if (n <= 1) return "1";
+    if (n === 2) return "2";
+    if (n === 3) return "3";
+    if (n === 4) return "4";
+    return "many";
   }
 
   function availUnused(pool, used) {
@@ -180,6 +206,65 @@
     parent.appendChild(stack);
   }
 
+  /**
+   * Dải tier: nhiều bundle (mỗi bundle = một dòng __images); layout 1 / 2 / 3 / 4 / nhiều.
+   */
+  function appendBundleStrip(parent, className, bundles) {
+    if (!bundles || !bundles.length) return;
+    var stack = document.createElement("div");
+    stack.className =
+      className +
+      " home-boss-stack--bundles home-boss-stack--cluster";
+    var totalImgs = 0;
+    var b;
+    for (b = 0; b < bundles.length; b++) {
+      totalImgs += bundles[b].paths.length;
+    }
+    if (totalImgs >= 8) {
+      stack.classList.add("home-boss-stack--strip-dense");
+    }
+
+    var globalIdx = 0;
+    bundles.forEach(function (bundle) {
+      var rels = bundle.paths;
+      var n = rels.length;
+      var wrap = document.createElement("div");
+      wrap.className =
+        "home-boss-bundle home-boss-bundle--" + bundleLayoutModifier(n);
+      wrap.setAttribute("data-bundle-n", String(n));
+      if (n === 4) {
+        wrap.setAttribute("data-bundle-grid", "2x2");
+      } else if (n > 4) {
+        var g = clusterGridDims(n);
+        if (
+          typeof window.matchMedia !== "undefined" &&
+          window.matchMedia("(max-width: 639px)").matches &&
+          g.cols > 3
+        ) {
+          g.cols = 3;
+          g.rows = Math.ceil(n / g.cols);
+        }
+        wrap.style.setProperty("--bundle-cols", String(g.cols));
+        wrap.style.setProperty("--bundle-rows", String(g.rows));
+        wrap.setAttribute("data-bundle-grid", g.cols + "x" + g.rows);
+      }
+      rels.forEach(function (rel) {
+        var img = document.createElement("img");
+        img.src = encPath(rel);
+        img.alt = "";
+        img.loading = "lazy";
+        img.decoding = "async";
+        img.className = "home-boss-stack__img";
+        img.setAttribute("draggable", "false");
+        img.style.animationDelay = (globalIdx * 0.055).toFixed(3) + "s";
+        wrap.appendChild(img);
+        globalIdx++;
+      });
+      stack.appendChild(wrap);
+    });
+    parent.appendChild(stack);
+  }
+
   function hasAcMongBossData(rows) {
     if (!Array.isArray(rows) || rows.length === 0) return false;
     var r = rows[0];
@@ -192,7 +277,8 @@
   /** Fallback 2 hàng: vừa viewport, không cần cụm tier quá rộng */
   var FALLBACK_STRIP_ROW_N = 12;
 
-  function buildTieredLayout(tiers) {
+  function buildTieredLayout(bundleTiers) {
+    var pathTiers = tiersFlatFromBundles(bundleTiers);
     var deco = document.getElementById("home-boss-deco");
     var strip = document.getElementById("home-boss-strip");
     var used = Object.create(null);
@@ -211,25 +297,39 @@
       var TIER_KEYS = ["t1000", "t750", "t500", "tlow"];
 
       TIER_KEYS.forEach(function (key, idx) {
-        var pool = tiers[idx];
-        var avail = availUnused(pool, used);
-        if (!avail.length) return;
+        var rawBundles = bundleTiers[idx] || [];
+        var availBundles = rawBundles.filter(function (b) {
+          var ok = true;
+          b.paths.forEach(function (p) {
+            if (used[p]) ok = false;
+          });
+          return ok && b.paths.length > 0;
+        });
+        if (!availBundles.length) return;
 
-        shuffleInPlace(avail);
-        var take = Math.min(avail.length, STRIP_CLUSTER_MAX);
-        var part = avail.slice(0, take);
-        var j;
-        for (j = 0; j < part.length; j++) used[part[j]] = true;
-        if (!part.length) return;
+        shuffleInPlace(availBundles);
+        var picked = [];
+        var imgCount = 0;
+        var bi;
+        for (bi = 0; bi < availBundles.length; bi++) {
+          var nb = availBundles[bi];
+          var next = imgCount + nb.paths.length;
+          if (next > STRIP_CLUSTER_MAX) break;
+          picked.push(nb);
+          imgCount = next;
+        }
+        if (!picked.length) return;
+
+        picked.forEach(function (b) {
+          b.paths.forEach(function (p) {
+            used[p] = true;
+          });
+        });
 
         var section = document.createElement("section");
         section.className = "home-boss-tier home-boss-tier--" + key;
 
-        appendStack(
-          section,
-          "home-boss-stack home-boss-stack--strip",
-          part
-        );
+        appendBundleStrip(section, "home-boss-stack home-boss-stack--strip", picked);
         strip.appendChild(section);
       });
     }
@@ -237,7 +337,7 @@
     if (deco) {
       CORNERS.forEach(function (cfg) {
         var part = takeUniquePreferTier(
-          tiers,
+          pathTiers,
           cfg.tier,
           CORNER_AVATAR_COUNT,
           used
@@ -268,6 +368,7 @@
     stacks.forEach(function (stack) {
       var imgs = stack.querySelectorAll(".home-boss-stack__img");
       if (!imgs.length) return;
+      var bundleMode = stack.classList.contains("home-boss-stack--bundles");
 
       function clearRepel() {
         stack.classList.remove("home-boss-stack--repel-active");
@@ -284,7 +385,13 @@
         var hy = hr.top + hr.height * 0.5;
         stack.classList.add("home-boss-stack--repel-active");
         Array.prototype.forEach.call(imgs, function (img) {
-          if (img === hovered) {
+          if (bundleMode) {
+            if (hovered.contains(img)) {
+              img.style.removeProperty("--repel-x");
+              img.style.removeProperty("--repel-y");
+              return;
+            }
+          } else if (img === hovered) {
             img.style.removeProperty("--repel-x");
             img.style.removeProperty("--repel-y");
             return;
@@ -305,11 +412,20 @@
         });
       }
 
-      Array.prototype.forEach.call(imgs, function (img) {
-        img.addEventListener("mouseenter", function () {
-          applyRepel(img);
+      if (bundleMode) {
+        var bundles = stack.querySelectorAll(".home-boss-bundle");
+        Array.prototype.forEach.call(bundles, function (bundle) {
+          bundle.addEventListener("mouseenter", function () {
+            applyRepel(bundle);
+          });
         });
-      });
+      } else {
+        Array.prototype.forEach.call(imgs, function (img) {
+          img.addEventListener("mouseenter", function () {
+            applyRepel(img);
+          });
+        });
+      }
 
       stack.addEventListener("mouseleave", function (e) {
         var rt = e.relatedTarget;
@@ -379,15 +495,18 @@
 
   var rows = window.BOSS_TABLE_DATA;
   if (hasAcMongBossData(rows)) {
-    var tiers = collectPathsByTier(rows);
-    if (
-      tiers[0].length +
-        tiers[1].length +
-        tiers[2].length +
-        tiers[3].length >
-      0
-    ) {
-      buildTieredLayout(tiers);
+    var bundleTiers = collectBundlesByTier(rows);
+    var pathTotal = 0;
+    var pi;
+    for (pi = 0; pi < 4; pi++) {
+      var tier = bundleTiers[pi];
+      var bj;
+      for (bj = 0; bj < tier.length; bj++) {
+        pathTotal += tier[bj].paths.length;
+      }
+    }
+    if (pathTotal > 0) {
+      buildTieredLayout(bundleTiers);
     } else {
       buildFallbackLayout(shuffleInPlace(PB10.concat(PB5)));
     }
