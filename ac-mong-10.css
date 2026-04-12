@@ -385,12 +385,16 @@ body.excel-boss-page .table-scroll {
   border-radius: 6px;
   box-shadow: 0 4px 24px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04);
   background: #ffffff;
-  overflow: auto;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   background-clip: padding-box;
 }
 
-/* Bảng list: tối thiểu ~1 hàng layout Excel; viewport hẹp → cuộn ngang */
+/* Bảng list: tối thiểu 1500px; khung .table-scroll cuộn ngang */
 body.excel-boss-page .table-scroll > table,
 body.excel-boss-page .table-scroll table.excel-ac-mong,
 body.excel-boss-page .table-scroll table.data-table {
@@ -401,7 +405,7 @@ body.excel-boss-page .table-scroll table.data-table {
 body.excel-boss-page table.excel-ac-mong {
   font-family: Calibri, "Segoe UI", sans-serif;
   font-size: 11pt;
-  width: 100%;
+  width: max(100%, 1500px);
   border-collapse: separate;
   border-spacing: 0;
   border: none;
@@ -607,6 +611,28 @@ body.excel-boss-page table.excel-ac-mong.data-table--fixed {
   min-width: 100%;
 }
 
+/* Listing trong .table-scroll: không để --fixed ghi đè min 1500px (rule trên dùng cho ngữ cảnh khác nếu có) */
+body.excel-boss-page .table-scroll table.excel-ac-mong.data-table--fixed {
+  width: max(100%, 1500px);
+  min-width: 1500px;
+}
+
+/* Trang listing Phụ bản 5 (phu-ban-5.html) — min-width bảng 420px */
+body.excel-boss-page--phu-ban-5-list .table-scroll > table,
+body.excel-boss-page--phu-ban-5-list .table-scroll table.excel-ac-mong,
+body.excel-boss-page--phu-ban-5-list .table-scroll table.data-table {
+  min-width: 420px;
+}
+
+body.excel-boss-page--phu-ban-5-list table.excel-ac-mong {
+  width: max(100%, 420px);
+}
+
+body.excel-boss-page--phu-ban-5-list .table-scroll table.excel-ac-mong.data-table--fixed {
+  width: max(100%, 420px);
+  min-width: 420px;
+}
+
 /* Tiêu đề cột: chỉ xuống dòng giữa các từ, không ngắt giữa một từ */
 body.excel-boss-page table.excel-ac-mong.data-table--fixed th {
   overflow-wrap: normal;
@@ -632,14 +658,14 @@ body.boss-detail-page {
   margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
-  height: 100vh;
-  height: 100dvh;
+  height: auto;
   padding: 0.55rem 0.85rem 0.55rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   background: radial-gradient(900px 420px at 8% 0%, rgba(0, 112, 192, 0.09), transparent 55%),
     radial-gradient(700px 380px at 100% 30%, rgba(99, 102, 241, 0.07), transparent 50%),
     linear-gradient(180deg, #e9edf6 0%, #e4e9f3 100%);
@@ -735,7 +761,8 @@ body.boss-detail-page .boss-detail__main {
   -webkit-overflow-scrolling: touch;
 }
 
-body.boss-detail-page .boss-detail__aside {
+/* Cuộn nội dung trong aside ảnh / cột phụ — không áp cho cột video (xem .boss-detail__aside--videos) */
+body.boss-detail-page .boss-detail__aside:not(.boss-detail__aside--videos) {
   min-width: 0;
   min-height: 0;
   overflow: auto;
@@ -980,14 +1007,23 @@ body.boss-detail-page--ac-mong-detail .boss-detail__images-col .boss-detail__gal
   padding: 0;
 }
 
-/* Cột Video — dùng chung mọi trang chi tiết */
+/* Cột Video — không cuộn trong khung; khung player có min-height 16:9 theo bề ngang cột */
 body.boss-detail-page .boss-detail__aside--videos {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  align-self: start;
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
-  overflow-y: auto;
-  min-height: 0;
+  overflow-y: visible;
+  padding: 0.55rem 0.6rem 0.65rem;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: 0 4px 22px rgba(15, 23, 42, 0.07);
   container-type: inline-size;
   container-name: boss-video;
 }
@@ -1006,7 +1042,8 @@ body.boss-detail-page .boss-detail__video-stack {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
-  flex: 1 1 0;
+  flex: 0 0 auto;
+  width: 100%;
   min-height: 0;
 }
 
@@ -1015,6 +1052,9 @@ body.boss-detail-page .boss-detail__video-frame {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
+  /* Sàn chiều cao: ~200px hoặc 9/16 bề ngang cột (boss-video); tránh iframe bị ép trong ô scroll nhỏ */
+  min-height: max(12.5rem, calc(100cqi * 9 / 16));
+  min-width: 0;
   border-radius: 10px;
   overflow: hidden;
   background: #0f172a;
@@ -1030,13 +1070,6 @@ body.boss-detail-page .boss-detail__video-frame iframe {
   border: none;
 }
 
-/* Khi khung video ≥400px rộng: chiều cao tối thiểu = 16:9 (400×9/16) */
-@container boss-video (min-width: 400px) {
-  .boss-detail__video-frame {
-    min-height: calc(400px * 9 / 16);
-  }
-}
-
 /*
  * Phụ bản 5 chi tiết + video: flex wrap — không đủ chỗ cho main + video (min) thì xuống hàng;
  * video ~400px; cùng logic min-height iframe như trên.
@@ -1050,11 +1083,15 @@ body.boss-detail-page--phu-ban .boss-detail__layout:not(.boss-detail__layout--no
   min-height: 0;
 }
 
+/*
+ * Main + video cạnh nhau: không cho main co nhỏ hơn 350px — flex-wrap tách hàng
+ * (min(100%, 350px) để màn rất hẹp vẫn không tràn ngang).
+ */
 body.boss-detail-page--phu-ban
   .boss-detail__layout:not(.boss-detail__layout--no-video)
   > .boss-detail__main {
   flex: 1 1 520px;
-  min-width: 0;
+  min-width: min(100%, 350px);
   max-width: 100%;
 }
 
@@ -1130,15 +1167,17 @@ body.boss-detail-page--phu-ban
 /* Chi tiết Phụ bản 5 — một cột, meta + 3 boss ngang */
 body.boss-detail-page--phu-ban .boss-detail__layout {
   grid-template-columns: 1fr;
-  grid-template-rows: minmax(0, 1fr);
+  grid-template-rows: auto;
   min-height: 0;
 }
 
 body.boss-detail-page--phu-ban .boss-detail__main {
   display: flex;
   flex-direction: column;
-  min-height: 0;
-  height: 100%;
+  /* Không dùng min-height:0 + height:100% — trên màn nhỏ flex cha không có chiều cao xác định → fields-inner co về 0 */
+  flex: 1 1 auto;
+  min-height: min-content;
+  height: auto;
   align-self: stretch;
   overflow: hidden;
 }
@@ -1150,8 +1189,9 @@ body.boss-detail-page--phu-ban .boss-detail__title {
 body.boss-detail-page--phu-ban .boss-detail__fields-inner--phu-ban {
   display: flex;
   flex-direction: column;
-  flex: 1 1 0;
-  min-height: 0;
+  flex: 1 1 auto;
+  min-height: min-content;
+  min-width: 0;
   gap: 0.65rem;
   overflow: hidden;
 }
@@ -1207,8 +1247,9 @@ body.boss-detail-page--phu-ban .boss-detail__field--phu-meta dd.boss-detail__pre
 
 body.boss-detail-page--phu-ban .boss-detail__phu-bosses {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-auto-rows: minmax(0, auto);
+  /* min(100%, 350px): màn hẹp hơn 350px vẫn một cột full width, không clip ngang */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
+  grid-auto-rows: minmax(min(11rem, 26vh), auto);
   gap: 0.55rem 0.95rem;
   align-items: stretch;
   flex: 1 1 0;
@@ -1233,8 +1274,8 @@ body.boss-detail-page--phu-ban .boss-detail__field--phu-boss {
   background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
   box-sizing: border-box;
   box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
-  min-height: 0;
-  height: 100%;
+  min-height: min(13rem, 32vh);
+  height: auto;
   align-self: stretch;
 }
 
@@ -1258,18 +1299,19 @@ body.boss-detail-page--phu-ban .boss-detail__boss-cell {
   flex-direction: column;
   align-items: stretch;
   gap: 0.35rem;
+  flex: 1 1 auto;
   min-width: 0;
-  min-height: 0;
-  overflow: hidden;
+  min-height: min(11rem, 28vh);
+  overflow-x: hidden;
+  overflow-y: visible;
   align-self: stretch;
   width: 100%;
 }
 
-/* Cuộn chỉ trong khung ảnh; phần tên boss không cuộn theo.
-   min-height đảm bảo khung không co về 0 (tránh “mất ảnh” khi hàng grid 1fr suy biến). */
+/* Cuộn chỉ trong khung ảnh; chiều cao do ảnh (aspect-ratio theo file — JS set sau load) */
 body.boss-detail-page--phu-ban .boss-detail__phu-img-scroll {
   flex: 1 1 auto;
-  min-height: min(40vh, 400px);
+  min-height: 0;
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
@@ -1297,13 +1339,16 @@ body.boss-detail-page--phu-ban .boss-detail__phu-bosses .boss-detail__gallery--p
   height: auto;
   display: block;
   max-height: none;
+  /* Placeholder trước khi load; phu-ban-5-detail ghi đè theo naturalWidth/Height */
+  aspect-ratio: 4 / 3;
   object-fit: contain;
+  object-position: top center;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   border: 1px solid #6d7480;
   border-radius: 4px;
-  background: transparent;
+  background: rgba(15, 23, 42, 0.04);
   transform: translateZ(0);
   backface-visibility: hidden;
 }
@@ -1326,13 +1371,15 @@ body.boss-detail-page--phu-ban .boss-detail__phu-bosses .boss-detail__gallery--p
   height: auto;
   display: block;
   max-height: none;
+  aspect-ratio: 4 / 3;
   object-fit: contain;
+  object-position: top center;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   border: 1px solid #6d7480;
   border-radius: 4px;
-  background: transparent;
+  background: rgba(15, 23, 42, 0.04);
   transform: translateZ(0);
   backface-visibility: hidden;
 }
@@ -1413,14 +1460,52 @@ body.boss-detail-page--phu-ban .boss-detail__phu-bosses .boss-detail__gallery--p
   body.boss-detail-page--phu-ban .boss-detail__main {
     display: flex;
     flex-direction: column;
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow: hidden;
+    flex: 0 1 auto;
+    min-height: min-content;
+    height: auto;
+    overflow: visible;
   }
 
+  body.boss-detail-page--phu-ban .boss-detail__fields-inner--phu-ban {
+    flex: 0 1 auto;
+    min-height: min-content;
+    overflow: visible;
+  }
+
+  body.boss-detail-page--phu-ban .boss-detail__phu-bosses {
+    flex: 0 1 auto;
+    min-height: min-content;
+  }
+
+  /* Không giới hạn max-height — ảnh dọc cần chiều cao theo tỉ lệ × width */
   body.boss-detail-page--phu-ban .boss-detail__phu-img-scroll {
-    min-height: min(36vh, 320px);
-    max-height: min(58vh, 520px);
+    min-height: 0;
+    max-height: none;
+  }
+}
+
+/*
+ * Phụ bản 5 detail: khi main + video đã wrap (không đủ ~520+400+gap) —
+ * mỗi cột full width (video không còn max 400px).
+ */
+@media (max-width: 940px) {
+  body.boss-detail-page--phu-ban
+    .boss-detail__layout:not(.boss-detail__layout--no-video)
+    > .boss-detail__main {
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  body.boss-detail-page--phu-ban
+    .boss-detail__layout:not(.boss-detail__layout--no-video)
+    > .boss-detail__aside--videos {
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    align-self: stretch;
   }
 }
 
@@ -1432,5 +1517,29 @@ body.boss-detail-page--phu-ban .boss-detail__phu-bosses .boss-detail__gallery--p
 
   body.boss-detail-page--phu-ban .boss-detail__field--phu-meta:last-child {
     flex: 1 1 100%;
+  }
+}
+
+/* Phụ bản 5 detail: màn <1550px — chỉ cuộn trang, không cuộn trong main / boss / ảnh */
+@media (max-width: 1549px) {
+  body.boss-detail-page--phu-ban .boss-detail__main {
+    overflow: visible;
+    max-height: none;
+  }
+
+  body.boss-detail-page--phu-ban .boss-detail__fields-inner--phu-ban {
+    overflow: visible;
+  }
+
+  body.boss-detail-page--phu-ban .boss-detail__phu-bosses {
+    flex: 0 1 auto;
+    min-height: min-content;
+    max-height: none;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  body.boss-detail-page--phu-ban .boss-detail__phu-img-scroll {
+    overflow: visible;
   }
 }

@@ -72,6 +72,22 @@
             .join("/");
         }
 
+        /** Chiều cao tối thiểu theo tỉ lệ ảnh × width cột (ổn trên màn hẹp). */
+        function applyBossImageAspect(img) {
+          function set() {
+            var w = img.naturalWidth;
+            var h = img.naturalHeight;
+            if (w > 0 && h > 0) {
+              img.style.aspectRatio = w + " / " + h;
+            }
+          }
+          if (img.complete) {
+            set();
+          } else {
+            img.addEventListener("load", set);
+          }
+        }
+
         function findRowByDetailId(rows, wantId) {
           if (!wantId) return null;
           var idFn = window.BOSS_TABLE_PHU_BAN_DETAIL_ROW_ID;
@@ -187,6 +203,7 @@
               img.src = bossImageSrc(src);
               img.alt = bossNameForDisplay(row, k);
               img.loading = "lazy";
+              applyBossImageAspect(img);
               fig.appendChild(img);
             });
             scroll.appendChild(fig);
