@@ -14,7 +14,7 @@ body.home-page {
   margin: 0;
   height: 100%;
   max-height: 100dvh;
-  padding-block: clamp(1rem, 3.5vw, 2.25rem);
+  padding-block: clamp(0.72rem, 2.8vw, 1.65rem);
   /* Chừa 2 bên rộng hơn — avatar / lưới cụm ít sát mép */
   padding-inline: clamp(1.55rem, 5.8vw, 3.6rem);
   box-sizing: border-box;
@@ -27,6 +27,16 @@ body.home-page {
 
 html.home-index body.home-page {
   max-height: 100dvh;
+}
+
+/*
+ * Tham chiếu kích thước avatar BOSS (margin chồng / cụm) — ghi đè trên home tiered.
+ */
+:root {
+  --boss-avatar-ref: clamp(4.28rem, 12.35vw, 7.05rem);
+  --boss-avatar-ref-dense: clamp(3.45rem, 9.5vw, 5.95rem);
+  --boss-avatar-inter: clamp(4.1rem, 11.4vw, 6.95rem);
+  --boss-avatar-inter-dense: clamp(3.38rem, 9.1vw, 5.75rem);
 }
 
 .home-backdrop {
@@ -145,6 +155,16 @@ body.home-page .home-header {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
+  margin-bottom: clamp(0.45rem, 1.5vw, 0.95rem);
+}
+
+body.home-page .home-kicker {
+  margin: 0 0 0.22rem;
+}
+
+body.home-page .home-title {
+  margin: 0 0 0.3rem;
+  font-size: clamp(2.2rem, 8.2vw, 3.45rem);
 }
 
 body.home-page .home-links {
@@ -152,7 +172,7 @@ body.home-page .home-links {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  margin-bottom: clamp(0.55rem, 1.85vw, 1.35rem);
+  margin-bottom: clamp(0.32rem, 1.15vw, 0.75rem);
 }
 
 body.home-page .home-links > li {
@@ -163,6 +183,9 @@ body.home-page .home-card {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-height: 4.25rem;
+  padding: clamp(0.78rem, 2.1vw, 1.05rem) clamp(1.05rem, 3vw, 1.4rem);
+  gap: 0.32rem;
 }
 
 .home-header {
@@ -501,15 +524,15 @@ html.home-index.home-page--avatars-paused .home-links > li {
 }
 
 .home-boss-stack--diff-t1 {
-  --boss-tier-scale: 0.9333333333;
+  --boss-tier-scale: 0.98;
 }
 
 .home-boss-stack--diff-t2 {
-  --boss-tier-scale: 0.8666666667;
+  --boss-tier-scale: 0.96;
 }
 
 .home-boss-stack--diff-t3 {
-  --boss-tier-scale: 0.8;
+  --boss-tier-scale: 0.94;
 }
 
 .home-boss-stack--diff-t0 .home-boss-stack__img,
@@ -751,8 +774,22 @@ html.home-index.home-page--avatars-paused .home-links > li {
     cursor: inherit;
   }
 
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle {
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle
+    .home-boss-stack__img {
+    pointer-events: none;
+    cursor: inherit;
+  }
+
   .home-boss-tier:has(.home-boss-stack__img:hover),
-  .home-boss-tier:has(.home-boss-bundle:hover) {
+  .home-boss-tier:has(.home-boss-bundle:hover),
+  .home-boss-tier:has(.home-boss-bundle.home-boss-bundle--detail-hover) {
     z-index: 10000;
   }
 
@@ -769,11 +806,39 @@ html.home-index.home-page--avatars-paused .home-links > li {
   /* Tắt animation trên ảnh hover — keyframes transform sẽ thắng scale hover nếu chỉ pause */
   .home-boss-stack--strip.home-boss-stack--cluster:not(
       .home-boss-stack--bundles
-    )
+    ):not(.home-boss-stack--cluster-wrap)
     .home-boss-stack__img:hover {
     animation: none !important;
     transform: scale(2.15);
     z-index: 999999;
+  }
+
+  /*
+   * Cụm mùa (cluster-wrap): hit-test bundle; cùng data-ac-detail-id — class detail-hover (JS) phóng đồng bộ.
+   */
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle:hover,
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle.home-boss-bundle--detail-hover {
+    animation: none !important;
+    /* Đồng bộ home-boss-avatars.js HOVER_SCALE; repel nhẹ hơn khi phóng nhỏ hơn */
+    transform: scale(1.68);
+    transform-origin: center center;
+    z-index: 999999;
+    filter: brightness(1.06) saturate(1.05);
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle:hover
+    .home-boss-stack__img,
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle.home-boss-bundle--detail-hover
+    .home-boss-stack__img {
+    animation: none !important;
+    transform: none;
+    box-shadow:
+      0 10px 28px rgba(15, 23, 42, 0.32),
+      0 0 0 1px rgba(15, 23, 42, 0.08);
   }
 
   /*
@@ -820,6 +885,31 @@ html.home-index.home-page--avatars-paused .home-links > li {
     .home-boss-stack__img {
     animation: none !important;
     transform: translate(var(--repel-x, 0px), var(--repel-y, 0px));
+  }
+
+  /*
+   * Repel trên cả .home-boss-bundle (không chỉ ảnh) để bbox hit-test khớp chỗ vẽ —
+   * tránh chuột trúng vùng rỗng / bị boss đang phóng che.
+   */
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--repel-active
+    .home-boss-bundle:not(:hover):not(.home-boss-bundle--detail-hover).home-boss-bundle--1 {
+    animation: none !important;
+    transform: translate(var(--repel-x, 0px), var(--repel-y, 0px));
+    transition: transform 0.38s cubic-bezier(0.32, 1.05, 0.45, 1);
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--repel-active
+    .home-boss-bundle:not(:hover):not(.home-boss-bundle--detail-hover):not(.home-boss-bundle--1) {
+    animation: none !important;
+    transform: translate(var(--repel-x, 0px), var(--repel-y, 0px)) scale(1.045);
+    transition: transform 0.38s cubic-bezier(0.32, 1.05, 0.45, 1);
+  }
+
+  @media (max-width: 480px) {
+    .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--repel-active
+      .home-boss-bundle:not(:hover):not(.home-boss-bundle--detail-hover):not(.home-boss-bundle--1) {
+      transform: translate(var(--repel-x, 0px), var(--repel-y, 0px)) scale(1.02);
+    }
   }
 }
 
@@ -872,56 +962,127 @@ html.home-index.home-page--avatars-paused .home-links > li {
 
 .home-boss-strip--tiered {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: start;
   justify-items: stretch;
-  gap: clamp(0.18rem, 0.72vw, 0.88rem);
+  justify-content: center;
+  gap: clamp(1px, 0.14vw, 3px);
 }
 
 @media (max-width: 1024px) {
   .home-boss-strip--tiered {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(0.1rem, 0.62vw, 0.44rem);
+    justify-content: center;
+    gap: clamp(1px, 0.18vw, 3px);
   }
 }
 
 @media (max-width: 480px) {
   .home-boss-strip--tiered {
     grid-template-columns: minmax(0, 1fr);
+    justify-content: center;
+    gap: clamp(1px, 0.22vw, 4px);
   }
 }
 
-/* Trang chủ: 4 cụm độ khó — lưới co trong shell, không dùng 100vw (tránh tràn ngang) */
 body.home-page .home-boss-tier {
-  width: 100%;
+  width: max-content;
   min-width: 0;
   max-width: 100%;
 }
 
+/* Cột mùa: rộng theo nội dung — không căng full ô grid */
+body.home-page .home-boss-strip--tiered > .home-boss-tier[data-boss-season] {
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  align-items: center;
+}
+
 body.home-page .home-boss-tier .home-boss-stack--strip {
-  width: 100%;
+  width: max-content;
   max-width: 100%;
 }
 
 body.home-page .home-boss-stack--strip.home-boss-stack--cluster {
-  width: 100%;
+  width: max-content;
   max-width: 100%;
   margin-inline: auto;
   box-sizing: border-box;
 }
 
-/* Trang chủ: dải 4 cụm trong shell; grid chia đều, tận dụng chiều ngang */
+/* Cụm mùa: co theo avatar, căn giữa trong cột */
+body.home-page .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap {
+  width: max-content;
+  max-width: 100%;
+  align-self: center;
+  align-items: center;
+}
+
+body.home-page .home-boss-season-cluster__row {
+  width: auto;
+  max-width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+  /* Không thêm khoảng ngang giữa các boss — overlap ~8–10% làm bằng margin âm trên bundle */
+  column-gap: 0;
+  row-gap: clamp(0.06rem, 0.5vw, 0.24rem);
+}
+
+body.home-page .home-boss-season-cluster__row:has(> .home-boss-bundle:only-child) {
+  justify-content: center;
+}
+
+/* Trang chủ: dải 3 mùa — grid theo nội dung, không căng full màn; avatar nhỏ hơn, scale chủ yếu theo độ khó */
 body.home-page .home-boss-strip.home-boss-strip--tiered {
-  width: 100%;
+  /* Base avatar ~×1.5 so với bản trước; margin chồng/inter vẫn tỉ lệ theo base */
+  --home-boss-avatar-base: clamp(4.4rem, 6.75vw, 5.9rem);
+  --boss-avatar-ref: var(--home-boss-avatar-base);
+  --boss-avatar-ref-dense: calc(var(--home-boss-avatar-base) * 0.805);
+  --boss-avatar-inter: calc(var(--home-boss-avatar-base) * 0.958);
+  --boss-avatar-inter-dense: calc(var(--home-boss-avatar-base) * 0.785);
+  width: fit-content;
   max-width: 100%;
   position: relative;
   left: auto;
   transform: none;
   box-sizing: border-box;
-  padding-inline: clamp(1.45rem, 2.65vw, 2.05rem);
-  padding-bottom: clamp(0.6rem, 2vw, 1.2rem);
-  margin-top: clamp(1.75rem, 4.5vw, 3.25rem);
-  justify-content: stretch;
+  padding-inline: clamp(0px, 0.35vw, 4px);
+  padding-bottom: clamp(0.45rem, 1.5vw, 0.95rem);
+  margin-top: clamp(1.35rem, 3.5vw, 2.6rem);
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+}
+
+body.home-page .home-boss-strip--tiered {
+  grid-template-columns: repeat(3, auto);
+  justify-content: center;
+  justify-items: center;
+}
+
+@media (max-width: 1024px) {
+  body.home-page .home-boss-strip--tiered {
+    grid-template-columns: repeat(2, auto);
+  }
+}
+
+@media (max-width: 480px) {
+  body.home-page .home-boss-strip--tiered {
+    grid-template-columns: max-content;
+    justify-items: center;
+  }
+
+  body.home-page .home-boss-strip.home-boss-strip--tiered {
+    --home-boss-avatar-base: clamp(4.1rem, 18.5vw, 5.35rem);
+  }
+}
+
+/* Kích thước avatar: gần cố định theo base, chỉ tách bậc độ khó (--boss-tier-scale, chênh ~2%) */
+body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img {
+  width: calc(var(--home-boss-avatar-base) * var(--boss-tier-scale, 1));
+  height: calc(var(--home-boss-avatar-base) * var(--boss-tier-scale, 1));
 }
 
 .home-boss-tier {
@@ -934,25 +1095,25 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   min-width: 0;
   max-width: 100%;
   overflow: visible;
-  padding-inline: clamp(0, 0.22vw, 0.1rem);
-  padding-block: clamp(0, 0.18vw, 0.06rem);
+  padding-inline: 0;
+  padding-block: clamp(0, 0.1vw, 0.04rem);
 }
 
-/* Avatar strip: scale nhẹ theo độ khó — khó nhất 100%, dễ nhất ~80% (4 bậc tuyến tính) */
+/* Avatar strip: scale nhẹ theo độ khó — 4 bậc sát nhau (~6% từ max→min) */
 .home-boss-tier--t1000 {
   --boss-tier-scale: 1;
 }
 
 .home-boss-tier--t750 {
-  --boss-tier-scale: 0.9333333333;
+  --boss-tier-scale: 0.98;
 }
 
 .home-boss-tier--t500 {
-  --boss-tier-scale: 0.8666666667;
+  --boss-tier-scale: 0.96;
 }
 
 .home-boss-tier--tlow {
-  --boss-tier-scale: 0.8;
+  --boss-tier-scale: 0.94;
 }
 
 .home-boss-tier .home-boss-stack--strip {
@@ -980,6 +1141,74 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   transform: rotate(0.72deg);
 }
 
+/* Slot mùa (gom theo "Tên season"): nghiêng cột — không dùng t1000… cho viền avatar */
+.home-boss-tier--season-1 .home-boss-stack--strip {
+  transform: rotate(-0.55deg);
+}
+
+.home-boss-tier--season-2 .home-boss-stack--strip {
+  transform: rotate(-0.2deg);
+}
+
+.home-boss-tier--season-3 .home-boss-stack--strip {
+  transform: rotate(0.32deg);
+}
+
+/* Dải 3 mùa: chênh độ khó nhỏ (dễ ↔ khó ~2%) — size chủ yếu từ --home-boss-avatar-base trên home */
+.home-boss-strip--tiered .home-boss-stack--diff-t0 {
+  --boss-tier-scale: 1;
+}
+
+.home-boss-strip--tiered .home-boss-stack--diff-t1 {
+  --boss-tier-scale: 0.993;
+}
+
+.home-boss-strip--tiered .home-boss-stack--diff-t2 {
+  --boss-tier-scale: 0.986;
+}
+
+.home-boss-strip--tiered .home-boss-stack--diff-t3 {
+  --boss-tier-scale: 0.98;
+}
+
+/* Độ khó tầng 500 / <500: animation strip-b — gắn theo bundle (không còn theo cột season) */
+.home-boss-strip--tiered .home-boss-bundle.home-boss-stack--diff-t2 .home-boss-stack__img {
+  animation: home-avl-strip-b 2.1s cubic-bezier(0.36, 0.85, 0.47, 1.1) infinite;
+}
+
+.home-boss-strip--tiered
+  .home-boss-bundle.home-boss-stack--diff-t2
+  .home-boss-stack__img:nth-child(even) {
+  animation-name: home-avl-strip-b2;
+  animation-duration: 1.75s;
+  animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1.4);
+}
+
+.home-boss-strip--tiered
+  .home-boss-bundle.home-boss-stack--diff-t2
+  .home-boss-stack__img:nth-child(odd) {
+  animation-delay: 0.22s;
+}
+
+.home-boss-strip--tiered
+  .home-boss-bundle.home-boss-stack--diff-t2
+  .home-boss-stack__img:nth-child(even) {
+  animation-delay: 0.04s;
+}
+
+.home-boss-strip--tiered
+  .home-boss-bundle.home-boss-stack--diff-t3
+  .home-boss-stack__img:nth-child(odd) {
+  animation-delay: 0.1s;
+}
+
+.home-boss-strip--tiered
+  .home-boss-bundle.home-boss-stack--diff-t3
+  .home-boss-stack__img:nth-child(even) {
+  animation-name: home-avl-strip-a2;
+  animation-duration: 1.85s;
+}
+
 .home-boss-strip:not(.home-boss-strip--tiered)
   > .home-boss-stack--strip:nth-child(1) {
   transform: rotate(-0.9deg);
@@ -1001,7 +1230,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
 /* Cụm strip: lưới cột×hàng; gap + margin âm nhẹ — chồng vừa phải, không dính sát quá */
 .home-boss-stack--strip.home-boss-stack--cluster:not(
     .home-boss-stack--bundles
-  ) {
+  ):not(.home-boss-stack--cluster-wrap) {
   display: grid;
   /* max-content: cột chỉ rộng bằng avatar — không chia đều 1fr (hai cột sẽ nằm sát, chồng nhờ margin âm) */
   grid-template-columns: repeat(var(--cluster-cols, 3), minmax(0, max-content));
@@ -1018,35 +1247,243 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
 /* Tránh fallback 3 cột khi --cluster-cols lỗi: 4 ảnh → 3+1 thay vì 2×2 */
 .home-boss-stack--strip.home-boss-stack--cluster:not(
     .home-boss-stack--bundles
-  )[data-cluster-cols="2"] {
+  ):not(.home-boss-stack--cluster-wrap)[data-cluster-cols="2"] {
   grid-template-columns: repeat(2, minmax(0, max-content)) !important;
 }
 
 .home-boss-stack--strip.home-boss-stack--cluster:not(
     .home-boss-stack--bundles
-  )[data-cluster-cols="3"] {
+  ):not(.home-boss-stack--cluster-wrap)[data-cluster-cols="3"] {
   grid-template-columns: repeat(3, minmax(0, max-content));
 }
 
 .home-boss-stack--strip.home-boss-stack--cluster:not(
     .home-boss-stack--bundles
-  )[data-cluster-cols="4"] {
+  ):not(.home-boss-stack--cluster-wrap)[data-cluster-cols="4"] {
   grid-template-columns: repeat(4, minmax(0, max-content));
 }
 
 .home-boss-stack--strip.home-boss-stack--cluster:not(
     .home-boss-stack--bundles
-  )[data-cluster-cols="5"] {
+  ):not(.home-boss-stack--cluster-wrap)[data-cluster-cols="5"] {
   grid-template-columns: repeat(5, minmax(0, max-content)) !important;
 }
 
 .home-boss-stack--strip.home-boss-stack--cluster:not(
     .home-boss-stack--bundles
-  )[data-cluster-cols="6"] {
+  ):not(.home-boss-stack--cluster-wrap)[data-cluster-cols="6"] {
   grid-template-columns: repeat(6, minmax(0, max-content)) !important;
 }
 
-.home-boss-stack--strip.home-boss-stack--cluster:not(.home-boss-stack--bundles)
+/* Slot mùa: cột dọc các hàng — cụm avatar co theo nội dung, căn giữa trong section */
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: center;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  margin-inline: auto;
+  padding-block: clamp(0.06rem, 0.22vw, 0.12rem);
+  gap: clamp(0.01rem, 0.12vw, 0.05rem);
+  box-sizing: border-box;
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+  .home-boss-bundle {
+  transition:
+    transform 0.42s cubic-bezier(0.32, 1.08, 0.45, 1),
+    filter 0.32s ease-out;
+}
+
+.home-boss-season-cluster__row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+  .home-boss-season-cluster__row
+  .home-boss-bundle--1
+  .home-boss-stack__img {
+  position: relative;
+  margin: clamp(-0.42rem, -1vw, -0.16rem);
+  z-index: 0;
+}
+
+/*
+ * Hai boss khác nhau trên cùng hàng: nén nhẹ — kéo cả bundle kế (~10% cạnh avatar).
+ * Đặt margin trên .home-boss-bundle (không chỉ ảnh) để flex/gap không nuốt overlap.
+ */
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+  .home-boss-season-cluster__row
+  .home-boss-bundle:not(:first-child) {
+  margin-left: calc(
+    var(--boss-avatar-inter) * var(--boss-tier-scale, 1) * -0.1
+  );
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+  .home-boss-season-cluster__row
+  .home-boss-bundle--1
+  .home-boss-stack__img {
+  margin: clamp(-0.32rem, -0.8vw, -0.1rem);
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+  .home-boss-season-cluster__row
+  .home-boss-bundle:not(:first-child) {
+  margin-left: calc(
+    var(--boss-avatar-inter-dense) * var(--boss-tier-scale, 1) * -0.1
+  );
+}
+
+/*
+ * Cụm mùa: chồng giữa các mặt cùng boss tối đa 15% cạnh (ghi đè strip bundle).
+ */
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+  .home-boss-bundle--2
+  .home-boss-stack__img:not(:first-child) {
+  margin-left: calc(
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.15
+  );
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+  .home-boss-bundle--2
+  .home-boss-stack__img:not(:first-child) {
+  margin-left: calc(
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.15
+  );
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+  .home-boss-bundle--3
+  .home-boss-stack__img:nth-child(1) {
+  margin-bottom: calc(
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.15
+  );
+  z-index: 3;
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+  .home-boss-bundle--3
+  .home-boss-stack__img:nth-child(2) {
+  margin-right: calc(
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.15
+  );
+  margin-top: calc(
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.15
+  );
+  z-index: 0;
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+  .home-boss-bundle--3
+  .home-boss-stack__img:nth-child(3) {
+  margin-left: calc(
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.15
+  );
+  margin-top: calc(
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.15
+  );
+  z-index: 0;
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+  .home-boss-bundle--3
+  .home-boss-stack__img:nth-child(1) {
+  margin-bottom: calc(
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.15
+  );
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+  .home-boss-bundle--3
+  .home-boss-stack__img:nth-child(2) {
+  margin-right: calc(
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.15
+  );
+  margin-top: calc(
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.15
+  );
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+  .home-boss-bundle--3
+  .home-boss-stack__img:nth-child(3) {
+  margin-left: calc(
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.15
+  );
+  margin-top: calc(
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.15
+  );
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+  .home-boss-bundle--4
+  .home-boss-stack__img:nth-child(2) {
+  margin-left: calc(
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.15
+  );
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+  .home-boss-bundle--4
+  .home-boss-stack__img:nth-child(3) {
+  margin-top: calc(
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.15
+  );
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+  .home-boss-bundle--4
+  .home-boss-stack__img:nth-child(4) {
+  margin-left: calc(
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.15
+  );
+  margin-top: calc(
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.15
+  );
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+  .home-boss-bundle--4
+  .home-boss-stack__img:nth-child(2) {
+  margin-left: calc(
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.15
+  );
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+  .home-boss-bundle--4
+  .home-boss-stack__img:nth-child(3) {
+  margin-top: calc(
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.15
+  );
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+  .home-boss-bundle--4
+  .home-boss-stack__img:nth-child(4) {
+  margin-left: calc(
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.15
+  );
+  margin-top: calc(
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.15
+  );
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster:not(.home-boss-stack--bundles):not(
+    .home-boss-stack--cluster-wrap
+  )
   .home-boss-stack__img {
   position: relative;
   margin: clamp(-0.32rem, -0.8vw, -0.16rem) clamp(-0.52rem, -1.35vw, -0.28rem);
@@ -1054,20 +1491,36 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
 }
 
 /* Chỉ xếp lớp khi không hover — nếu không, z-index này ghi đè rule :hover phía trên trong cascade */
-.home-boss-stack--strip.home-boss-stack--cluster:not(.home-boss-stack--bundles)
+.home-boss-stack--strip.home-boss-stack--cluster:not(
+    .home-boss-stack--bundles
+  ):not(.home-boss-stack--cluster-wrap)
   .home-boss-stack__img:nth-child(even):not(:hover) {
   z-index: 1;
 }
 
-.home-boss-stack--strip.home-boss-stack--cluster:not(.home-boss-stack--bundles)
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+  .home-boss-strip-face-zb
+  .home-boss-stack__img {
+  z-index: 1;
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster:not(
+    .home-boss-stack--bundles
+  ):not(.home-boss-stack--cluster-wrap)
   .home-boss-stack__img:nth-child(3n + 1):not(:hover) {
+  z-index: 2;
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+  .home-boss-strip-face-za
+  .home-boss-stack__img {
   z-index: 2;
 }
 
 /* 1 cột: chồng dọc — margin dọc hơi âm */
 .home-boss-stack--strip.home-boss-stack--cluster:not(
     .home-boss-stack--bundles
-  )[data-cluster-cols="1"]
+  ):not(.home-boss-stack--cluster-wrap)[data-cluster-cols="1"]
   .home-boss-stack__img {
   margin: clamp(-0.42rem, -1rem, -0.22rem) clamp(-0.32rem, -0.75vw, -0.16rem);
 }
@@ -1075,21 +1528,21 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
 /* 2 cột: chồng ngang vừa */
 .home-boss-stack--strip.home-boss-stack--cluster:not(
     .home-boss-stack--bundles
-  )[data-cluster-cols="2"]
+  ):not(.home-boss-stack--cluster-wrap)[data-cluster-cols="2"]
   .home-boss-stack__img {
   margin: clamp(-0.3rem, -0.72vw, -0.14rem) clamp(-0.78rem, -1.9vw, -0.42rem);
 }
 
 .home-boss-stack--strip.home-boss-stack--cluster:not(
     .home-boss-stack--bundles
-  ).home-boss-stack--strip-dense
+  ):not(.home-boss-stack--cluster-wrap).home-boss-stack--strip-dense
   .home-boss-stack__img {
   margin: clamp(-0.28rem, -0.68vw, -0.12rem) clamp(-0.45rem, -1.15vw, -0.24rem);
 }
 
 .home-boss-stack--strip.home-boss-stack--cluster:not(
     .home-boss-stack--bundles
-  ).home-boss-stack--strip-dense[data-cluster-cols="2"]
+  ):not(.home-boss-stack--cluster-wrap).home-boss-stack--strip-dense[data-cluster-cols="2"]
   .home-boss-stack__img {
   margin: clamp(-0.24rem, -0.58vw, -0.1rem) clamp(-0.65rem, -1.55vw, -0.35rem);
 }
@@ -1126,8 +1579,8 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
 .home-boss-tier--t750 .home-boss-stack--strip .home-boss-stack__img,
 .home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img,
 .home-boss-tier--tlow .home-boss-stack--strip .home-boss-stack__img {
-  width: calc(clamp(4.28rem, 12.35vw, 7.05rem) * var(--boss-tier-scale, 1));
-  height: calc(clamp(4.28rem, 12.35vw, 7.05rem) * var(--boss-tier-scale, 1));
+  width: calc(var(--boss-avatar-ref) * var(--boss-tier-scale, 1));
+  height: calc(var(--boss-avatar-ref) * var(--boss-tier-scale, 1));
 }
 
 .home-boss-tier--t1000
@@ -1142,14 +1595,41 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
 .home-boss-tier--tlow
   .home-boss-stack--strip.home-boss-stack--strip-dense
   .home-boss-stack__img {
-  width: calc(clamp(3.45rem, 9.5vw, 5.95rem) * var(--boss-tier-scale, 1));
-  height: calc(clamp(3.45rem, 9.5vw, 5.95rem) * var(--boss-tier-scale, 1));
+  width: calc(var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1));
+  height: calc(var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1));
 }
 
 .home-boss-tier--t1000 .home-boss-stack--strip.home-boss-stack--cluster,
 .home-boss-tier--t750 .home-boss-stack--strip.home-boss-stack--cluster,
 .home-boss-tier--t500 .home-boss-stack--strip.home-boss-stack--cluster,
 .home-boss-tier--tlow .home-boss-stack--strip.home-boss-stack--cluster {
+  max-width: 100%;
+}
+
+/* Cùng kích thước strip khi section là slot mùa (data-boss-season) */
+.home-boss-tier--season-1 .home-boss-stack--strip .home-boss-stack__img,
+.home-boss-tier--season-2 .home-boss-stack--strip .home-boss-stack__img,
+.home-boss-tier--season-3 .home-boss-stack--strip .home-boss-stack__img {
+  width: calc(var(--boss-avatar-inter) * var(--boss-tier-scale, 1));
+  height: calc(var(--boss-avatar-inter) * var(--boss-tier-scale, 1));
+}
+
+.home-boss-tier--season-1
+  .home-boss-stack--strip.home-boss-stack--strip-dense
+  .home-boss-stack__img,
+.home-boss-tier--season-2
+  .home-boss-stack--strip.home-boss-stack--strip-dense
+  .home-boss-stack__img,
+.home-boss-tier--season-3
+  .home-boss-stack--strip.home-boss-stack--strip-dense
+  .home-boss-stack__img {
+  width: calc(var(--boss-avatar-inter-dense) * var(--boss-tier-scale, 1));
+  height: calc(var(--boss-avatar-inter-dense) * var(--boss-tier-scale, 1));
+}
+
+.home-boss-tier--season-1 .home-boss-stack--strip.home-boss-stack--cluster,
+.home-boss-tier--season-2 .home-boss-stack--strip.home-boss-stack--cluster,
+.home-boss-tier--season-3 .home-boss-stack--strip.home-boss-stack--cluster {
   max-width: 100%;
 }
 
@@ -1220,7 +1700,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
 /* Chồng ~17% đường kính — bám theo size avatar tier */
 .home-boss-bundle--2 .home-boss-stack__img:not(:first-child) {
   margin-left: calc(
-    clamp(4.28rem, 12.35vw, 7.05rem) * var(--boss-tier-scale, 1) * -0.17
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.17
   );
 }
 
@@ -1228,7 +1708,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   .home-boss-bundle--2
   .home-boss-stack__img:not(:first-child) {
   margin-left: calc(
-    clamp(3.45rem, 9.5vw, 5.95rem) * var(--boss-tier-scale, 1) * -0.17
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.17
   );
 }
 
@@ -1250,7 +1730,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   position: relative;
   z-index: 3;
   margin-bottom: calc(
-    clamp(4.28rem, 12.35vw, 7.05rem) * var(--boss-tier-scale, 1) * -0.1
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.1
   );
 }
 
@@ -1258,7 +1738,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   .home-boss-bundle--3
   .home-boss-stack__img:nth-child(1) {
   margin-bottom: calc(
-    clamp(3.45rem, 9.5vw, 5.95rem) * var(--boss-tier-scale, 1) * -0.1
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.1
   );
 }
 
@@ -1269,10 +1749,10 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   position: relative;
   z-index: 0;
   margin-right: calc(
-    clamp(4.28rem, 12.35vw, 7.05rem) * var(--boss-tier-scale, 1) * -0.08
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.08
   );
   margin-top: calc(
-    clamp(4.28rem, 12.35vw, 7.05rem) * var(--boss-tier-scale, 1) * -0.18
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.18
   );
 }
 
@@ -1282,10 +1762,10 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   position: relative;
   z-index: 0;
   margin-left: calc(
-    clamp(4.28rem, 12.35vw, 7.05rem) * var(--boss-tier-scale, 1) * -0.08
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.08
   );
   margin-top: calc(
-    clamp(4.28rem, 12.35vw, 7.05rem) * var(--boss-tier-scale, 1) * -0.18
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.18
   );
 }
 
@@ -1293,10 +1773,10 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   .home-boss-bundle--3
   .home-boss-stack__img:nth-child(2) {
   margin-right: calc(
-    clamp(3.45rem, 9.5vw, 5.95rem) * var(--boss-tier-scale, 1) * -0.08
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.08
   );
   margin-top: calc(
-    clamp(3.45rem, 9.5vw, 5.95rem) * var(--boss-tier-scale, 1) * -0.18
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.18
   );
 }
 
@@ -1304,10 +1784,10 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   .home-boss-bundle--3
   .home-boss-stack__img:nth-child(3) {
   margin-left: calc(
-    clamp(3.45rem, 9.5vw, 5.95rem) * var(--boss-tier-scale, 1) * -0.08
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.08
   );
   margin-top: calc(
-    clamp(3.45rem, 9.5vw, 5.95rem) * var(--boss-tier-scale, 1) * -0.18
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.18
   );
 }
 
@@ -1337,7 +1817,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   position: relative;
   z-index: 2;
   margin-left: calc(
-    clamp(4.28rem, 12.35vw, 7.05rem) * var(--boss-tier-scale, 1) * -0.12
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.12
   );
 }
 
@@ -1347,7 +1827,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   position: relative;
   z-index: 1;
   margin-top: calc(
-    clamp(4.28rem, 12.35vw, 7.05rem) * var(--boss-tier-scale, 1) * -0.12
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.12
   );
 }
 
@@ -1357,10 +1837,10 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   position: relative;
   z-index: 1;
   margin-left: calc(
-    clamp(4.28rem, 12.35vw, 7.05rem) * var(--boss-tier-scale, 1) * -0.12
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.12
   );
   margin-top: calc(
-    clamp(4.28rem, 12.35vw, 7.05rem) * var(--boss-tier-scale, 1) * -0.12
+    var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.12
   );
 }
 
@@ -1368,7 +1848,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   .home-boss-bundle--4
   .home-boss-stack__img:nth-child(2) {
   margin-left: calc(
-    clamp(3.45rem, 9.5vw, 5.95rem) * var(--boss-tier-scale, 1) * -0.12
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.12
   );
 }
 
@@ -1376,7 +1856,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   .home-boss-bundle--4
   .home-boss-stack__img:nth-child(3) {
   margin-top: calc(
-    clamp(3.45rem, 9.5vw, 5.95rem) * var(--boss-tier-scale, 1) * -0.12
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.12
   );
 }
 
@@ -1384,10 +1864,10 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   .home-boss-bundle--4
   .home-boss-stack__img:nth-child(4) {
   margin-left: calc(
-    clamp(3.45rem, 9.5vw, 5.95rem) * var(--boss-tier-scale, 1) * -0.12
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.12
   );
   margin-top: calc(
-    clamp(3.45rem, 9.5vw, 5.95rem) * var(--boss-tier-scale, 1) * -0.12
+    var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.12
   );
 }
 
@@ -1429,6 +1909,14 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
 }
 
 @media (max-width: 639px) {
+  /* Strip / cluster dùng var(--boss-avatar-*) — thu nhỏ so với desktop */
+  :root {
+    --boss-avatar-ref: clamp(3.35rem, 15vw, 4.75rem);
+    --boss-avatar-ref-dense: clamp(2.72rem, 12vw, 3.95rem);
+    --boss-avatar-inter: clamp(3.2rem, 14vw, 4.55rem);
+    --boss-avatar-inter-dense: clamp(2.62rem, 11.5vw, 3.85rem);
+  }
+
   .home-boss-deco {
     opacity: 0.52;
   }
@@ -1444,8 +1932,8 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   }
 
   .home-boss-stack--strip .home-boss-stack__img {
-    width: clamp(3.45rem, 16vw, 4.85rem);
-    height: clamp(3.45rem, 16vw, 4.85rem);
+    width: var(--boss-avatar-ref);
+    height: var(--boss-avatar-ref);
     border-width: 3px;
   }
 
@@ -1455,8 +1943,8 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   }
 
   .home-boss-stack--strip-dense .home-boss-stack__img {
-    width: clamp(2.75rem, 8.25vw, 4.15rem);
-    height: clamp(2.75rem, 8.25vw, 4.15rem);
+    width: var(--boss-avatar-ref-dense);
+    height: var(--boss-avatar-ref-dense);
     border-width: 2px;
   }
 
@@ -1466,12 +1954,12 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   }
 
   .home-boss-strip--tiered {
-    gap: clamp(0.14rem, 0.78vw, 0.3rem);
+    gap: clamp(1px, 0.35vw, 5px);
   }
 
   .home-boss-stack--strip.home-boss-stack--cluster:not(
       .home-boss-stack--bundles
-    )
+    ):not(.home-boss-stack--cluster-wrap)
     .home-boss-stack__img {
     margin: clamp(-0.28rem, -1.05vw, -0.14rem)
       clamp(-0.45rem, -1.65vw, -0.24rem);
@@ -1479,30 +1967,60 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
 
   .home-boss-stack--strip.home-boss-stack--cluster:not(
       .home-boss-stack--bundles
-    )[data-cluster-cols="1"]
+    ):not(.home-boss-stack--cluster-wrap)[data-cluster-cols="1"]
     .home-boss-stack__img {
     margin: clamp(-0.36rem, -1.2vw, -0.2rem) clamp(-0.28rem, -0.95vw, -0.14rem);
   }
 
   .home-boss-stack--strip.home-boss-stack--cluster:not(
       .home-boss-stack--bundles
-    )[data-cluster-cols="2"]
+    ):not(.home-boss-stack--cluster-wrap)[data-cluster-cols="2"]
     .home-boss-stack__img {
     margin: clamp(-0.26rem, -0.95vw, -0.12rem) clamp(-0.68rem, -2.2vw, -0.38rem);
   }
 
   .home-boss-stack--strip.home-boss-stack--cluster:not(
       .home-boss-stack--bundles
-    ).home-boss-stack--strip-dense
+    ):not(.home-boss-stack--cluster-wrap).home-boss-stack--strip-dense
     .home-boss-stack__img {
     margin: clamp(-0.22rem, -0.85vw, -0.1rem) clamp(-0.38rem, -1.35vw, -0.2rem);
   }
 
   .home-boss-stack--strip.home-boss-stack--cluster:not(
       .home-boss-stack--bundles
-    ).home-boss-stack--strip-dense[data-cluster-cols="2"]
+    ):not(.home-boss-stack--cluster-wrap).home-boss-stack--strip-dense[data-cluster-cols="2"]
     .home-boss-stack__img {
     margin: clamp(-0.2rem, -0.75vw, -0.08rem) clamp(-0.55rem, -1.85vw, -0.32rem);
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-season-cluster__row
+    .home-boss-bundle--1
+    .home-boss-stack__img {
+    margin: clamp(-0.36rem, -1.2vw, -0.2rem);
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-season-cluster__row
+    .home-boss-bundle:not(:first-child) {
+    margin-left: calc(
+      var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.1
+    );
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-season-cluster__row
+    .home-boss-bundle--1
+    .home-boss-stack__img {
+    margin: clamp(-0.28rem, -1.05vw, -0.14rem);
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-season-cluster__row
+    .home-boss-bundle:not(:first-child) {
+    margin-left: calc(
+      var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.1
+    );
   }
 
   .home-boss-bundle--2 .home-boss-stack__img:not(:first-child) {
@@ -1647,6 +2165,26 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
     .home-boss-stack__img {
     width: calc(clamp(2.85rem, 8.5vw, 4.35rem) * var(--boss-tier-scale, 1));
     height: calc(clamp(2.85rem, 8.5vw, 4.35rem) * var(--boss-tier-scale, 1));
+  }
+
+  .home-boss-tier--season-1 .home-boss-stack--strip .home-boss-stack__img,
+  .home-boss-tier--season-2 .home-boss-stack--strip .home-boss-stack__img,
+  .home-boss-tier--season-3 .home-boss-stack--strip .home-boss-stack__img {
+    width: calc(clamp(3.45rem, 14.5vw, 5rem) * var(--boss-tier-scale, 1));
+    height: calc(clamp(3.45rem, 14.5vw, 5rem) * var(--boss-tier-scale, 1));
+  }
+
+  .home-boss-tier--season-1
+    .home-boss-stack--strip.home-boss-stack--strip-dense
+    .home-boss-stack__img,
+  .home-boss-tier--season-2
+    .home-boss-stack--strip.home-boss-stack--strip-dense
+    .home-boss-stack__img,
+  .home-boss-tier--season-3
+    .home-boss-stack--strip.home-boss-stack--strip-dense
+    .home-boss-stack__img {
+    width: calc(clamp(2.85rem, 8.2vw, 4.35rem) * var(--boss-tier-scale, 1));
+    height: calc(clamp(2.85rem, 8.2vw, 4.35rem) * var(--boss-tier-scale, 1));
   }
 
   .home-boss-stack--diff-t0 .home-boss-stack__img,
@@ -2702,12 +3240,32 @@ body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
 }
 
 @media (min-width: 1150px) {
-  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
+  body.boss-detail-page--luyen-detail
     .boss-detail__layout:not(.boss-detail__layout--no-video) {
     grid-template-columns:
       minmax(550px, 1.35fr)
       minmax(0, max-content)
       minmax(400px, 2.4fr);
+  }
+
+  /* Cột video tối thiểu 680px khi chưa wrap (3 cột cùng hàng) */
+  body.boss-detail-page--ac-mong-detail
+    .boss-detail__layout:not(.boss-detail__layout--no-video) {
+    grid-template-columns:
+      minmax(550px, 1.35fr)
+      minmax(0, max-content)
+      minmax(680px, 2.4fr);
+  }
+}
+
+/* Viewport hẹp: không còn 3 cột cố định — video rộng theo 100% / tối đa viewport */
+@media (max-width: 1149px) {
+  body.boss-detail-page--ac-mong-detail
+    .boss-detail__layout--ac-mong-3col
+    > .boss-detail__aside--videos {
+    width: min(100%, 100vw);
+    max-width: 100%;
+    min-width: 0;
   }
 }
 
@@ -2968,6 +3526,15 @@ body.boss-detail-page--phu-ban
   .boss-detail__aside--videos:nth-child(3) {
     grid-column: 1 / -1;
   }
+
+  /* Đã wrap (video full hàng): không giữ min 680px — rộng tối đa theo viewport */
+  body.boss-detail-page--ac-mong-detail
+    .boss-detail__layout--ac-mong-3col
+    > .boss-detail__aside--videos:nth-child(3) {
+    width: min(100%, 100vw);
+    max-width: 100%;
+    min-width: 0;
+  }
 }
 
 /* Ác mộng 3 cột: khi cột xếp chồng, tách ảnh / video bằng viền ngang */
@@ -2981,6 +3548,14 @@ body.boss-detail-page--phu-ban
   .boss-detail__layout--ac-mong-3col .boss-detail__aside--videos {
     border-top: 1px solid #e2e8f0;
     padding-top: 0.65rem;
+  }
+
+  body.boss-detail-page--ac-mong-detail
+    .boss-detail__layout--ac-mong-3col
+    > .boss-detail__aside--videos {
+    width: min(100%, 100vw);
+    max-width: 100%;
+    min-width: 0;
   }
 }
 

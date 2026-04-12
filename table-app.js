@@ -959,4 +959,25 @@
       location.href = base + sep + "id=" + encodeURIComponent(id);
     });
   }
+
+  /**
+   * Video .mp4/.webm đường dẫn tương đối: mở bằng file:// giữ nguyên; http(s) (GitHub Pages, v.v.)
+   * gắn prefix raw media trên nhánh main để trình duyệt tải được file trong repo.
+   */
+  window.BOSS_TABLE_REPO_MEDIA_VIDEO_BASE =
+    "https://media.githubusercontent.com/media/quocvan1311/tru-tien-the-gioi/refs/heads/main/";
+  window.resolveRepoMediaVideoSrc = function (src) {
+    const s = String(src == null ? "" : src).trim();
+    if (!s) return s;
+    if (/^https?:\/\//i.test(s)) return s;
+    try {
+      if (typeof location !== "undefined" && location.protocol === "file:") {
+        return s;
+      }
+    } catch (e) {}
+    const base = String(
+      window.BOSS_TABLE_REPO_MEDIA_VIDEO_BASE || ""
+    ).replace(/\/?$/, "/");
+    return base + s.replace(/^\//, "");
+  };
 })();

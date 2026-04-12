@@ -34,7 +34,8 @@
       /**
        * Video theo id dòng (cùng khóa với ?id= từ BOSS_TABLE_DETAIL_ROW_ID).
        * Mỗi BOSS tối đa 3 mục: URL YouTube (watch/embed), youtu.be, 11 ký tự id,
-       * hoặc đường dẫn file .mp4/.webm tương đối (vd. trailer pb 10/...).
+       * hoặc đường dẫn file .mp4/.webm tương đối (vd. trailer pb 10/...). Trên http(s) (GitHub Pages)
+       * URL file được resolve qua resolveRepoMediaVideoSrc (table-app.js); file:// giữ đường dẫn cục bộ.
        * Nếu không có mục nào hợp lệ → file fallback AC_MONG_TRAILER_FALLBACK_BASENAME (ac-mong-10.js),
        * rồi mới tới DEFAULT_BOSS_DETAIL_VIDEO_URL.
        */
@@ -350,7 +351,10 @@
             frame.appendChild(iframe);
           } else if (entry.kind === "file") {
             var video = document.createElement("video");
-            video.src = entry.src;
+            video.src =
+              typeof window.resolveRepoMediaVideoSrc === "function"
+                ? window.resolveRepoMediaVideoSrc(entry.src)
+                : entry.src;
             video.controls = true;
             video.playsInline = true;
             video.setAttribute("playsinline", "");
