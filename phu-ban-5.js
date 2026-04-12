@@ -22,7 +22,10 @@ window.BOSS_TABLE_DATA = [
     "Boss 2": "Cửu U Huyết Tế",
     "Boss 3": "Huyễn Ma Âm Mị",
     __bossImages: {
-      "Boss 1": ["phu ban 5/12 ho thap boss 1 - khoc huyet la sat.JPG"],
+      "Boss 1": [
+        "phu ban 5/12 ho thap boss 1 - khoc huyet la sat.JPG",
+        "phu ban 5/12 ho thap boss 1 - minh huyet la sat.JPG",
+      ],
       "Boss 2": ["phu ban 5/12 ho thap boss 2 - cuu u huyet te.JPG"],
       "Boss 3": ["phu ban 5/12 ho thap boss 3 - huyen ma am mi.JPG"],
     },
@@ -51,7 +54,10 @@ window.BOSS_TABLE_DATA = [
     "Boss 2": "Quan Phi Hỏa",
     "Boss 3": "Lôi Diệc",
     __bossImages: {
-      "Boss 1": ["phu ban 5/14 ta tong boss 1 - ngao liet.JPG"],
+      "Boss 1": [
+        "phu ban 5/14 ta tong boss 1 - ngao liet.JPG",
+        "phu ban 5/14 ta tong boss 1 - ngao phan.JPG",
+      ],
       "Boss 2": ["phu ban 5/14 ta tong boss 2 - quan phi hoa.JPG"],
       "Boss 3": ["phu ban 5/14 ta tong boss 3 - loi diec.JPG"],
     },
