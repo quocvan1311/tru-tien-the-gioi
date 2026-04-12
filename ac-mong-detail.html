@@ -33,8 +33,10 @@
     <script>
       /**
        * Video theo id dòng (cùng khóa với ?id= từ BOSS_TABLE_DETAIL_ROW_ID).
-       * Mỗi BOSS tối đa 3 mục: URL YouTube (watch/embed), youtu.be, hoặc 11 ký tự video id.
-       * Nếu không khai báo → dùng DEFAULT_BOSS_DETAIL_VIDEO_URL (đổi link mẫu tại đây).
+       * Mỗi BOSS tối đa 3 mục: URL YouTube (watch/embed), youtu.be, 11 ký tự id,
+       * hoặc đường dẫn file .mp4/.webm tương đối (vd. trailer pb 10/...).
+       * Nếu không có mục nào hợp lệ → file fallback AC_MONG_TRAILER_FALLBACK_BASENAME (ac-mong-10.js),
+       * rồi mới tới DEFAULT_BOSS_DETAIL_VIDEO_URL.
        */
       var DEFAULT_BOSS_DETAIL_VIDEO_URL =
         "https://www.youtube.com/watch?v=OY_RlbR4o4E";
@@ -85,6 +87,32 @@
           return m ? m[1] : "";
         }
 
+        function encodePathSegments(relPath) {
+          return String(relPath || "")
+            .split("/")
+            .filter(function (seg) {
+              return seg.length;
+            })
+            .map(function (seg) {
+              return encodeURIComponent(seg);
+            })
+            .join("/");
+        }
+
+        function localVideoEntry(raw) {
+          var s = String(raw == null ? "" : raw).trim();
+          if (!s) return null;
+          if (youtubeVideoId(s)) return null;
+          if (/^https?:\/\//i.test(s)) {
+            if (/\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(s)) {
+              return { kind: "file", src: s };
+            }
+            return null;
+          }
+          if (!/\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(s)) return null;
+          return { kind: "file", src: encodePathSegments(s) };
+        }
+
         function videoEntriesForRow(row) {
           var idFn = window.BOSS_TABLE_DETAIL_ROW_ID;
           if (typeof idFn !== "function") return [];
@@ -97,7 +125,21 @@
           var out = [];
           for (var i = 0; i < arr.length && out.length < 3; i++) {
             var y = youtubeVideoId(arr[i]);
-            if (y) out.push({ kind: "youtube", id: y });
+            if (y) {
+              out.push({ kind: "youtube", id: y });
+              continue;
+            }
+            var loc = localVideoEntry(arr[i]);
+            if (loc) out.push(loc);
+          }
+          if (out.length === 0) {
+            var fbName = window.AC_MONG_TRAILER_FALLBACK_BASENAME;
+            var fbBase = window.AC_MONG_TRAILER_BASE || "trailer pb 10/";
+            if (fbName) {
+              var join = String(fbBase).replace(/\/?$/, "/") + String(fbName).replace(/^\//, "");
+              var fb = localVideoEntry(join);
+              if (fb) out.push(fb);
+            }
           }
           if (out.length === 0) {
             var def = youtubeVideoId(DEFAULT_BOSS_DETAIL_VIDEO_URL);
@@ -287,24 +329,37 @@
         videos.forEach(function (entry, vi) {
           var frame = document.createElement("div");
           frame.className = "boss-detail__video-frame";
-          var iframe = document.createElement("iframe");
-          var q = new URLSearchParams();
-          if (vi === 0) {
-            q.set("autoplay", "1");
-            q.set("mute", "1");
-          }
-          q.set("rel", "0");
-          q.set("playsinline", "1");
-          iframe.src =
-            "https://www.youtube.com/embed/" + entry.id + "?" + q.toString();
-          iframe.title =
+          var titleSuffix =
             bossName + (videos.length > 1 ? " — video " + (vi + 1) : "");
-          iframe.loading = vi === 0 ? "eager" : "lazy";
-          iframe.setAttribute("allowfullscreen", "");
-          iframe.allow =
-            "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-          iframe.referrerPolicy = "strict-origin-when-cross-origin";
-          frame.appendChild(iframe);
+          if (entry.kind === "youtube") {
+            var iframe = document.createElement("iframe");
+            var q = new URLSearchParams();
+            if (vi === 0) {
+              q.set("autoplay", "1");
+            }
+            q.set("rel", "0");
+            q.set("playsinline", "1");
+            iframe.src =
+              "https://www.youtube.com/embed/" + entry.id + "?" + q.toString();
+            iframe.title = titleSuffix;
+            iframe.loading = vi === 0 ? "eager" : "lazy";
+            iframe.setAttribute("allowfullscreen", "");
+            iframe.allow =
+              "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+            iframe.referrerPolicy = "strict-origin-when-cross-origin";
+            frame.appendChild(iframe);
+          } else if (entry.kind === "file") {
+            var video = document.createElement("video");
+            video.src = entry.src;
+            video.controls = true;
+            video.playsInline = true;
+            video.setAttribute("playsinline", "");
+            video.title = titleSuffix;
+            if (vi === 0) {
+              video.autoplay = true;
+            }
+            frame.appendChild(video);
+          }
           stack.appendChild(frame);
         });
         aside.appendChild(stack);
