@@ -17,8 +17,17 @@ body.home-page {
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: radial-gradient(1200px 600px at 15% -10%, rgba(0, 112, 192, 0.14), transparent 55%),
-    radial-gradient(900px 500px at 100% 20%, rgba(99, 102, 241, 0.12), transparent 50%),
+  background:
+    radial-gradient(
+      1200px 600px at 15% -10%,
+      rgba(0, 112, 192, 0.14),
+      transparent 55%
+    ),
+    radial-gradient(
+      900px 500px at 100% 20%,
+      rgba(99, 102, 241, 0.12),
+      transparent 50%
+    ),
     linear-gradient(165deg, #f4f6fb 0%, #e8ecf6 45%, #dfe6f4 100%);
   pointer-events: none;
 }
@@ -38,7 +47,7 @@ body.home-page {
 
 .home-kicker {
   margin: 0 0 0.35rem;
-  font-size: clamp(0.8rem, 2.2vw, 0.95rem);
+  font-size: clamp(1.25rem, 3.5vw, 1.5rem);
   font-weight: 700;
   letter-spacing: 0.32em;
   text-transform: uppercase;
@@ -86,13 +95,20 @@ body.home-page {
   background: #ffffff;
   border-radius: 12px;
   border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.07),
+    0 1px 2px rgba(15, 23, 42, 0.04);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
 }
 
 .home-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(15, 23, 42, 0.06);
+  box-shadow:
+    0 10px 28px rgba(15, 23, 42, 0.12),
+    0 2px 6px rgba(15, 23, 42, 0.06);
 }
 
 .home-card:focus-visible {
@@ -168,7 +184,12 @@ body.excel-boss-page {
   font-size: 11pt;
   line-height: 1.35;
   color: #141820;
-  background: radial-gradient(900px 480px at 12% -5%, rgba(0, 112, 192, 0.06), transparent 50%),
+  background:
+    radial-gradient(
+      900px 480px at 12% -5%,
+      rgba(0, 112, 192, 0.06),
+      transparent 50%
+    ),
     linear-gradient(180deg, #f0f3fa 0%, #e8ecf4 100%);
   min-height: 100vh;
   min-height: 100dvh;
@@ -338,13 +359,18 @@ body.boss-detail-page--ac-mong-detail .boss-data-chip {
   box-sizing: border-box;
 }
 
+/* Chip Độ khó (bảng + chi tiết Ác mộng) — đậm hơn chip season */
+body.excel-boss-page .boss-data-chip--difficulty,
+body.boss-detail-page--ac-mong-detail .boss-data-chip--difficulty {
+  font-weight: 700;
+}
+
 body.excel-boss-page table.excel-ac-mong td[data-col="Độ khó"] {
   vertical-align: top;
 }
 
-body.excel-boss-page table.excel-ac-mong td[data-col="Độ khó"] .boss-data-chip {
+body.excel-boss-page table.excel-ac-mong td[data-col="Độ khó"] .boss-data-chip--difficulty {
   font-size: 11.75pt;
-  font-weight: 500;
 }
 
 body.excel-boss-page .table-status__hint {
@@ -383,7 +409,9 @@ body.excel-boss-page .table-scroll {
   /* Cùng độ dày + màu với viền ô (divider) bên trong */
   border: 0.5px solid #9aa8b8;
   border-radius: 6px;
-  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04);
+  box-shadow:
+    0 4px 24px rgba(15, 23, 42, 0.08),
+    0 1px 3px rgba(15, 23, 42, 0.04);
   background: #ffffff;
   width: 100%;
   max-width: 100%;
@@ -462,15 +490,24 @@ body.excel-boss-page table.excel-ac-mong thead th:hover {
   background: linear-gradient(180deg, #d6e0f2 0%, #c8d4ea 100%);
 }
 
-body.excel-boss-page table.excel-ac-mong:not(.excel-ac-mong--fills) tbody tr:nth-child(even) {
+body.excel-boss-page
+  table.excel-ac-mong:not(.excel-ac-mong--fills)
+  tbody
+  tr:nth-child(even) {
   background: #f4f6fa;
 }
 
-body.excel-boss-page table.excel-ac-mong:not(.excel-ac-mong--fills) tbody tr:nth-child(odd) {
+body.excel-boss-page
+  table.excel-ac-mong:not(.excel-ac-mong--fills)
+  tbody
+  tr:nth-child(odd) {
   background: #ffffff;
 }
 
-body.excel-boss-page table.excel-ac-mong:not(.excel-ac-mong--fills) tbody tr:hover {
+body.excel-boss-page
+  table.excel-ac-mong:not(.excel-ac-mong--fills)
+  tbody
+  tr:hover {
   background: #e8f4ff;
 }
 
@@ -497,7 +534,11 @@ body.excel-boss-page table.excel-ac-mong.excel-ac-mong--fills tbody tr {
   background: transparent;
 }
 
-body.excel-boss-page table.excel-ac-mong.excel-ac-mong--fills tbody tr:hover td {
+body.excel-boss-page
+  table.excel-ac-mong.excel-ac-mong--fills
+  tbody
+  tr:hover
+  td {
   filter: brightness(0.97);
 }
 
@@ -633,7 +674,9 @@ body.excel-boss-page--phu-ban-5-list table.excel-ac-mong {
   width: max(100%, 420px);
 }
 
-body.excel-boss-page--phu-ban-5-list .table-scroll table.excel-ac-mong.data-table--fixed {
+body.excel-boss-page--phu-ban-5-list
+  .table-scroll
+  table.excel-ac-mong.data-table--fixed {
   width: max(100%, 420px);
   min-width: 420px;
 }
@@ -671,8 +714,17 @@ body.boss-detail-page {
   gap: 0.85rem;
   overflow-x: hidden;
   overflow-y: auto;
-  background: radial-gradient(900px 420px at 8% 0%, rgba(0, 112, 192, 0.09), transparent 55%),
-    radial-gradient(700px 380px at 100% 30%, rgba(99, 102, 241, 0.07), transparent 50%),
+  background:
+    radial-gradient(
+      900px 420px at 8% 0%,
+      rgba(0, 112, 192, 0.09),
+      transparent 55%
+    ),
+    radial-gradient(
+      700px 380px at 100% 30%,
+      rgba(99, 102, 241, 0.07),
+      transparent 50%
+    ),
     linear-gradient(180deg, #e9edf6 0%, #e4e9f3 100%);
   color: #141820;
 }
@@ -790,7 +842,8 @@ body.boss-detail-page .boss-detail__fields-inner {
 }
 
 @media (min-width: 1180px) {
-  body.boss-detail-page:not(.boss-detail-page--phu-ban) .boss-detail__fields-inner {
+  body.boss-detail-page:not(.boss-detail-page--phu-ban)
+    .boss-detail__fields-inner {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
@@ -889,7 +942,8 @@ body.boss-detail-page--ac-mong-detail .boss-detail__layout {
 }
 
 @media (min-width: 1150px) {
-  body.boss-detail-page--ac-mong-detail .boss-detail__layout:not(.boss-detail__layout--no-video) {
+  body.boss-detail-page--ac-mong-detail
+    .boss-detail__layout:not(.boss-detail__layout--no-video) {
     grid-template-columns:
       minmax(550px, 1.35fr)
       minmax(0, max-content)
@@ -923,7 +977,9 @@ body.boss-detail-page--ac-mong-detail .boss-detail__images-col {
   padding: 0.55rem 6px 0.65rem;
 }
 
-body.boss-detail-page--ac-mong-detail .boss-detail__images-col .boss-detail__gallery {
+body.boss-detail-page--ac-mong-detail
+  .boss-detail__images-col
+  .boss-detail__gallery {
   width: fit-content;
   max-width: 100%;
   margin-left: auto;
@@ -939,7 +995,9 @@ body.boss-detail-page--ac-mong-detail .boss-detail__fields-inner {
   font-size: inherit;
 }
 
-body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field {
+body.boss-detail-page--ac-mong-detail
+  .boss-detail__info-col
+  .boss-detail__field {
   display: grid;
   grid-template-columns: 12.5rem minmax(0, 1fr);
   column-gap: 1.5rem;
@@ -952,11 +1010,16 @@ body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field
   border-bottom: 1px solid #e8e8e8;
 }
 
-body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field--wide {
+body.boss-detail-page--ac-mong-detail
+  .boss-detail__info-col
+  .boss-detail__field--wide {
   grid-template-columns: 12.5rem minmax(0, 1fr);
 }
 
-body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field dt {
+body.boss-detail-page--ac-mong-detail
+  .boss-detail__info-col
+  .boss-detail__field
+  dt {
   margin: 0;
   padding: 0;
   font-weight: 400;
@@ -969,12 +1032,18 @@ body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field
   line-height: var(--ac-detail-row-lh);
 }
 
-body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field dt::after {
-  content: ':';
+body.boss-detail-page--ac-mong-detail
+  .boss-detail__info-col
+  .boss-detail__field
+  dt::after {
+  content: ":";
   font-weight: inherit;
 }
 
-body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field dd {
+body.boss-detail-page--ac-mong-detail
+  .boss-detail__info-col
+  .boss-detail__field
+  dd {
   margin: 0;
   padding: 0;
   text-align: left;
@@ -987,12 +1056,16 @@ body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field
   min-width: 0;
 }
 
-body.boss-detail-page--ac-mong-detail .boss-detail__info-col dd.boss-detail__boss {
+body.boss-detail-page--ac-mong-detail
+  .boss-detail__info-col
+  dd.boss-detail__boss {
   font-weight: 700;
   line-height: var(--ac-detail-row-lh);
 }
 
-body.boss-detail-page--ac-mong-detail .boss-detail__info-col dd.boss-detail__pre {
+body.boss-detail-page--ac-mong-detail
+  .boss-detail__info-col
+  dd.boss-detail__pre {
   white-space: pre-wrap;
   word-break: normal;
   overflow-wrap: normal;
@@ -1006,7 +1079,10 @@ body.boss-detail-page--ac-mong-detail .boss-detail__images-block {
   min-width: 0;
 }
 
-body.boss-detail-page--ac-mong-detail .boss-detail__images-col .boss-detail__gallery img {
+body.boss-detail-page--ac-mong-detail
+  .boss-detail__images-col
+  .boss-detail__gallery
+  img {
   max-height: min(52vh, 520px);
   margin: 0;
   padding: 0;
@@ -1079,7 +1155,8 @@ body.boss-detail-page .boss-detail__video-frame iframe {
  * Phụ bản 5 chi tiết + video: flex wrap — không đủ chỗ cho main + video (min) thì xuống hàng;
  * video ~400px; cùng logic min-height iframe như trên.
  */
-body.boss-detail-page--phu-ban .boss-detail__layout:not(.boss-detail__layout--no-video) {
+body.boss-detail-page--phu-ban
+  .boss-detail__layout:not(.boss-detail__layout--no-video) {
   display: flex;
   flex-wrap: wrap;
   align-content: stretch;
@@ -1146,8 +1223,12 @@ body.boss-detail-page--phu-ban
     font-size: 10.75pt;
   }
 
-  body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field,
-  body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field--wide {
+  body.boss-detail-page--ac-mong-detail
+    .boss-detail__info-col
+    .boss-detail__field,
+  body.boss-detail-page--ac-mong-detail
+    .boss-detail__info-col
+    .boss-detail__field--wide {
     grid-template-columns: 1fr;
     column-gap: 0;
     row-gap: 0.2rem;
@@ -1155,16 +1236,24 @@ body.boss-detail-page--phu-ban
     padding: 0.42rem 0;
   }
 
-  body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field dt {
+  body.boss-detail-page--ac-mong-detail
+    .boss-detail__info-col
+    .boss-detail__field
+    dt {
     text-align: left;
   }
 
-  body.boss-detail-page--ac-mong-detail .boss-detail__info-col .boss-detail__field dd {
+  body.boss-detail-page--ac-mong-detail
+    .boss-detail__info-col
+    .boss-detail__field
+    dd {
     overflow-wrap: break-word;
     word-break: normal;
   }
 
-  body.boss-detail-page--ac-mong-detail .boss-detail__info-col dd.boss-detail__pre {
+  body.boss-detail-page--ac-mong-detail
+    .boss-detail__info-col
+    dd.boss-detail__pre {
     overflow-wrap: break-word;
   }
 }
@@ -1246,7 +1335,9 @@ body.boss-detail-page--phu-ban .boss-detail__field--phu-meta dd {
   line-height: 1.35;
 }
 
-body.boss-detail-page--phu-ban .boss-detail__field--phu-meta dd.boss-detail__pre {
+body.boss-detail-page--phu-ban
+  .boss-detail__field--phu-meta
+  dd.boss-detail__pre {
   line-height: 1.4;
 }
 
@@ -1327,7 +1418,9 @@ body.boss-detail-page--phu-ban .boss-detail__phu-img-scroll {
 }
 
 /* Ảnh full width ô boss (không căn giữa / không thụt theo cột tên) */
-body.boss-detail-page--phu-ban .boss-detail__phu-bosses .boss-detail__gallery--phu-single {
+body.boss-detail-page--phu-ban
+  .boss-detail__phu-bosses
+  .boss-detail__gallery--phu-single {
   flex: 0 0 auto;
   flex-direction: column;
   width: 100%;
@@ -1338,7 +1431,10 @@ body.boss-detail-page--phu-ban .boss-detail__phu-bosses .boss-detail__gallery--p
   min-height: 0;
 }
 
-body.boss-detail-page--phu-ban .boss-detail__phu-bosses .boss-detail__gallery--phu-single img {
+body.boss-detail-page--phu-ban
+  .boss-detail__phu-bosses
+  .boss-detail__gallery--phu-single
+  img {
   width: 100%;
   max-width: 100%;
   height: auto;
@@ -1359,7 +1455,9 @@ body.boss-detail-page--phu-ban .boss-detail__phu-bosses .boss-detail__gallery--p
 }
 
 /* Từ 2 ảnh: xếp dọc, mỗi ảnh dùng gần hết chiều ngang ô → hiển thị to hơn */
-body.boss-detail-page--phu-ban .boss-detail__phu-bosses .boss-detail__gallery--phu-stack {
+body.boss-detail-page--phu-ban
+  .boss-detail__phu-bosses
+  .boss-detail__gallery--phu-stack {
   flex: 0 0 auto;
   flex-direction: column;
   width: 100%;
@@ -1370,7 +1468,10 @@ body.boss-detail-page--phu-ban .boss-detail__phu-bosses .boss-detail__gallery--p
   min-height: 0;
 }
 
-body.boss-detail-page--phu-ban .boss-detail__phu-bosses .boss-detail__gallery--phu-stack img {
+body.boss-detail-page--phu-ban
+  .boss-detail__phu-bosses
+  .boss-detail__gallery--phu-stack
+  img {
   width: 100%;
   max-width: 100%;
   height: auto;
@@ -1427,7 +1528,8 @@ body.boss-detail-page--phu-ban .boss-detail__phu-bosses .boss-detail__gallery--p
     order: 1;
   }
 
-  body.boss-detail-page--luyen-detail .boss-detail__aside:not(.boss-detail__aside--videos) {
+  body.boss-detail-page--luyen-detail
+    .boss-detail__aside:not(.boss-detail__aside--videos) {
     order: 2;
   }
 

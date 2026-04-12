@@ -538,7 +538,7 @@
             td.textContent = "";
           } else {
             const chip = document.createElement("span");
-            chip.className = "boss-data-chip";
+            chip.className = "boss-data-chip boss-data-chip--difficulty";
             chip.textContent = text;
             const tierBg = difficultyColumnBgAcMong(raw);
             chip.style.backgroundColor = tierBg;
@@ -628,6 +628,9 @@
     const statusLocale = tableOptions.statusLocale || "en";
     const detailBaseUrl = tableOptions.detailPage || "";
     const seasonChipPrefix = tableOptions.seasonChipPrefix || "";
+    const seasonSummaryOrder = Array.isArray(tableOptions.seasonSummaryOrder)
+      ? tableOptions.seasonSummaryOrder
+      : null;
     const cellBgMode = tableOptions.cellBgMode;
 
     const statusEl = document.getElementById("status");
@@ -708,6 +711,14 @@
 
         const counts = countBySeason(rawRows, seasonKey, emptySeason);
         const names = Object.keys(counts).sort(function (a, b) {
+          if (seasonSummaryOrder && seasonSummaryOrder.length) {
+            const ia = seasonSummaryOrder.indexOf(a);
+            const ib = seasonSummaryOrder.indexOf(b);
+            const after = seasonSummaryOrder.length;
+            const ra = ia === -1 ? after : ia;
+            const rb = ib === -1 ? after : ib;
+            if (ra !== rb) return ra - rb;
+          }
           return a.localeCompare(b, vi ? "vi" : "en");
         });
         names.forEach(function (name) {
