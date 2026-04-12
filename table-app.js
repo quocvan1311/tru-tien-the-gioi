@@ -190,6 +190,17 @@
     return String(v).trim() === "";
   }
 
+  /** Chưa có ngày tiêu diệt — bảng listing không hiển thị chip Độ khô */
+  function isNgayTieuDietEmpty(row) {
+    const v = row["Ngày tiêu diệt"];
+    if (v == null) return true;
+    return String(v).trim() === "";
+  }
+
+  function isDoKhoValueEmpty(raw) {
+    return parseDifficultyNumber(raw) == null;
+  }
+
   function makeAcMongNgucCellBgResolver(
     rows,
     seasonKey,
@@ -221,7 +232,7 @@
           ? WEEK_BG_PALETTE[(w - 1) % WEEK_BG_PALETTE.length]
           : "#eeeeee";
       if (colKey === "Ghi chú") return "#ffffff";
-      /* Ác mộng 10: chưa nhập Tuần tiêu diệt → các ô ngày/tuần/số ngày trắng (Độ khó vẫn nền season + chip tier) */
+      /* Ác mộng 10: chưa nhập Tuần tiêu diệt → các ô ngày/tuần/số ngày trắng (chip Độ khó do renderTable) */
       if (useTierDifficultyBg && isTuanTieuDietMissing(row)) {
         if (
           colKey === "Ngày tiêu diệt" ||
@@ -522,13 +533,18 @@
           k === "Độ khó" &&
           (cellBgMode === "ac-mong" || cellBgMode === "luyen-nguc")
         ) {
-          const chip = document.createElement("span");
-          chip.className = "boss-data-chip";
-          chip.textContent = text;
-          const tierBg = difficultyColumnBgAcMong(raw);
-          chip.style.backgroundColor = tierBg;
-          chip.style.borderColor = bossChipBorderForBackground(tierBg);
-          td.appendChild(chip);
+          /* Có ngày tiêu diệt + có độ khó mới hiển thị chip; không thì ô trống */
+          if (isNgayTieuDietEmpty(row) || isDoKhoValueEmpty(raw)) {
+            td.textContent = "";
+          } else {
+            const chip = document.createElement("span");
+            chip.className = "boss-data-chip";
+            chip.textContent = text;
+            const tierBg = difficultyColumnBgAcMong(raw);
+            chip.style.backgroundColor = tierBg;
+            chip.style.borderColor = bossChipBorderForBackground(tierBg);
+            td.appendChild(chip);
+          }
           if (spec && spec.noWrap) td.style.whiteSpace = "nowrap";
         } else {
           td.textContent = text;

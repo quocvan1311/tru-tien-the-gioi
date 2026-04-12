@@ -573,11 +573,12 @@ body.excel-boss-page table.excel-ac-mong td[style*="white-space"] {
   line-height: 1.4;
 }
 
-/* Cột ảnh BOSS — thêm khoảng dọc nhẹ so với hàng (2–4px) */
+/* Cột ảnh BOSS — padding trái/phải 4px; ảnh fill bề ngang vùng nội dung ô */
 body.excel-boss-page table.excel-ac-mong td.cell-images {
   vertical-align: middle;
-  padding: 3px 0;
+  padding: 3px 4px;
   line-height: 0;
+  box-sizing: border-box;
 }
 
 body.excel-boss-page .boss-image-strip {
@@ -585,15 +586,18 @@ body.excel-boss-page .boss-image-strip {
   flex-wrap: wrap;
   gap: 3px;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* Listing Ác mộng / Luyện ngục — ảnh full width strip (đã trừ padding ô) */
 body.excel-boss-page .boss-image-strip img {
   display: block;
-  max-height: 148px;
-  max-width: 148px;
+  max-width: 100%;
   width: auto;
   height: auto;
+  max-height: none;
   object-fit: contain;
   box-sizing: border-box;
   margin: 0;
