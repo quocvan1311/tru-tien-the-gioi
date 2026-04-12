@@ -1,3 +1,9 @@
+/* Trang chủ — index: không cuộn, nội dung gói trong viewport */
+html.home-index {
+  height: 100%;
+  overflow: hidden;
+}
+
 /* Trang chủ */
 body.home-page {
   position: relative;
@@ -6,11 +12,19 @@ body.home-page {
   line-height: 1.5;
   color: #1a1d26;
   margin: 0;
-  min-height: 100vh;
-  min-height: 100dvh;
-  padding: clamp(1.5rem, 5vw, 3rem);
+  height: 100%;
+  max-height: 100dvh;
+  padding: clamp(1rem, 3.5vw, 2.25rem);
   box-sizing: border-box;
-  overflow-x: hidden;
+  overflow: hidden;
+  overscroll-behavior: none;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+html.home-index body.home-page {
+  max-height: 100dvh;
 }
 
 .home-backdrop {
@@ -19,16 +33,21 @@ body.home-page {
   z-index: 0;
   background:
     radial-gradient(
-      1200px 600px at 15% -10%,
-      rgba(0, 112, 192, 0.14),
+      720px 520px at 8% 15%,
+      rgba(234, 179, 8, 0.18),
       transparent 55%
     ),
     radial-gradient(
-      900px 500px at 100% 20%,
-      rgba(99, 102, 241, 0.12),
+      640px 480px at 92% 25%,
+      rgba(220, 38, 38, 0.12),
+      transparent 52%
+    ),
+    radial-gradient(
+      700px 500px at 50% 95%,
+      rgba(5, 150, 105, 0.14),
       transparent 50%
     ),
-    linear-gradient(165deg, #f4f6fb 0%, #e8ecf6 45%, #dfe6f4 100%);
+    linear-gradient(165deg, #f8fafc 0%, #eef2ff 38%, #e2e8f0 100%);
   pointer-events: none;
 }
 
@@ -36,13 +55,20 @@ body.home-page {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: min(38rem, 100%);
+  max-width: min(56rem, 100%);
   margin: 0 auto;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  /* Không clip avatar tròn / shadow; trang vẫn khóa scroll ở body.home-page */
+  overflow: visible;
 }
 
 .home-header {
   text-align: center;
-  margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+  margin-bottom: clamp(1rem, 3vw, 1.85rem);
+  flex-shrink: 0;
 }
 
 .home-kicker {
@@ -73,13 +99,888 @@ body.home-page {
   color: #475569;
 }
 
+/* Trang chủ — avatar BOSS: mỗi vùng một kiểu motion (nhanh, khác nhau) */
+@keyframes home-avl-tl {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  28% {
+    transform: translateY(-5px) scale(1.06);
+  }
+  55% {
+    transform: translateY(-10px) scale(1.11);
+  }
+}
+
+@keyframes home-avl-tl-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  40% {
+    transform: translate(4px, -7px) scale(1.09) rotate(3deg);
+  }
+  72% {
+    transform: translate(-3px, -4px) scale(1.05) rotate(-2deg);
+  }
+}
+
+@keyframes home-avl-tr {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  22% {
+    transform: translate(5px, -5px) scale(1.06);
+  }
+  48% {
+    transform: translate(-4px, -9px) scale(1.1);
+  }
+  74% {
+    transform: translate(-6px, -3px) scale(1.04);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes home-avl-tr-b {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0) scale(1);
+  }
+  35% {
+    transform: rotate(5deg) translateY(-7px) scale(1.08);
+  }
+  65% {
+    transform: rotate(-4deg) translateY(-4px) scale(1.06);
+  }
+}
+
+@keyframes home-avl-mid {
+  0%,
+  100% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.12) translateY(-8px);
+  }
+}
+
+@keyframes home-avl-mid-b {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  30% {
+    transform: translateY(-5px) rotate(-3deg) scale(1.06);
+  }
+  62% {
+    transform: translateY(-10px) rotate(3deg) scale(1.1);
+  }
+}
+
+@keyframes home-avl-strip-a {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  32% {
+    transform: translate(-6px, -7px) scale(1.09) rotate(-2.5deg);
+  }
+  64% {
+    transform: translate(6px, -11px) scale(1.12) rotate(2deg);
+  }
+}
+
+@keyframes home-avl-strip-a2 {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  48% {
+    transform: translateY(-11px) scale(1.13);
+  }
+}
+
+@keyframes home-avl-strip-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  18% {
+    transform: translateY(-4px) scale(1.06);
+  }
+  42% {
+    transform: translateY(-12px) scale(1.14) rotate(-2deg);
+  }
+  68% {
+    transform: translateY(-5px) scale(1.08) rotate(1.5deg);
+  }
+}
+
+@keyframes home-avl-strip-b2 {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.14) translateY(-7px);
+  }
+}
+
+/* JS rotation — preset ngẫu nhiên (home-boss-avatars.js) */
+@keyframes home-avl-xp1 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(8px, -6px) scale(1.08);
+  }
+}
+
+@keyframes home-avl-xp2 {
+  0%,
+  100% {
+    transform: scale(1) translateY(0);
+  }
+  45% {
+    transform: scale(1.14) translateY(-9px);
+  }
+}
+
+@keyframes home-avl-xp3 {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  30% {
+    transform: translate(-5px, -8px) rotate(-4deg) scale(1.06);
+  }
+  65% {
+    transform: translate(6px, -4px) rotate(3deg) scale(1.05);
+  }
+}
+
+@keyframes home-avl-xp4 {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  25% {
+    transform: rotate(5deg) translateY(-6px);
+  }
+  75% {
+    transform: rotate(-5deg) translateY(-8px);
+  }
+}
+
+@keyframes home-avl-xp5 {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  15% {
+    transform: translateY(-2px) scale(1.03);
+  }
+  35% {
+    transform: translateY(-12px) scale(1.12);
+  }
+  55% {
+    transform: translateY(-5px) scale(1.07);
+  }
+}
+
+@keyframes home-avl-xp6 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-7px, -5px) scale(1.07);
+  }
+  66% {
+    transform: translate(7px, -9px) scale(1.09);
+  }
+}
+
+@keyframes home-avl-xp7 {
+  0%,
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.1) rotate(2.5deg);
+  }
+}
+
+@keyframes home-avl-xp8 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(2px, -4px);
+  }
+  40% {
+    transform: translate(-3px, -7px);
+  }
+  60% {
+    transform: translate(3px, -5px);
+  }
+  80% {
+    transform: translate(-2px, -3px);
+  }
+}
+
+.home-boss-deco {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.home-boss-stack {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.home-boss-stack__img {
+  flex: 0 0 auto;
+  width: clamp(3.75rem, 9.2vw, 5.85rem);
+  height: clamp(3.75rem, 9.2vw, 5.85rem);
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 3px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 5px 18px rgba(15, 23, 42, 0.24),
+    0 0 0 1px rgba(15, 23, 42, 0.06);
+  transition:
+    opacity 0.22s ease-out,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.home-boss-stack__img:not(:first-child) {
+  margin-left: clamp(-2.05rem, -4.65vw, -1.35rem);
+}
+
+/* Góc (tier ưu tiên): độ khó cao — to hơn; thấp — nhỏ hơn */
+.home-boss-stack--diff-t0 .home-boss-stack__img {
+  width: clamp(4.05rem, 9.85vw, 6.2rem);
+  height: clamp(4.05rem, 9.85vw, 6.2rem);
+}
+
+.home-boss-stack--diff-t2 .home-boss-stack__img {
+  width: clamp(3.45rem, 8.5vw, 5.4rem);
+  height: clamp(3.45rem, 8.5vw, 5.4rem);
+}
+
+/* Viền avatar — cùng palette chip Độ khó (bảng listing) */
+.home-boss-tier--t1000 .home-boss-stack--strip .home-boss-stack__img,
+.home-boss-stack--diff-t0 .home-boss-stack__img {
+  border-color: #ff7c80;
+  box-shadow:
+    0 0 0 1px rgba(90, 18, 22, 0.35),
+    0 6px 22px rgba(210, 70, 80, 0.32),
+    0 4px 16px rgba(15, 23, 42, 0.2);
+}
+
+.home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img,
+.home-boss-stack--diff-t1 .home-boss-stack__img {
+  border-color: #e6e655;
+  box-shadow:
+    0 0 0 1px rgba(110, 110, 25, 0.32),
+    0 6px 22px rgba(230, 230, 120, 0.45),
+    0 4px 16px rgba(15, 23, 42, 0.18);
+}
+
+.home-boss-tier--tlow .home-boss-stack--strip .home-boss-stack__img,
+.home-boss-stack--diff-t2 .home-boss-stack__img {
+  border-color: #8fd4a0;
+  box-shadow:
+    0 0 0 1px rgba(35, 95, 55, 0.28),
+    0 6px 22px rgba(130, 210, 155, 0.35),
+    0 4px 16px rgba(15, 23, 42, 0.18);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .home-boss-deco .home-boss-stack__img {
+    will-change: transform;
+  }
+
+  .home-boss-deco .home-boss-stack__img:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  .home-boss-deco .home-boss-stack__img:nth-child(2) {
+    animation-delay: 0.08s;
+  }
+
+  .home-boss-deco .home-boss-stack__img:nth-child(3) {
+    animation-delay: 0.16s;
+  }
+
+  .home-boss-deco .home-boss-stack__img:nth-child(4) {
+    animation-delay: 0.24s;
+  }
+
+  .home-boss-deco .home-boss-stack__img:nth-child(5) {
+    animation-delay: 0.32s;
+  }
+
+  .home-boss-deco .home-boss-stack__img:nth-child(6) {
+    animation-delay: 0.4s;
+  }
+
+  /* Trên trái — sóng nảy */
+  .home-boss-stack--tl .home-boss-stack__img {
+    animation: home-avl-tl 1.95s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+  }
+
+  .home-boss-stack--tl .home-boss-stack__img:nth-child(even) {
+    animation-name: home-avl-tl-b;
+    animation-duration: 2.1s;
+    animation-timing-function: cubic-bezier(0.34, 0.72, 0.42, 1.15);
+  }
+
+  /* Trên phải — drift / nghiêng */
+  .home-boss-stack--tr .home-boss-stack__img {
+    animation: home-avl-tr 1.85s ease-in-out infinite;
+  }
+
+  .home-boss-stack--tr .home-boss-stack__img:nth-child(even) {
+    animation-name: home-avl-tr-b;
+    animation-duration: 2s;
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+
+  /* Giữa trái — pulse scale */
+  .home-boss-stack--ml .home-boss-stack__img {
+    animation: home-avl-mid 2.05s ease-in-out infinite;
+  }
+
+  .home-boss-stack--ml .home-boss-stack__img:nth-child(even) {
+    animation-name: home-avl-mid-b;
+    animation-duration: 2.2s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Giữa phải — đổi vai: lẻ pulse / chẵn rock (lệch phase so với ml) */
+  .home-boss-stack--mr .home-boss-stack__img {
+    animation: home-avl-mid 1.9s ease-in-out infinite;
+  }
+
+  .home-boss-stack--mr .home-boss-stack__img:nth-child(1) {
+    animation-delay: 0.14s;
+  }
+
+  .home-boss-stack--mr .home-boss-stack__img:nth-child(2) {
+    animation-delay: 0.22s;
+  }
+
+  .home-boss-stack--mr .home-boss-stack__img:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  .home-boss-stack--mr .home-boss-stack__img:nth-child(even) {
+    animation-name: home-avl-mid-b;
+    animation-duration: 2.05s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Dải dưới — hàng 1: lắc ngang + nảy; chẵn: spike dọc */
+  .home-boss-stack--strip .home-boss-stack__img {
+    animation: home-avl-strip-a 2s cubic-bezier(0.4, 0, 0.25, 1) infinite;
+  }
+
+  .home-boss-stack--strip .home-boss-stack__img:nth-child(even) {
+    animation-name: home-avl-strip-a2;
+    animation-duration: 1.9s;
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1.25);
+  }
+
+  .home-boss-stack--strip .home-boss-stack__img:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  .home-boss-stack--strip .home-boss-stack__img:nth-child(2) {
+    animation-delay: 0.07s;
+  }
+
+  .home-boss-stack--strip .home-boss-stack__img:nth-child(3) {
+    animation-delay: 0.14s;
+  }
+
+  .home-boss-stack--strip .home-boss-stack__img:nth-child(4) {
+    animation-delay: 0.21s;
+  }
+
+  /* Cụm ≥500 — kiểu hàng 2 cũ */
+  .home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img {
+    animation: home-avl-strip-b 2.1s cubic-bezier(0.36, 0.85, 0.47, 1.1) infinite;
+  }
+
+  .home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img:nth-child(even) {
+    animation-name: home-avl-strip-b2;
+    animation-duration: 1.75s;
+    animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1.4);
+  }
+
+  .home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img:nth-child(odd) {
+    animation-delay: 0.22s;
+  }
+
+  .home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img:nth-child(even) {
+    animation-delay: 0.04s;
+  }
+
+  /* Cụm <500 — xen kẽ strip-a / a2 mạnh hơn */
+  .home-boss-tier--tlow .home-boss-stack--strip .home-boss-stack__img:nth-child(odd) {
+    animation-delay: 0.1s;
+  }
+
+  .home-boss-tier--tlow .home-boss-stack--strip .home-boss-stack__img:nth-child(even) {
+    animation-name: home-avl-strip-a2;
+    animation-duration: 1.85s;
+  }
+
+  /* Fallback (không có dữ liệu tier): 2 hàng như trước */
+  .home-boss-strip:not(.home-boss-strip--tiered)
+    > .home-boss-stack--strip:nth-child(2)
+    .home-boss-stack__img {
+    animation: home-avl-strip-b 2.1s cubic-bezier(0.36, 0.85, 0.47, 1.1) infinite;
+  }
+
+  .home-boss-strip:not(.home-boss-strip--tiered)
+    > .home-boss-stack--strip:nth-child(2)
+    .home-boss-stack__img:nth-child(even) {
+    animation-name: home-avl-strip-b2;
+    animation-duration: 1.75s;
+    animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1.4);
+  }
+
+  .home-boss-strip:not(.home-boss-strip--tiered)
+    > .home-boss-stack--strip:nth-child(2)
+    .home-boss-stack__img:nth-child(odd) {
+    animation-delay: 0.22s;
+  }
+
+  .home-boss-strip:not(.home-boss-strip--tiered)
+    > .home-boss-stack--strip:nth-child(2)
+    .home-boss-stack__img:nth-child(even) {
+    animation-delay: 0.04s;
+  }
+}
+
+.home-boss-stack--tl {
+  top: clamp(3rem, 8vh, 6rem);
+  left: clamp(0.25rem, 1.8vw, 0.85rem);
+  transform: rotate(-5deg);
+}
+
+.home-boss-stack--tr {
+  top: clamp(4rem, 10vh, 7rem);
+  right: clamp(0.25rem, 1.8vw, 0.85rem);
+  transform: rotate(6deg);
+}
+
+.home-boss-stack--ml {
+  top: 50%;
+  left: clamp(0.1rem, 1vw, 0.45rem);
+  transform: translateY(-50%) rotate(-3deg);
+}
+
+.home-boss-stack--mr {
+  top: 50%;
+  right: clamp(0.1rem, 1vw, 0.45rem);
+  transform: translateY(-50%) rotate(4deg);
+}
+
+/* Hai hàng avatar lớn ngay dưới 3 thẻ */
+.home-boss-strip {
+  margin-top: clamp(1rem, 4vw, 2.25rem);
+  margin-bottom: 0;
+  padding-inline: clamp(0.35rem, 2vw, 0.95rem);
+  padding-bottom: clamp(0.2rem, 1.2vw, 0.45rem);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.35rem, 1.8vw, 0.55rem);
+  width: 100%;
+  max-width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: visible;
+}
+
+.home-boss-strip--tiered {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.25rem, 1.1vw, 0.65rem);
+}
+
+.home-boss-tier {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 100%;
+  overflow: visible;
+  padding-inline: clamp(0.12rem, 0.9vw, 0.35rem);
+  padding-block: clamp(0.1rem, 0.6vw, 0.28rem);
+}
+
+.home-boss-tier .home-boss-stack--strip {
+  justify-content: center;
+  max-width: 100%;
+  overflow: visible;
+}
+
+.home-boss-tier--t1000 .home-boss-stack--strip {
+  transform: rotate(-0.9deg);
+}
+
+.home-boss-tier--t500 .home-boss-stack--strip {
+  transform: rotate(0.45deg);
+}
+
+.home-boss-tier--tlow .home-boss-stack--strip {
+  transform: rotate(1.05deg);
+}
+
+.home-boss-strip:not(.home-boss-strip--tiered) > .home-boss-stack--strip:nth-child(1) {
+  transform: rotate(-0.9deg);
+}
+
+.home-boss-strip:not(.home-boss-strip--tiered) > .home-boss-stack--strip:nth-child(2) {
+  transform: rotate(1.1deg);
+}
+
+.home-boss-stack--strip {
+  position: relative;
+  left: auto;
+  right: auto;
+  top: auto;
+  bottom: auto;
+}
+
+/* Cụm chồng 2 chiều (không bắt buộc một hàng ngang) */
+.home-boss-stack--strip.home-boss-stack--cluster {
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  max-width: min(100%, 13.25rem);
+  padding-block: 0.12rem;
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster .home-boss-stack__img {
+  margin: clamp(-0.42rem, -1vw, -0.16rem);
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster .home-boss-stack__img:not(:first-child) {
+  margin-left: clamp(-0.42rem, -1vw, -0.16rem);
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--strip-dense {
+  max-width: min(100%, 11.65rem);
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--strip-dense
+  .home-boss-stack__img {
+  margin: clamp(-0.32rem, -0.8vw, -0.1rem);
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--strip-dense
+  .home-boss-stack__img:not(:first-child) {
+  margin-left: clamp(-0.32rem, -0.8vw, -0.1rem);
+}
+
+.home-boss-stack--strip .home-boss-stack__img {
+  width: clamp(4.15rem, 12.4vw, 7.05rem);
+  height: clamp(4.15rem, 12.4vw, 7.05rem);
+  border-width: 4px;
+  box-shadow:
+    0 6px 22px rgba(15, 23, 42, 0.26),
+    0 0 0 1px rgba(15, 23, 42, 0.07);
+}
+
+.home-boss-stack--strip .home-boss-stack__img:not(:first-child) {
+  margin-left: clamp(-2.55rem, -5.85vw, -1.78rem);
+}
+
+.home-boss-stack--strip-dense .home-boss-stack__img {
+  width: clamp(2.4rem, 5.65vw, 4.15rem);
+  height: clamp(2.4rem, 5.65vw, 4.15rem);
+  border-width: 3px;
+}
+
+.home-boss-stack--strip-dense .home-boss-stack__img:not(:first-child) {
+  margin-left: clamp(-2.1rem, -4.85vw, -1.3rem);
+}
+
+/* Strip theo độ khó: t1000 lớn nhất, t500 = mặc định, tlow nhỏ nhất */
+.home-boss-tier--t1000 .home-boss-stack--strip .home-boss-stack__img {
+  width: clamp(4.45rem, 13vw, 7.6rem);
+  height: clamp(4.45rem, 13vw, 7.6rem);
+}
+
+.home-boss-tier--tlow .home-boss-stack--strip .home-boss-stack__img {
+  width: clamp(3.85rem, 11.25vw, 6.22rem);
+  height: clamp(3.85rem, 11.25vw, 6.22rem);
+}
+
+.home-boss-tier--t1000 .home-boss-stack--strip.home-boss-stack--strip-dense .home-boss-stack__img {
+  width: clamp(2.62rem, 6.1vw, 4.5rem);
+  height: clamp(2.62rem, 6.1vw, 4.5rem);
+}
+
+.home-boss-tier--tlow .home-boss-stack--strip.home-boss-stack--strip-dense .home-boss-stack__img {
+  width: clamp(2.22rem, 5.25vw, 3.85rem);
+  height: clamp(2.22rem, 5.25vw, 3.85rem);
+}
+
+.home-boss-tier--t1000 .home-boss-stack--strip.home-boss-stack--cluster {
+  max-width: min(100%, 14.2rem);
+}
+
+.home-boss-tier--tlow .home-boss-stack--strip.home-boss-stack--cluster {
+  max-width: min(100%, 12.35rem);
+}
+
+.home-boss-tier--t1000
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--strip-dense {
+  max-width: min(100%, 12.25rem);
+}
+
+.home-boss-tier--tlow
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--strip-dense {
+  max-width: min(100%, 10.65rem);
+}
+
+@media (max-width: 1023px) {
+  .home-boss-stack--ml,
+  .home-boss-stack--mr {
+    display: none;
+  }
+}
+
+@media (max-width: 639px) {
+  .home-boss-deco {
+    opacity: 0.52;
+  }
+
+  .home-boss-stack__img {
+    width: clamp(3.35rem, 14vw, 4.25rem);
+    height: clamp(3.35rem, 14vw, 4.25rem);
+    border-width: 2px;
+  }
+
+  .home-boss-stack__img:not(:first-child) {
+    margin-left: clamp(-1.55rem, -8vw, -1.05rem);
+  }
+
+  .home-boss-stack--strip .home-boss-stack__img {
+    width: clamp(3.45rem, 16vw, 4.85rem);
+    height: clamp(3.45rem, 16vw, 4.85rem);
+    border-width: 3px;
+  }
+
+  .home-boss-stack--strip .home-boss-stack__img:not(:first-child) {
+    margin-left: clamp(-1.78rem, -8.8vw, -1.2rem);
+  }
+
+  .home-boss-stack--strip-dense .home-boss-stack__img {
+    width: clamp(2rem, 4.55vw, 3.25rem);
+    height: clamp(2rem, 4.55vw, 3.25rem);
+    border-width: 2px;
+  }
+
+  .home-boss-stack--strip-dense .home-boss-stack__img:not(:first-child) {
+    margin-left: clamp(-1.55rem, -7.5vw, -1.05rem);
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster {
+    max-width: min(100%, 11rem);
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--strip-dense {
+    max-width: min(100%, 9.65rem);
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster .home-boss-stack__img {
+    margin: clamp(-0.3rem, -0.8vw, -0.1rem);
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster .home-boss-stack__img:not(:first-child) {
+    margin-left: clamp(-0.3rem, -0.8vw, -0.1rem);
+  }
+
+  .home-boss-tier--t1000 .home-boss-stack--strip .home-boss-stack__img {
+    width: clamp(3.65rem, 16.5vw, 5.15rem);
+    height: clamp(3.65rem, 16.5vw, 5.15rem);
+  }
+
+  .home-boss-tier--tlow .home-boss-stack--strip .home-boss-stack__img {
+    width: clamp(3.1rem, 15vw, 4.5rem);
+    height: clamp(3.1rem, 15vw, 4.5rem);
+  }
+
+  .home-boss-tier--t1000 .home-boss-stack--strip.home-boss-stack--strip-dense .home-boss-stack__img {
+    width: clamp(2.18rem, 4.85vw, 3.4rem);
+    height: clamp(2.18rem, 4.85vw, 3.4rem);
+  }
+
+  .home-boss-tier--tlow .home-boss-stack--strip.home-boss-stack--strip-dense .home-boss-stack__img {
+    width: clamp(1.88rem, 4.25vw, 2.95rem);
+    height: clamp(1.88rem, 4.25vw, 2.95rem);
+  }
+
+  .home-boss-stack--diff-t0 .home-boss-stack__img {
+    width: clamp(3.55rem, 14.5vw, 4.5rem);
+    height: clamp(3.55rem, 14.5vw, 4.5rem);
+  }
+
+  .home-boss-stack--diff-t2 .home-boss-stack__img {
+    width: clamp(3.02rem, 13.2vw, 3.95rem);
+    height: clamp(3.02rem, 13.2vw, 3.95rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-boss-stack__img {
+    animation: none !important;
+    will-change: auto;
+  }
+
+  .home-boss-stack--tl,
+  .home-boss-stack--tr {
+    transform: none;
+  }
+
+  .home-boss-stack--ml,
+  .home-boss-stack--mr {
+    transform: translateY(-50%);
+  }
+
+  .home-boss-tier--t1000 .home-boss-stack--strip,
+  .home-boss-tier--t500 .home-boss-stack--strip,
+  .home-boss-tier--tlow .home-boss-stack--strip,
+  .home-boss-strip:not(.home-boss-strip--tiered) > .home-boss-stack--strip:nth-child(1),
+  .home-boss-strip:not(.home-boss-strip--tiered) > .home-boss-stack--strip:nth-child(2) {
+    transform: none;
+  }
+}
+
+@keyframes home-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1.15rem) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes home-card-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes home-card-float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes home-card-float-deep {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes home-card-float-wobble {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-5px) rotate(-0.6deg);
+  }
+  66% {
+    transform: translateY(-4px) rotate(0.6deg);
+  }
+}
+
 .home-links {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: clamp(0.85rem, 2.5vw, 1.15rem);
+  gap: clamp(0.95rem, 2.6vw, 1.25rem);
+  flex-shrink: 0;
+}
+
+@media (min-width: 900px) {
+  .home-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.15rem 1.25rem;
+    align-items: stretch;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .home-links > li {
+    animation: home-card-float 3.1s ease-in-out infinite;
+  }
+
+  .home-links > li:nth-child(1) {
+    animation-name: home-card-float-deep;
+    animation-duration: 2.75s;
+    animation-delay: 0s;
+  }
+
+  .home-links > li:nth-child(2) {
+    animation-name: home-card-float-wobble;
+    animation-duration: 3.35s;
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+    animation-delay: -0.9s;
+  }
+
+  .home-links > li:nth-child(3) {
+    animation-name: home-card-float-soft;
+    animation-duration: 3.65s;
+    animation-delay: -1.85s;
+  }
 }
 
 .home-card {
@@ -87,70 +988,167 @@ body.home-page {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 0.35rem;
-  min-height: 4.5rem;
-  padding: clamp(1.1rem, 3vw, 1.35rem) clamp(1.15rem, 3.5vw, 1.5rem);
+  gap: 0.45rem;
+  min-height: 5.95rem;
+  padding: clamp(1.3rem, 3.2vw, 1.6rem) clamp(1.3rem, 3.5vw, 1.65rem);
   text-decoration: none;
   color: inherit;
-  background: #ffffff;
-  border-radius: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow:
-    0 4px 14px rgba(15, 23, 42, 0.07),
-    0 1px 2px rgba(15, 23, 42, 0.04);
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    border-color 0.18s ease;
+    transform 0.28s cubic-bezier(0.34, 1.2, 0.64, 1),
+    box-shadow 0.28s ease,
+    border-color 0.28s ease,
+    filter 0.28s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .home-card {
+    animation: home-card-enter 0.4s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+
+  .home-links > li:nth-child(1) .home-card {
+    animation-delay: 0.04s;
+  }
+
+  .home-links > li:nth-child(2) .home-card {
+    animation-delay: 0.11s;
+  }
+
+  .home-links > li:nth-child(3) .home-card {
+    animation-delay: 0.19s;
+  }
 }
 
 .home-card:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 10px 28px rgba(15, 23, 42, 0.12),
-    0 2px 6px rgba(15, 23, 42, 0.06);
+  transform: translateY(-6px) scale(1.02);
 }
 
 .home-card:focus-visible {
-  outline: 2px solid #0070c0;
+  outline: 2px solid currentColor;
   outline-offset: 3px;
 }
 
 .home-card__label {
-  font-size: clamp(1.15rem, 3.2vw, 1.35rem);
-  font-weight: 700;
-  line-height: 1.25;
-  color: #0f172a;
+  font-size: clamp(1.22rem, 3.35vw, 1.48rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
 }
 
 .home-card__hint {
-  font-size: clamp(0.9rem, 2.2vw, 1.05rem);
-  line-height: 1.4;
-  color: #64748b;
+  font-size: clamp(0.92rem, 2.35vw, 1.08rem);
+  line-height: 1.45;
+  font-weight: 500;
+  opacity: 0.92;
 }
 
+/* Ác mộng — theme vàng đậm / amber */
 .home-card--ac {
-  border-left: 5px solid #0070c0;
+  background: linear-gradient(
+    145deg,
+    #fffbeb 0%,
+    #fde68a 42%,
+    #f59e0b 100%
+  );
+  border-color: rgba(180, 83, 9, 0.45);
+  box-shadow:
+    0 4px 16px rgba(180, 83, 9, 0.2),
+    0 1px 0 rgba(255, 255, 255, 0.55) inset;
+  border-left: 6px solid #92400e;
 }
 
-.home-card--ln {
-  border-left: 5px solid #6366f1;
+.home-card--ac .home-card__label {
+  color: #451a03;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
-.home-card--pb {
-  border-left: 5px solid #0d9488;
+.home-card--ac .home-card__hint {
+  color: #78350f;
 }
 
 .home-card--ac:hover {
-  border-left-color: #005a9e;
+  border-color: rgba(120, 53, 15, 0.55);
+  box-shadow:
+    0 14px 32px rgba(180, 83, 9, 0.32),
+    0 2px 8px rgba(120, 53, 15, 0.12),
+    0 1px 0 rgba(255, 255, 255, 0.5) inset;
+}
+
+.home-card--ac:focus-visible {
+  outline-color: #b45309;
+}
+
+/* Luyện ngục — theme đỏ */
+.home-card--ln {
+  background: linear-gradient(
+    145deg,
+    #fef2f2 0%,
+    #fecaca 45%,
+    #ef4444 100%
+  );
+  border-color: rgba(185, 28, 28, 0.42);
+  box-shadow:
+    0 4px 16px rgba(185, 28, 28, 0.22),
+    0 1px 0 rgba(255, 255, 255, 0.45) inset;
+  border-left: 6px solid #7f1d1d;
+}
+
+.home-card--ln .home-card__label {
+  color: #450a0a;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.home-card--ln .home-card__hint {
+  color: #7f1d1d;
 }
 
 .home-card--ln:hover {
-  border-left-color: #4f46e5;
+  border-color: rgba(127, 29, 29, 0.55);
+  box-shadow:
+    0 14px 32px rgba(185, 28, 28, 0.35),
+    0 2px 8px rgba(127, 29, 29, 0.15),
+    0 1px 0 rgba(255, 255, 255, 0.42) inset;
+}
+
+.home-card--ln:focus-visible {
+  outline-color: #b91c1c;
+}
+
+/* Phụ bản 5 — theme xanh lá */
+.home-card--pb {
+  background: linear-gradient(
+    145deg,
+    #ecfdf5 0%,
+    #6ee7b7 48%,
+    #10b981 100%
+  );
+  border-color: rgba(4, 120, 87, 0.4);
+  box-shadow:
+    0 4px 16px rgba(4, 120, 87, 0.2),
+    0 1px 0 rgba(255, 255, 255, 0.5) inset;
+  border-left: 6px solid #047857;
+}
+
+.home-card--pb .home-card__label {
+  color: #022c22;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.home-card--pb .home-card__hint {
+  color: #065f46;
 }
 
 .home-card--pb:hover {
-  border-left-color: #0f766e;
+  border-color: rgba(6, 95, 70, 0.55);
+  box-shadow:
+    0 14px 32px rgba(4, 120, 87, 0.32),
+    0 2px 8px rgba(6, 78, 59, 0.12),
+    0 1px 0 rgba(255, 255, 255, 0.45) inset;
+}
+
+.home-card--pb:focus-visible {
+  outline-color: #059669;
 }
 
 .site-nav {
