@@ -65,6 +65,38 @@ html.home-index body.home-page {
   overflow: visible;
 }
 
+/* Trang chủ: shell full width; header + 3 nút hẹp hơn; dải avatar full màn hình (rule riêng bên dưới) */
+body.home-page .home-shell {
+  max-width: 100%;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+body.home-page .home-header {
+  max-width: min(52rem, 100%);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+body.home-page .home-links {
+  max-width: min(52rem, 100%);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  margin-bottom: clamp(0.55rem, 1.85vw, 1.35rem);
+}
+
+body.home-page .home-links > li {
+  min-width: 0;
+}
+
+body.home-page .home-card {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .home-header {
   text-align: center;
   margin-bottom: clamp(1rem, 3vw, 1.85rem);
@@ -351,6 +383,8 @@ html.home-index body.home-page {
 }
 
 .home-boss-stack__img {
+  position: relative;
+  z-index: 0;
   flex: 0 0 auto;
   width: clamp(3.75rem, 9.2vw, 5.85rem);
   height: clamp(3.75rem, 9.2vw, 5.85rem);
@@ -362,27 +396,43 @@ html.home-index body.home-page {
     0 5px 18px rgba(15, 23, 42, 0.24),
     0 0 0 1px rgba(15, 23, 42, 0.06);
   transition:
-    opacity 0.22s ease-out,
+    transform 0.42s cubic-bezier(0.34, 1.18, 0.45, 1),
+    opacity 0.32s ease-out,
     border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.3s ease,
+    filter 0.28s ease;
 }
 
 .home-boss-stack__img:not(:first-child) {
   margin-left: clamp(-2.05rem, -4.65vw, -1.35rem);
 }
 
-/* Góc (tier ưu tiên): độ khó cao — to hơn; thấp — nhỏ hơn */
-.home-boss-stack--diff-t0 .home-boss-stack__img {
-  width: clamp(4.05rem, 9.85vw, 6.2rem);
-  height: clamp(4.05rem, 9.85vw, 6.2rem);
+/* Góc: cùng công thức scale 100% → 80% như strip */
+.home-boss-stack--diff-t0 {
+  --boss-tier-scale: 1;
 }
 
-.home-boss-stack--diff-t2 .home-boss-stack__img {
-  width: clamp(3.45rem, 8.5vw, 5.4rem);
-  height: clamp(3.45rem, 8.5vw, 5.4rem);
+.home-boss-stack--diff-t1 {
+  --boss-tier-scale: 0.9333333333;
 }
 
-/* Viền avatar — cùng palette chip Độ khó (bảng listing) */
+.home-boss-stack--diff-t2 {
+  --boss-tier-scale: 0.8666666667;
+}
+
+.home-boss-stack--diff-t3 {
+  --boss-tier-scale: 0.8;
+}
+
+.home-boss-stack--diff-t0 .home-boss-stack__img,
+.home-boss-stack--diff-t1 .home-boss-stack__img,
+.home-boss-stack--diff-t2 .home-boss-stack__img,
+.home-boss-stack--diff-t3 .home-boss-stack__img {
+  width: calc(clamp(4.05rem, 9.85vw, 6.2rem) * var(--boss-tier-scale, 1));
+  height: calc(clamp(4.05rem, 9.85vw, 6.2rem) * var(--boss-tier-scale, 1));
+}
+
+/* Viền avatar — cùng palette chip Độ khó (bảng listing): đỏ / lam / vàng / lá */
 .home-boss-tier--t1000 .home-boss-stack--strip .home-boss-stack__img,
 .home-boss-stack--diff-t0 .home-boss-stack__img {
   border-color: #ff7c80;
@@ -392,8 +442,17 @@ html.home-index body.home-page {
     0 4px 16px rgba(15, 23, 42, 0.2);
 }
 
-.home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img,
+.home-boss-tier--t750 .home-boss-stack--strip .home-boss-stack__img,
 .home-boss-stack--diff-t1 .home-boss-stack__img {
+  border-color: #5b9ae8;
+  box-shadow:
+    0 0 0 1px rgba(28, 72, 130, 0.38),
+    0 6px 22px rgba(120, 175, 235, 0.42),
+    0 4px 16px rgba(15, 23, 42, 0.18);
+}
+
+.home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img,
+.home-boss-stack--diff-t2 .home-boss-stack__img {
   border-color: #e6e655;
   box-shadow:
     0 0 0 1px rgba(110, 110, 25, 0.32),
@@ -402,7 +461,7 @@ html.home-index body.home-page {
 }
 
 .home-boss-tier--tlow .home-boss-stack--strip .home-boss-stack__img,
-.home-boss-stack--diff-t2 .home-boss-stack__img {
+.home-boss-stack--diff-t3 .home-boss-stack__img {
   border-color: #8fd4a0;
   box-shadow:
     0 0 0 1px rgba(35, 95, 55, 0.28),
@@ -410,172 +469,210 @@ html.home-index body.home-page {
     0 4px 16px rgba(15, 23, 42, 0.18);
 }
 
-@media (prefers-reduced-motion: no-preference) {
+.home-boss-deco .home-boss-stack__img {
+  will-change: transform;
+}
+
+.home-boss-deco .home-boss-stack__img:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.home-boss-deco .home-boss-stack__img:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.home-boss-deco .home-boss-stack__img:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.home-boss-deco .home-boss-stack__img:nth-child(4) {
+  animation-delay: 0.24s;
+}
+
+.home-boss-deco .home-boss-stack__img:nth-child(5) {
+  animation-delay: 0.32s;
+}
+
+.home-boss-deco .home-boss-stack__img:nth-child(6) {
+  animation-delay: 0.4s;
+}
+
+/* Trên trái — sóng nảy */
+.home-boss-stack--tl .home-boss-stack__img {
+  animation: home-avl-tl 1.95s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+}
+
+.home-boss-stack--tl .home-boss-stack__img:nth-child(even) {
+  animation-name: home-avl-tl-b;
+  animation-duration: 2.1s;
+  animation-timing-function: cubic-bezier(0.34, 0.72, 0.42, 1.15);
+}
+
+/* Trên phải — drift / nghiêng */
+.home-boss-stack--tr .home-boss-stack__img {
+  animation: home-avl-tr 1.85s ease-in-out infinite;
+}
+
+.home-boss-stack--tr .home-boss-stack__img:nth-child(even) {
+  animation-name: home-avl-tr-b;
+  animation-duration: 2s;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+/* Giữa trái — pulse scale */
+.home-boss-stack--ml .home-boss-stack__img {
+  animation: home-avl-mid 2.05s ease-in-out infinite;
+}
+
+.home-boss-stack--ml .home-boss-stack__img:nth-child(even) {
+  animation-name: home-avl-mid-b;
+  animation-duration: 2.2s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Giữa phải — đổi vai: lẻ pulse / chẵn rock (lệch phase so với ml) */
+.home-boss-stack--mr .home-boss-stack__img {
+  animation: home-avl-mid 1.9s ease-in-out infinite;
+}
+
+.home-boss-stack--mr .home-boss-stack__img:nth-child(1) {
+  animation-delay: 0.14s;
+}
+
+.home-boss-stack--mr .home-boss-stack__img:nth-child(2) {
+  animation-delay: 0.22s;
+}
+
+.home-boss-stack--mr .home-boss-stack__img:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.home-boss-stack--mr .home-boss-stack__img:nth-child(even) {
+  animation-name: home-avl-mid-b;
+  animation-duration: 2.05s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dải dưới — hàng 1: lắc ngang + nảy; chẵn: spike dọc */
+.home-boss-stack--strip .home-boss-stack__img {
+  animation: home-avl-strip-a 2s cubic-bezier(0.4, 0, 0.25, 1) infinite;
+}
+
+.home-boss-stack--strip .home-boss-stack__img:nth-child(even) {
+  animation-name: home-avl-strip-a2;
+  animation-duration: 1.9s;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1.25);
+}
+
+.home-boss-stack--strip .home-boss-stack__img:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.home-boss-stack--strip .home-boss-stack__img:nth-child(2) {
+  animation-delay: 0.07s;
+}
+
+.home-boss-stack--strip .home-boss-stack__img:nth-child(3) {
+  animation-delay: 0.14s;
+}
+
+.home-boss-stack--strip .home-boss-stack__img:nth-child(4) {
+  animation-delay: 0.21s;
+}
+
+/* Cụm ≥500 — kiểu hàng 2 cũ */
+.home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img {
+  animation: home-avl-strip-b 2.1s cubic-bezier(0.36, 0.85, 0.47, 1.1) infinite;
+}
+
+.home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img:nth-child(even) {
+  animation-name: home-avl-strip-b2;
+  animation-duration: 1.75s;
+  animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1.4);
+}
+
+.home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img:nth-child(odd) {
+  animation-delay: 0.22s;
+}
+
+.home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img:nth-child(even) {
+  animation-delay: 0.04s;
+}
+
+/* Cụm <500 — xen kẽ strip-a / a2 mạnh hơn */
+.home-boss-tier--tlow .home-boss-stack--strip .home-boss-stack__img:nth-child(odd) {
+  animation-delay: 0.1s;
+}
+
+.home-boss-tier--tlow .home-boss-stack--strip .home-boss-stack__img:nth-child(even) {
+  animation-name: home-avl-strip-a2;
+  animation-duration: 1.85s;
+}
+
+/* Fallback (không có dữ liệu tier): 2 hàng như trước */
+.home-boss-strip:not(.home-boss-strip--tiered)
+  > .home-boss-stack--strip:nth-child(2)
+  .home-boss-stack__img {
+  animation: home-avl-strip-b 2.1s cubic-bezier(0.36, 0.85, 0.47, 1.1) infinite;
+}
+
+.home-boss-strip:not(.home-boss-strip--tiered)
+  > .home-boss-stack--strip:nth-child(2)
+  .home-boss-stack__img:nth-child(even) {
+  animation-name: home-avl-strip-b2;
+  animation-duration: 1.75s;
+  animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1.4);
+}
+
+.home-boss-strip:not(.home-boss-strip--tiered)
+  > .home-boss-stack--strip:nth-child(2)
+  .home-boss-stack__img:nth-child(odd) {
+  animation-delay: 0.22s;
+}
+
+.home-boss-strip:not(.home-boss-strip--tiered)
+  > .home-boss-stack--strip:nth-child(2)
+  .home-boss-stack__img:nth-child(even) {
+  animation-delay: 0.04s;
+}
+
+
+/* Hover: góc / strip hàng — phóng vừa; cụm lưới — phóng x3 + lân cận đẩy (JS + --repel-*) */
+@media (hover: hover) and (pointer: fine) {
   .home-boss-deco .home-boss-stack__img {
-    will-change: transform;
+    pointer-events: auto;
+    cursor: pointer;
   }
 
-  .home-boss-deco .home-boss-stack__img:nth-child(1) {
-    animation-delay: 0s;
+  .home-boss-strip .home-boss-stack__img {
+    cursor: pointer;
   }
 
-  .home-boss-deco .home-boss-stack__img:nth-child(2) {
-    animation-delay: 0.08s;
+  .home-boss-tier:has(.home-boss-stack__img:hover) {
+    z-index: 10000;
   }
 
-  .home-boss-deco .home-boss-stack__img:nth-child(3) {
-    animation-delay: 0.16s;
+  .home-boss-stack__img:hover {
+    animation-play-state: paused !important;
+    transform: scale(1.14);
+    z-index: 999999;
+    filter: brightness(1.06) saturate(1.05);
+    box-shadow:
+      0 10px 28px rgba(15, 23, 42, 0.32),
+      0 0 0 1px rgba(15, 23, 42, 0.08);
   }
 
-  .home-boss-deco .home-boss-stack__img:nth-child(4) {
-    animation-delay: 0.24s;
+  /* Tắt animation trên ảnh hover — keyframes transform sẽ thắng scale(3) nếu chỉ pause */
+  .home-boss-stack--strip.home-boss-stack--cluster .home-boss-stack__img:hover {
+    animation: none !important;
+    transform: scale(3);
+    z-index: 999999;
   }
 
-  .home-boss-deco .home-boss-stack__img:nth-child(5) {
-    animation-delay: 0.32s;
-  }
-
-  .home-boss-deco .home-boss-stack__img:nth-child(6) {
-    animation-delay: 0.4s;
-  }
-
-  /* Trên trái — sóng nảy */
-  .home-boss-stack--tl .home-boss-stack__img {
-    animation: home-avl-tl 1.95s cubic-bezier(0.42, 0, 0.58, 1) infinite;
-  }
-
-  .home-boss-stack--tl .home-boss-stack__img:nth-child(even) {
-    animation-name: home-avl-tl-b;
-    animation-duration: 2.1s;
-    animation-timing-function: cubic-bezier(0.34, 0.72, 0.42, 1.15);
-  }
-
-  /* Trên phải — drift / nghiêng */
-  .home-boss-stack--tr .home-boss-stack__img {
-    animation: home-avl-tr 1.85s ease-in-out infinite;
-  }
-
-  .home-boss-stack--tr .home-boss-stack__img:nth-child(even) {
-    animation-name: home-avl-tr-b;
-    animation-duration: 2s;
-    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
-  }
-
-  /* Giữa trái — pulse scale */
-  .home-boss-stack--ml .home-boss-stack__img {
-    animation: home-avl-mid 2.05s ease-in-out infinite;
-  }
-
-  .home-boss-stack--ml .home-boss-stack__img:nth-child(even) {
-    animation-name: home-avl-mid-b;
-    animation-duration: 2.2s;
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Giữa phải — đổi vai: lẻ pulse / chẵn rock (lệch phase so với ml) */
-  .home-boss-stack--mr .home-boss-stack__img {
-    animation: home-avl-mid 1.9s ease-in-out infinite;
-  }
-
-  .home-boss-stack--mr .home-boss-stack__img:nth-child(1) {
-    animation-delay: 0.14s;
-  }
-
-  .home-boss-stack--mr .home-boss-stack__img:nth-child(2) {
-    animation-delay: 0.22s;
-  }
-
-  .home-boss-stack--mr .home-boss-stack__img:nth-child(3) {
-    animation-delay: 0.3s;
-  }
-
-  .home-boss-stack--mr .home-boss-stack__img:nth-child(even) {
-    animation-name: home-avl-mid-b;
-    animation-duration: 2.05s;
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Dải dưới — hàng 1: lắc ngang + nảy; chẵn: spike dọc */
-  .home-boss-stack--strip .home-boss-stack__img {
-    animation: home-avl-strip-a 2s cubic-bezier(0.4, 0, 0.25, 1) infinite;
-  }
-
-  .home-boss-stack--strip .home-boss-stack__img:nth-child(even) {
-    animation-name: home-avl-strip-a2;
-    animation-duration: 1.9s;
-    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1.25);
-  }
-
-  .home-boss-stack--strip .home-boss-stack__img:nth-child(1) {
-    animation-delay: 0s;
-  }
-
-  .home-boss-stack--strip .home-boss-stack__img:nth-child(2) {
-    animation-delay: 0.07s;
-  }
-
-  .home-boss-stack--strip .home-boss-stack__img:nth-child(3) {
-    animation-delay: 0.14s;
-  }
-
-  .home-boss-stack--strip .home-boss-stack__img:nth-child(4) {
-    animation-delay: 0.21s;
-  }
-
-  /* Cụm ≥500 — kiểu hàng 2 cũ */
-  .home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img {
-    animation: home-avl-strip-b 2.1s cubic-bezier(0.36, 0.85, 0.47, 1.1) infinite;
-  }
-
-  .home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img:nth-child(even) {
-    animation-name: home-avl-strip-b2;
-    animation-duration: 1.75s;
-    animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1.4);
-  }
-
-  .home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img:nth-child(odd) {
-    animation-delay: 0.22s;
-  }
-
-  .home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img:nth-child(even) {
-    animation-delay: 0.04s;
-  }
-
-  /* Cụm <500 — xen kẽ strip-a / a2 mạnh hơn */
-  .home-boss-tier--tlow .home-boss-stack--strip .home-boss-stack__img:nth-child(odd) {
-    animation-delay: 0.1s;
-  }
-
-  .home-boss-tier--tlow .home-boss-stack--strip .home-boss-stack__img:nth-child(even) {
-    animation-name: home-avl-strip-a2;
-    animation-duration: 1.85s;
-  }
-
-  /* Fallback (không có dữ liệu tier): 2 hàng như trước */
-  .home-boss-strip:not(.home-boss-strip--tiered)
-    > .home-boss-stack--strip:nth-child(2)
-    .home-boss-stack__img {
-    animation: home-avl-strip-b 2.1s cubic-bezier(0.36, 0.85, 0.47, 1.1) infinite;
-  }
-
-  .home-boss-strip:not(.home-boss-strip--tiered)
-    > .home-boss-stack--strip:nth-child(2)
-    .home-boss-stack__img:nth-child(even) {
-    animation-name: home-avl-strip-b2;
-    animation-duration: 1.75s;
-    animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1.4);
-  }
-
-  .home-boss-strip:not(.home-boss-strip--tiered)
-    > .home-boss-stack--strip:nth-child(2)
-    .home-boss-stack__img:nth-child(odd) {
-    animation-delay: 0.22s;
-  }
-
-  .home-boss-strip:not(.home-boss-strip--tiered)
-    > .home-boss-stack--strip:nth-child(2)
-    .home-boss-stack__img:nth-child(even) {
-    animation-delay: 0.04s;
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--repel-active
+    .home-boss-stack__img:not(:hover) {
+    animation: none !important;
+    transform: translate(var(--repel-x, 0px), var(--repel-y, 0px));
   }
 }
 
@@ -603,54 +700,113 @@ html.home-index body.home-page {
   transform: translateY(-50%) rotate(4deg);
 }
 
-/* Hai hàng avatar lớn ngay dưới 3 thẻ */
+/* Vùng avatar: chiều cao theo nội dung (không flex-grow); spacing rõ với 3 thẻ phía trên */
 .home-boss-strip {
-  margin-top: clamp(1rem, 4vw, 2.25rem);
+  margin-top: clamp(2rem, 5.5vw, 3.85rem);
   margin-bottom: 0;
-  padding-inline: clamp(0.35rem, 2vw, 0.95rem);
-  padding-bottom: clamp(0.2rem, 1.2vw, 0.45rem);
+  padding-inline: clamp(0.2rem, 1.4vw, 0.65rem);
+  padding-bottom: clamp(0.15rem, 1vw, 0.4rem);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(0.35rem, 1.8vw, 0.55rem);
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: clamp(0.28rem, 1.4vw, 0.5rem);
   width: 100%;
   max-width: 100%;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   min-height: 0;
   overflow: visible;
+}
+
+.home-boss-strip:not(.home-boss-strip--tiered) {
+  align-items: center;
 }
 
 .home-boss-strip--tiered {
   flex-direction: row;
   flex-wrap: nowrap;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: stretch;
+  gap: clamp(2.1rem, 6.25vw, 4.5rem);
+}
+
+/* Trang chủ: cụm rộng theo số avatar (không chia đều cột) */
+body.home-page .home-boss-tier {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+}
+
+body.home-page .home-boss-tier .home-boss-stack--strip {
+  width: auto;
+  max-width: 100%;
+}
+
+body.home-page .home-boss-stack--strip.home-boss-stack--cluster {
+  width: max-content;
+  max-width: 100%;
+}
+
+/* Trang chủ: dải 4 cụm tràn full viewport; căn giữa cụm theo nội dung */
+body.home-page .home-boss-strip.home-boss-strip--tiered {
+  width: 100vw;
+  max-width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  padding-inline: clamp(0.65rem, 2.5vw, 1.35rem);
+  margin-top: clamp(1.75rem, 4.5vw, 3.25rem);
   justify-content: center;
-  gap: clamp(0.25rem, 1.1vw, 0.65rem);
 }
 
 .home-boss-tier {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1 1 0;
+  align-items: stretch;
+  justify-content: flex-start;
+  flex: 1 1 21.875rem;
   min-width: 0;
-  max-width: 100%;
+  max-width: none;
   overflow: visible;
-  padding-inline: clamp(0.12rem, 0.9vw, 0.35rem);
-  padding-block: clamp(0.1rem, 0.6vw, 0.28rem);
+  padding-inline: clamp(0.12rem, 0.65vw, 0.35rem);
+  padding-block: clamp(0.04rem, 0.35vw, 0.14rem);
+}
+
+/* Avatar strip: scale nhẹ theo độ khó — khó nhất 100%, dễ nhất ~80% (4 bậc tuyến tính) */
+.home-boss-tier--t1000 {
+  --boss-tier-scale: 1;
+}
+
+.home-boss-tier--t750 {
+  --boss-tier-scale: 0.9333333333;
+}
+
+.home-boss-tier--t500 {
+  --boss-tier-scale: 0.8666666667;
+}
+
+.home-boss-tier--tlow {
+  --boss-tier-scale: 0.8;
 }
 
 .home-boss-tier .home-boss-stack--strip {
   justify-content: center;
+  align-content: flex-start;
+  width: 100%;
   max-width: 100%;
   overflow: visible;
 }
 
 .home-boss-tier--t1000 .home-boss-stack--strip {
   transform: rotate(-0.9deg);
+}
+
+.home-boss-tier--t750 .home-boss-stack--strip {
+  transform: rotate(-0.28deg);
 }
 
 .home-boss-tier--t500 .home-boss-stack--strip {
@@ -677,36 +833,53 @@ html.home-index body.home-page {
   bottom: auto;
 }
 
-/* Cụm chồng 2 chiều (không bắt buộc một hàng ngang) */
+/* Cụm strip: lưới cột×hàng; gap + margin âm nhẹ — chồng vừa phải, không dính sát quá */
 .home-boss-stack--strip.home-boss-stack--cluster {
-  flex-wrap: wrap;
+  display: grid;
+  /* max-content: cột chỉ rộng bằng avatar — không chia đều 1fr (hai cột sẽ nằm sát, chồng nhờ margin âm) */
+  grid-template-columns: repeat(var(--cluster-cols, 3), minmax(0, max-content));
+  grid-auto-rows: auto;
+  gap: clamp(0.04rem, 0.35vw, 0.12rem);
+  justify-items: center;
+  align-content: start;
   justify-content: center;
-  align-content: center;
-  align-items: center;
-  max-width: min(100%, 13.25rem);
-  padding-block: 0.12rem;
+  width: 100%;
+  max-width: 100%;
+  padding-block: 0.06rem;
 }
 
 .home-boss-stack--strip.home-boss-stack--cluster .home-boss-stack__img {
-  margin: clamp(-0.42rem, -1vw, -0.16rem);
+  position: relative;
+  margin: clamp(-0.32rem, -0.8vw, -0.16rem) clamp(-0.52rem, -1.35vw, -0.28rem);
+  z-index: 0;
 }
 
-.home-boss-stack--strip.home-boss-stack--cluster .home-boss-stack__img:not(:first-child) {
-  margin-left: clamp(-0.42rem, -1vw, -0.16rem);
+/* Chỉ xếp lớp khi không hover — nếu không, z-index này ghi đè rule :hover phía trên trong cascade */
+.home-boss-stack--strip.home-boss-stack--cluster .home-boss-stack__img:nth-child(even):not(:hover) {
+  z-index: 1;
 }
 
-.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--strip-dense {
-  max-width: min(100%, 11.65rem);
+.home-boss-stack--strip.home-boss-stack--cluster .home-boss-stack__img:nth-child(3n + 1):not(:hover) {
+  z-index: 2;
 }
 
-.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--strip-dense
+/* 1 cột: chồng dọc — margin dọc hơi âm */
+.home-boss-stack--strip.home-boss-stack--cluster[data-cluster-cols="1"] .home-boss-stack__img {
+  margin: clamp(-0.42rem, -1rem, -0.22rem) clamp(-0.32rem, -0.75vw, -0.16rem);
+}
+
+/* 2 cột: chồng ngang vừa */
+.home-boss-stack--strip.home-boss-stack--cluster[data-cluster-cols="2"] .home-boss-stack__img {
+  margin: clamp(-0.3rem, -0.72vw, -0.14rem) clamp(-0.78rem, -1.9vw, -0.42rem);
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--strip-dense .home-boss-stack__img {
+  margin: clamp(-0.28rem, -0.68vw, -0.12rem) clamp(-0.45rem, -1.15vw, -0.24rem);
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--strip-dense[data-cluster-cols="2"]
   .home-boss-stack__img {
-  margin: clamp(-0.32rem, -0.8vw, -0.1rem);
-}
-
-.home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--strip-dense
-  .home-boss-stack__img:not(:first-child) {
-  margin-left: clamp(-0.32rem, -0.8vw, -0.1rem);
+  margin: clamp(-0.24rem, -0.58vw, -0.1rem) clamp(-0.65rem, -1.55vw, -0.35rem);
 }
 
 .home-boss-stack--strip .home-boss-stack__img {
@@ -718,57 +891,44 @@ html.home-index body.home-page {
     0 0 0 1px rgba(15, 23, 42, 0.07);
 }
 
-.home-boss-stack--strip .home-boss-stack__img:not(:first-child) {
+.home-boss-stack--strip:not(.home-boss-stack--cluster) .home-boss-stack__img:not(:first-child) {
   margin-left: clamp(-2.55rem, -5.85vw, -1.78rem);
 }
 
 .home-boss-stack--strip-dense .home-boss-stack__img {
-  width: clamp(2.4rem, 5.65vw, 4.15rem);
-  height: clamp(2.4rem, 5.65vw, 4.15rem);
+  width: clamp(3.35rem, 9.2vw, 5.85rem);
+  height: clamp(3.35rem, 9.2vw, 5.85rem);
   border-width: 3px;
 }
 
-.home-boss-stack--strip-dense .home-boss-stack__img:not(:first-child) {
+.home-boss-stack--strip-dense:not(.home-boss-stack--cluster) .home-boss-stack__img:not(:first-child) {
   margin-left: clamp(-2.1rem, -4.85vw, -1.3rem);
 }
 
-/* Strip theo độ khó: t1000 lớn nhất, t500 = mặc định, tlow nhỏ nhất */
-.home-boss-tier--t1000 .home-boss-stack--strip .home-boss-stack__img {
-  width: clamp(4.45rem, 13vw, 7.6rem);
-  height: clamp(4.45rem, 13vw, 7.6rem);
-}
-
+/*
+ * Strip tier: base chung × --boss-tier-scale (1 → 0.8); dense cùng tỷ lệ.
+ */
+.home-boss-tier--t1000 .home-boss-stack--strip .home-boss-stack__img,
+.home-boss-tier--t750 .home-boss-stack--strip .home-boss-stack__img,
+.home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img,
 .home-boss-tier--tlow .home-boss-stack--strip .home-boss-stack__img {
-  width: clamp(3.85rem, 11.25vw, 6.22rem);
-  height: clamp(3.85rem, 11.25vw, 6.22rem);
+  width: calc(clamp(4.28rem, 12.35vw, 7.05rem) * var(--boss-tier-scale, 1));
+  height: calc(clamp(4.28rem, 12.35vw, 7.05rem) * var(--boss-tier-scale, 1));
 }
 
-.home-boss-tier--t1000 .home-boss-stack--strip.home-boss-stack--strip-dense .home-boss-stack__img {
-  width: clamp(2.62rem, 6.1vw, 4.5rem);
-  height: clamp(2.62rem, 6.1vw, 4.5rem);
-}
-
+.home-boss-tier--t1000 .home-boss-stack--strip.home-boss-stack--strip-dense .home-boss-stack__img,
+.home-boss-tier--t750 .home-boss-stack--strip.home-boss-stack--strip-dense .home-boss-stack__img,
+.home-boss-tier--t500 .home-boss-stack--strip.home-boss-stack--strip-dense .home-boss-stack__img,
 .home-boss-tier--tlow .home-boss-stack--strip.home-boss-stack--strip-dense .home-boss-stack__img {
-  width: clamp(2.22rem, 5.25vw, 3.85rem);
-  height: clamp(2.22rem, 5.25vw, 3.85rem);
+  width: calc(clamp(3.45rem, 9.5vw, 5.95rem) * var(--boss-tier-scale, 1));
+  height: calc(clamp(3.45rem, 9.5vw, 5.95rem) * var(--boss-tier-scale, 1));
 }
 
-.home-boss-tier--t1000 .home-boss-stack--strip.home-boss-stack--cluster {
-  max-width: min(100%, 14.2rem);
-}
-
+.home-boss-tier--t1000 .home-boss-stack--strip.home-boss-stack--cluster,
+.home-boss-tier--t750 .home-boss-stack--strip.home-boss-stack--cluster,
+.home-boss-tier--t500 .home-boss-stack--strip.home-boss-stack--cluster,
 .home-boss-tier--tlow .home-boss-stack--strip.home-boss-stack--cluster {
-  max-width: min(100%, 12.35rem);
-}
-
-.home-boss-tier--t1000
-  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--strip-dense {
-  max-width: min(100%, 12.25rem);
-}
-
-.home-boss-tier--tlow
-  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--strip-dense {
-  max-width: min(100%, 10.65rem);
+  max-width: 100%;
 }
 
 @media (max-width: 1023px) {
@@ -799,91 +959,71 @@ html.home-index body.home-page {
     border-width: 3px;
   }
 
-  .home-boss-stack--strip .home-boss-stack__img:not(:first-child) {
+  .home-boss-stack--strip:not(.home-boss-stack--cluster) .home-boss-stack__img:not(:first-child) {
     margin-left: clamp(-1.78rem, -8.8vw, -1.2rem);
   }
 
   .home-boss-stack--strip-dense .home-boss-stack__img {
-    width: clamp(2rem, 4.55vw, 3.25rem);
-    height: clamp(2rem, 4.55vw, 3.25rem);
+    width: clamp(2.75rem, 8.25vw, 4.15rem);
+    height: clamp(2.75rem, 8.25vw, 4.15rem);
     border-width: 2px;
   }
 
-  .home-boss-stack--strip-dense .home-boss-stack__img:not(:first-child) {
+  .home-boss-stack--strip-dense:not(.home-boss-stack--cluster) .home-boss-stack__img:not(:first-child) {
     margin-left: clamp(-1.55rem, -7.5vw, -1.05rem);
   }
 
-  .home-boss-stack--strip.home-boss-stack--cluster {
-    max-width: min(100%, 11rem);
-  }
-
-  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--strip-dense {
-    max-width: min(100%, 9.65rem);
+  .home-boss-strip--tiered {
+    gap: clamp(1.4rem, 5vw, 2.65rem);
   }
 
   .home-boss-stack--strip.home-boss-stack--cluster .home-boss-stack__img {
-    margin: clamp(-0.3rem, -0.8vw, -0.1rem);
+    margin: clamp(-0.28rem, -1.05vw, -0.14rem) clamp(-0.45rem, -1.65vw, -0.24rem);
   }
 
-  .home-boss-stack--strip.home-boss-stack--cluster .home-boss-stack__img:not(:first-child) {
-    margin-left: clamp(-0.3rem, -0.8vw, -0.1rem);
+  .home-boss-stack--strip.home-boss-stack--cluster[data-cluster-cols="1"] .home-boss-stack__img {
+    margin: clamp(-0.36rem, -1.2vw, -0.2rem) clamp(-0.28rem, -0.95vw, -0.14rem);
   }
 
-  .home-boss-tier--t1000 .home-boss-stack--strip .home-boss-stack__img {
-    width: clamp(3.65rem, 16.5vw, 5.15rem);
-    height: clamp(3.65rem, 16.5vw, 5.15rem);
+  .home-boss-stack--strip.home-boss-stack--cluster[data-cluster-cols="2"] .home-boss-stack__img {
+    margin: clamp(-0.26rem, -0.95vw, -0.12rem) clamp(-0.68rem, -2.2vw, -0.38rem);
   }
 
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--strip-dense .home-boss-stack__img {
+    margin: clamp(-0.22rem, -0.85vw, -0.1rem) clamp(-0.38rem, -1.35vw, -0.2rem);
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--strip-dense[data-cluster-cols="2"]
+    .home-boss-stack__img {
+    margin: clamp(-0.2rem, -0.75vw, -0.08rem) clamp(-0.55rem, -1.85vw, -0.32rem);
+  }
+
+  .home-boss-tier--t1000 .home-boss-stack--strip .home-boss-stack__img,
+  .home-boss-tier--t750 .home-boss-stack--strip .home-boss-stack__img,
+  .home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img,
   .home-boss-tier--tlow .home-boss-stack--strip .home-boss-stack__img {
-    width: clamp(3.1rem, 15vw, 4.5rem);
-    height: clamp(3.1rem, 15vw, 4.5rem);
+    width: calc(clamp(3.5rem, 16vw, 5rem) * var(--boss-tier-scale, 1));
+    height: calc(clamp(3.5rem, 16vw, 5rem) * var(--boss-tier-scale, 1));
   }
 
-  .home-boss-tier--t1000 .home-boss-stack--strip.home-boss-stack--strip-dense .home-boss-stack__img {
-    width: clamp(2.18rem, 4.85vw, 3.4rem);
-    height: clamp(2.18rem, 4.85vw, 3.4rem);
-  }
-
+  .home-boss-tier--t1000 .home-boss-stack--strip.home-boss-stack--strip-dense .home-boss-stack__img,
+  .home-boss-tier--t750 .home-boss-stack--strip.home-boss-stack--strip-dense .home-boss-stack__img,
+  .home-boss-tier--t500 .home-boss-stack--strip.home-boss-stack--strip-dense .home-boss-stack__img,
   .home-boss-tier--tlow .home-boss-stack--strip.home-boss-stack--strip-dense .home-boss-stack__img {
-    width: clamp(1.88rem, 4.25vw, 2.95rem);
-    height: clamp(1.88rem, 4.25vw, 2.95rem);
+    width: calc(clamp(2.85rem, 8.5vw, 4.35rem) * var(--boss-tier-scale, 1));
+    height: calc(clamp(2.85rem, 8.5vw, 4.35rem) * var(--boss-tier-scale, 1));
   }
 
-  .home-boss-stack--diff-t0 .home-boss-stack__img {
-    width: clamp(3.55rem, 14.5vw, 4.5rem);
-    height: clamp(3.55rem, 14.5vw, 4.5rem);
-  }
-
-  .home-boss-stack--diff-t2 .home-boss-stack__img {
-    width: clamp(3.02rem, 13.2vw, 3.95rem);
-    height: clamp(3.02rem, 13.2vw, 3.95rem);
+  .home-boss-stack--diff-t0 .home-boss-stack__img,
+  .home-boss-stack--diff-t1 .home-boss-stack__img,
+  .home-boss-stack--diff-t2 .home-boss-stack__img,
+  .home-boss-stack--diff-t3 .home-boss-stack__img {
+    width: calc(clamp(3.55rem, 14.5vw, 4.5rem) * var(--boss-tier-scale, 1));
+    height: calc(clamp(3.55rem, 14.5vw, 4.5rem) * var(--boss-tier-scale, 1));
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .home-boss-stack__img {
-    animation: none !important;
-    will-change: auto;
-  }
 
-  .home-boss-stack--tl,
-  .home-boss-stack--tr {
-    transform: none;
-  }
-
-  .home-boss-stack--ml,
-  .home-boss-stack--mr {
-    transform: translateY(-50%);
-  }
-
-  .home-boss-tier--t1000 .home-boss-stack--strip,
-  .home-boss-tier--t500 .home-boss-stack--strip,
-  .home-boss-tier--tlow .home-boss-stack--strip,
-  .home-boss-strip:not(.home-boss-strip--tiered) > .home-boss-stack--strip:nth-child(1),
-  .home-boss-strip:not(.home-boss-strip--tiered) > .home-boss-stack--strip:nth-child(2) {
-    transform: none;
-  }
-}
 
 @keyframes home-card-enter {
   from {
@@ -958,30 +1098,29 @@ html.home-index body.home-page {
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .home-links > li {
-    animation: home-card-float 3.1s ease-in-out infinite;
-  }
-
-  .home-links > li:nth-child(1) {
-    animation-name: home-card-float-deep;
-    animation-duration: 2.75s;
-    animation-delay: 0s;
-  }
-
-  .home-links > li:nth-child(2) {
-    animation-name: home-card-float-wobble;
-    animation-duration: 3.35s;
-    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
-    animation-delay: -0.9s;
-  }
-
-  .home-links > li:nth-child(3) {
-    animation-name: home-card-float-soft;
-    animation-duration: 3.65s;
-    animation-delay: -1.85s;
-  }
+.home-links > li {
+  animation: home-card-float 3.1s ease-in-out infinite;
 }
+
+.home-links > li:nth-child(1) {
+  animation-name: home-card-float-deep;
+  animation-duration: 2.75s;
+  animation-delay: 0s;
+}
+
+.home-links > li:nth-child(2) {
+  animation-name: home-card-float-wobble;
+  animation-duration: 3.35s;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  animation-delay: -0.9s;
+}
+
+.home-links > li:nth-child(3) {
+  animation-name: home-card-float-soft;
+  animation-duration: 3.65s;
+  animation-delay: -1.85s;
+}
+
 
 .home-card {
   display: flex;
@@ -995,6 +1134,7 @@ html.home-index body.home-page {
   color: inherit;
   border-radius: 14px;
   border: 1px solid rgba(0, 0, 0, 0.08);
+  animation: home-card-enter 0.4s cubic-bezier(0.22, 1, 0.36, 1) backwards;
   transition:
     transform 0.28s cubic-bezier(0.34, 1.2, 0.64, 1),
     box-shadow 0.28s ease,
@@ -1002,23 +1142,18 @@ html.home-index body.home-page {
     filter 0.28s ease;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .home-card {
-    animation: home-card-enter 0.4s cubic-bezier(0.22, 1, 0.36, 1) backwards;
-  }
-
-  .home-links > li:nth-child(1) .home-card {
-    animation-delay: 0.04s;
-  }
-
-  .home-links > li:nth-child(2) .home-card {
-    animation-delay: 0.11s;
-  }
-
-  .home-links > li:nth-child(3) .home-card {
-    animation-delay: 0.19s;
-  }
+.home-links > li:nth-child(1) .home-card {
+  animation-delay: 0.04s;
 }
+
+.home-links > li:nth-child(2) .home-card {
+  animation-delay: 0.11s;
+}
+
+.home-links > li:nth-child(3) .home-card {
+  animation-delay: 0.19s;
+}
+
 
 .home-card:hover {
   transform: translateY(-6px) scale(1.02);

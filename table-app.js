@@ -133,11 +133,12 @@
     return null;
   }
 
-  /** Độ khó — Ác mộng 10 (Excel): ≥1000 / ≥500 / <500 */
+  /** Độ khó — Ác mộng 10 (Excel): ≥1000 / ≥750 / ≥500 / <500 */
   function difficultyColumnBgAcMong(v) {
     const n = parseDifficultyNumber(v);
     if (n == null) return "#ffffff";
     if (n >= 1000) return "#ff7c80";
+    if (n >= 750) return "#a8d4ff";
     if (n >= 500) return "#ffff99";
     return "#ccffcc";
   }

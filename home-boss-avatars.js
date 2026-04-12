@@ -1,5 +1,5 @@
 /**
- * Trang chủ: avatar BOSS — gom theo Độ khó (Ác mộng 10: ≥1000 / ≥500 / <500)
+ * Trang chủ: avatar BOSS — gom theo Độ khó (≥1000 / ≥750 / ≥500 / <500)
  * mỗi ảnh chỉ hiển thị một lần; cần ac-mong-10.js (BOSS_TABLE_DATA).
  */
 (function () {
@@ -57,10 +57,11 @@
 
   /** Cùng ngưỡng table-app.js — Ác mộng 10 */
   function tierIndex(n) {
-    if (n == null) return 2;
+    if (n == null) return 3;
     if (n >= 1000) return 0;
-    if (n >= 500) return 1;
-    return 2;
+    if (n >= 750) return 1;
+    if (n >= 500) return 2;
+    return 3;
   }
 
   function uniqueInOrder(arr) {
@@ -76,7 +77,7 @@
 
   /** Mỗi path chỉ gán một tier (dòng đầu gặp được ưu tiên). */
   function collectPathsByTier(rows) {
-    var tiers = [[], [], []];
+    var tiers = [[], [], [], []];
     var seenPath = Object.create(null);
     if (!Array.isArray(rows)) return tiers;
     rows.forEach(function (row) {
@@ -114,7 +115,7 @@
     var need = n - out.length;
     var rest = [];
     var t;
-    for (t = 0; t < 3; t++) {
+    for (t = 0; t < 4; t++) {
       if (t === tierPref) continue;
       availUnused(tiers[t], used).forEach(function (p) {
         if (rest.indexOf(p) === -1) rest.push(p);
@@ -124,6 +125,19 @@
     var more = rest.slice(0, need);
     for (k = 0; k < more.length; k++) used[more[k]] = true;
     return out.concat(more);
+  }
+
+  /**
+   * Lưới gần vuông, hơi rộng ngang (vd 3×3, 4×5, 5×6) — ít dư chiều cao.
+   * cols = ceil(sqrt(n)), rows = ceil(n/cols).
+   */
+  function clusterGridDims(n) {
+    if (n <= 0) return { cols: 1, rows: 1 };
+    if (n === 1) return { cols: 1, rows: 1 };
+    var cols = Math.ceil(Math.sqrt(n));
+    cols = Math.min(Math.max(1, cols), n);
+    var rows = Math.ceil(n / cols);
+    return { cols: cols, rows: rows };
   }
 
   function appendStack(parent, className, rels) {
@@ -136,6 +150,19 @@
       if (rels.length >= 8) {
         stack.classList.add("home-boss-stack--strip-dense");
       }
+      var g = clusterGridDims(rels.length);
+      if (
+        typeof window.matchMedia !== "undefined" &&
+        window.matchMedia("(max-width: 639px)").matches &&
+        g.cols > 3
+      ) {
+        g.cols = 3;
+        g.rows = Math.ceil(rels.length / g.cols);
+      }
+      stack.style.setProperty("--cluster-cols", String(g.cols));
+      stack.style.setProperty("--cluster-rows", String(g.rows));
+      stack.setAttribute("data-cluster-grid", g.cols + "x" + g.rows);
+      stack.setAttribute("data-cluster-cols", String(g.cols));
     }
     rels.forEach(function (rel, idx) {
       var img = document.createElement("img");
@@ -159,7 +186,7 @@
     return r && "Độ khó" in r && Array.isArray(r.__images);
   }
 
-  /** Góc: nhiều avatar hơn; dải tier: tối đa mỗi cụm (3 cụm cạnh nhau) */
+  /** Góc: nhiều avatar hơn; dải tier: tối đa mỗi cụm (4 cụm cạnh nhau) */
   var CORNER_AVATAR_COUNT = 6;
   var STRIP_CLUSTER_MAX = 18;
   /** Fallback 2 hàng: vừa viewport, không cần cụm tier quá rộng */
@@ -174,14 +201,14 @@
       { cls: "home-boss-stack home-boss-stack--tl", tier: 0 },
       { cls: "home-boss-stack home-boss-stack--tr", tier: 1 },
       { cls: "home-boss-stack home-boss-stack--ml", tier: 2 },
-      { cls: "home-boss-stack home-boss-stack--mr", tier: 0 },
+      { cls: "home-boss-stack home-boss-stack--mr", tier: 3 },
     ];
 
     if (strip) {
       strip.textContent = "";
       strip.classList.add("home-boss-strip--tiered");
 
-      var TIER_KEYS = ["t1000", "t500", "tlow"];
+      var TIER_KEYS = ["t1000", "t750", "t500", "tlow"];
 
       TIER_KEYS.forEach(function (key, idx) {
         var pool = tiers[idx];
@@ -228,6 +255,69 @@
   /**
    * Fallback: pool đã unique, xáo rồi chia đều vòng quanh 4 góc + 2 dải — không lặp path.
    */
+  /** Cụm lưới: hover phóng x3 — đẩy avatar lân cận theo vector từ tâm (chỉ khi có hover chuột). */
+  function initClusterHoverRepel() {
+    if (
+      typeof window.matchMedia === "undefined" ||
+      !window.matchMedia("(hover: hover) and (pointer: fine)").matches
+    ) {
+      return;
+    }
+    var PUSH = 56;
+    var stacks = document.querySelectorAll(".home-boss-stack--cluster");
+    stacks.forEach(function (stack) {
+      var imgs = stack.querySelectorAll(".home-boss-stack__img");
+      if (!imgs.length) return;
+
+      function clearRepel() {
+        stack.classList.remove("home-boss-stack--repel-active");
+        Array.prototype.forEach.call(imgs, function (img) {
+          img.style.removeProperty("--repel-x");
+          img.style.removeProperty("--repel-y");
+        });
+      }
+
+      function applyRepel(hovered) {
+        var hr = hovered.getBoundingClientRect();
+        if (hr.width < 1 || hr.height < 1) return;
+        var hx = hr.left + hr.width * 0.5;
+        var hy = hr.top + hr.height * 0.5;
+        stack.classList.add("home-boss-stack--repel-active");
+        Array.prototype.forEach.call(imgs, function (img) {
+          if (img === hovered) {
+            img.style.removeProperty("--repel-x");
+            img.style.removeProperty("--repel-y");
+            return;
+          }
+          var ir = img.getBoundingClientRect();
+          if (ir.width < 1 || ir.height < 1) return;
+          var ix = ir.left + ir.width * 0.5;
+          var iy = ir.top + ir.height * 0.5;
+          var dx = ix - hx;
+          var dy = iy - hy;
+          var len = Math.sqrt(dx * dx + dy * dy);
+          if (len < 0.5) len = 0.5;
+          var boost = PUSH * (1 + 26 / len);
+          var tx = (dx / len) * boost;
+          var ty = (dy / len) * boost;
+          img.style.setProperty("--repel-x", tx.toFixed(2) + "px");
+          img.style.setProperty("--repel-y", ty.toFixed(2) + "px");
+        });
+      }
+
+      Array.prototype.forEach.call(imgs, function (img) {
+        img.addEventListener("mouseenter", function () {
+          applyRepel(img);
+        });
+      });
+
+      stack.addEventListener("mouseleave", function (e) {
+        var rt = e.relatedTarget;
+        if (!rt || !stack.contains(rt)) clearRepel();
+      });
+    });
+  }
+
   function buildFallbackLayout(pool) {
     var deco = document.getElementById("home-boss-deco");
     var strip = document.getElementById("home-boss-strip");
@@ -290,7 +380,13 @@
   var rows = window.BOSS_TABLE_DATA;
   if (hasAcMongBossData(rows)) {
     var tiers = collectPathsByTier(rows);
-    if (tiers[0].length + tiers[1].length + tiers[2].length > 0) {
+    if (
+      tiers[0].length +
+        tiers[1].length +
+        tiers[2].length +
+        tiers[3].length >
+      0
+    ) {
       buildTieredLayout(tiers);
     } else {
       buildFallbackLayout(shuffleInPlace(PB10.concat(PB5)));
@@ -298,6 +394,8 @@
   } else {
     buildFallbackLayout(shuffleInPlace(PB10.concat(PB5)));
   }
+
+  initClusterHoverRepel();
 
   /** Định kỳ đổi preset animation (inline) */
   var XP_NAMES = [
@@ -376,12 +474,7 @@
     }, next);
   }
 
-  if (
-    window.matchMedia &&
-    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  ) {
-    setTimeout(function () {
-      scheduleAvatarAnimShuffle();
-    }, 16000 + Math.random() * 12000);
-  }
+  setTimeout(function () {
+    scheduleAvatarAnimShuffle();
+  }, 16000 + Math.random() * 12000);
 })();
