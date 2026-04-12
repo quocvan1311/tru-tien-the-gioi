@@ -3,6 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      (function () {
+        try {
+          if (new URLSearchParams(location.search).get("from") === "index") {
+            document.documentElement.classList.add("ac-detail-from-index");
+          }
+        } catch (e) {}
+      })();
+    </script>
     <title>Chi tiết BOSS — Ác mộng 10</title>
     <link rel="stylesheet" href="table-app.css" />
     <link rel="stylesheet" href="ac-mong-10.css" />

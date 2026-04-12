@@ -144,3 +144,6 @@ window.BOSS_TABLE_DATA = [
     },
   },
 ];
+
+/** Trang chủ (index): đọc ảnh PB5 không trùng — không đổi BOSS_TABLE_DATA */
+window.PHU_BAN_5_TABLE_DATA = window.BOSS_TABLE_DATA;

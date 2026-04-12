@@ -40,6 +40,87 @@
     return rel.split("/").map(encodeURIComponent).join("/");
   }
 
+  function buildPathToDetailId(rows, idFn) {
+    var map = Object.create(null);
+    if (!Array.isArray(rows) || typeof idFn !== "function") return map;
+    rows.forEach(function (row) {
+      var id = idFn(row);
+      var imgs = row.__images;
+      if (!Array.isArray(imgs)) return;
+      imgs.forEach(function (p) {
+        var s = p != null ? String(p).trim() : "";
+        if (s) map[s] = id;
+      });
+    });
+    return map;
+  }
+
+  function isPhuBan10Path(p) {
+    return String(p || "")
+      .toLowerCase()
+      .indexOf("phu ban 10/") !== -1;
+  }
+
+  function bundleDetailIdForPb10(paths, pathToDetailId) {
+    var i;
+    var p;
+    var id;
+    for (i = 0; i < paths.length; i++) {
+      p = paths[i];
+      if (!isPhuBan10Path(p)) continue;
+      id = pathToDetailId[p];
+      if (id) return id;
+    }
+    return "";
+  }
+
+  function initHomeAcMongDetailNav() {
+    function detailUrl(id) {
+      return (
+        "ac-mong-detail.html?id=" +
+        encodeURIComponent(id) +
+        "&from=index"
+      );
+    }
+    function go(e, id) {
+      if (!id) return;
+      e.preventDefault();
+      var url = detailUrl(id);
+      if (e.ctrlKey || e.metaKey) {
+        window.open(url, "_blank");
+        return;
+      }
+      location.href = url;
+    }
+    document.body.addEventListener("click", function (e) {
+      var img = e.target.closest(".home-boss-stack__img[data-ac-detail-id]");
+      if (img) {
+        go(e, img.getAttribute("data-ac-detail-id"));
+        return;
+      }
+      var b = e.target.closest(".home-boss-bundle[data-ac-detail-id]");
+      if (b) {
+        go(e, b.getAttribute("data-ac-detail-id"));
+      }
+    });
+    document.body.addEventListener("auxclick", function (e) {
+      if (e.button !== 1) return;
+      var img = e.target.closest(".home-boss-stack__img[data-ac-detail-id]");
+      var el = img || e.target.closest(".home-boss-bundle[data-ac-detail-id]");
+      var id = el && el.getAttribute("data-ac-detail-id");
+      if (!id) return;
+      e.preventDefault();
+      window.open(detailUrl(id), "_blank");
+    });
+    document.body.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      var b = e.target.closest(".home-boss-bundle[data-ac-detail-id]");
+      if (!b || document.activeElement !== b) return;
+      e.preventDefault();
+      location.href = detailUrl(b.getAttribute("data-ac-detail-id"));
+    });
+  }
+
   function shuffleInPlace(arr) {
     for (var i = arr.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
@@ -114,10 +195,12 @@
   }
 
   function bundleLayoutModifier(n) {
-    if (n <= 1) return "1";
-    if (n === 2) return "2";
-    if (n === 3) return "3";
-    if (n === 4) return "4";
+    var k = Math.floor(Number(n));
+    if (!Number.isFinite(k) || k < 1) k = 1;
+    if (k <= 1) return "1";
+    if (k === 2) return "2";
+    if (k === 3) return "3";
+    if (k === 4) return "4";
     return "many";
   }
 
@@ -154,20 +237,82 @@
   }
 
   /**
-   * Lưới gần vuông, hơi rộng ngang (vd 3×3, 4×5, 5×6) — ít dư chiều cao.
-   * cols = ceil(sqrt(n)), rows = ceil(n/cols).
+   * Lưới cụm avatar: ưu tiên bảng “đẹp” khi có thể — 2×2, 3×3, 3×4 (12 ảnh), hình chữ nhật đầy,
+   * tránh hàng cuối 1 ô; hòa điểm → cột gần √n (cột tier hẹp).
    */
   function clusterGridDims(n) {
     if (n <= 0) return { cols: 1, rows: 1 };
     if (n === 1) return { cols: 1, rows: 1 };
-    var cols = Math.ceil(Math.sqrt(n));
-    cols = Math.min(Math.max(1, cols), n);
-    var rows = Math.ceil(n / cols);
-    return { cols: cols, rows: rows };
+
+    var target = Math.sqrt(n);
+    var best = null;
+    var bestScore = Infinity;
+    var bestDist = Infinity;
+
+    var c;
+    for (c = 1; c <= n; c++) {
+      var r = Math.ceil(n / c);
+      var inLast = n - (r - 1) * c;
+      if (inLast <= 0) {
+        inLast = c;
+      }
+      var imbal = Math.abs(c - r);
+      var score = imbal * 2;
+      if (r > 1 && inLast === 1) {
+        score += 100;
+      }
+      if (r > 2 && inLast === 2) {
+        score += 3;
+      }
+      if (c * r === n) {
+        score -= 14;
+      }
+      if (c === r && n > 1) {
+        score -= 4;
+      }
+
+      var dist = Math.abs(c - target);
+      if (
+        !best ||
+        score < bestScore ||
+        (score === bestScore && dist < bestDist) ||
+        (score === bestScore && dist === bestDist && c < best.cols)
+      ) {
+        bestScore = score;
+        bestDist = dist;
+        best = { cols: c, rows: r };
+      }
+    }
+    return best;
   }
 
-  function appendStack(parent, className, rels) {
+  /**
+   * Màn hẹp: từng ép max 3 cột — dễ tạo hàng cuối 1 ô (4→3+1) hoặc phá lưới 2 hàng (8→3+3+2).
+   * Giữ nguyên nếu đã ≤3 cột, hoặc ≤2 hàng (đã cân), hoặc ép 3 cột sẽ để lại 1 ô lẻ.
+   */
+  function clusterGridDimsMobile(n, g) {
+    if (
+      typeof window.matchMedia === "undefined" ||
+      !window.matchMedia("(max-width: 639px)").matches ||
+      g.cols <= 3
+    ) {
+      return g;
+    }
+    if (g.rows <= 2) {
+      return g;
+    }
+    var c3 = 3;
+    var r3 = Math.ceil(n / c3);
+    var last3 = n - (r3 - 1) * c3;
+    if (last3 === 1 && n > 3) {
+      return g;
+    }
+    return { cols: c3, rows: r3 };
+  }
+
+  function appendStack(parent, className, rels, pathToDetailId) {
     if (!rels || !rels.length) return;
+    pathToDetailId = pathToDetailId || Object.create(null);
     var stack = document.createElement("div");
     stack.className = className;
     var isStrip = className.indexOf("--strip") !== -1;
@@ -177,18 +322,20 @@
         stack.classList.add("home-boss-stack--strip-dense");
       }
       var g = clusterGridDims(rels.length);
-      if (
-        typeof window.matchMedia !== "undefined" &&
-        window.matchMedia("(max-width: 639px)").matches &&
-        g.cols > 3
-      ) {
-        g.cols = 3;
-        g.rows = Math.ceil(rels.length / g.cols);
-      }
+      g = clusterGridDimsMobile(rels.length, g);
       stack.style.setProperty("--cluster-cols", String(g.cols));
       stack.style.setProperty("--cluster-rows", String(g.rows));
       stack.setAttribute("data-cluster-grid", g.cols + "x" + g.rows);
       stack.setAttribute("data-cluster-cols", String(g.cols));
+      if (rels.length === 4) {
+        stack.style.setProperty("display", "grid", "important");
+        stack.style.setProperty(
+          "grid-template-columns",
+          "repeat(2, minmax(0, max-content))",
+          "important"
+        );
+        stack.style.setProperty("grid-auto-rows", "auto", "important");
+      }
     }
     rels.forEach(function (rel, idx) {
       var img = document.createElement("img");
@@ -198,6 +345,9 @@
       img.decoding = "async";
       img.className = "home-boss-stack__img";
       img.setAttribute("draggable", "false");
+      if (isPhuBan10Path(rel) && pathToDetailId[rel]) {
+        img.setAttribute("data-ac-detail-id", pathToDetailId[rel]);
+      }
       if (isStrip) {
         img.style.animationDelay = (idx * 0.055).toFixed(3) + "s";
       }
@@ -209,8 +359,9 @@
   /**
    * Dải tier: nhiều bundle (mỗi bundle = một dòng __images); layout 1 / 2 / 3 / 4 / nhiều.
    */
-  function appendBundleStrip(parent, className, bundles) {
+  function appendBundleStrip(parent, className, bundles, pathToDetailId) {
     if (!bundles || !bundles.length) return;
+    pathToDetailId = pathToDetailId || Object.create(null);
     var stack = document.createElement("div");
     stack.className =
       className +
@@ -227,23 +378,39 @@
     var globalIdx = 0;
     bundles.forEach(function (bundle) {
       var rels = bundle.paths;
-      var n = rels.length;
+      var n = rels.length | 0;
       var wrap = document.createElement("div");
       wrap.className =
         "home-boss-bundle home-boss-bundle--" + bundleLayoutModifier(n);
       wrap.setAttribute("data-bundle-n", String(n));
+      var navBid = bundleDetailIdForPb10(rels, pathToDetailId);
+      if (navBid) {
+        wrap.setAttribute("data-ac-detail-id", navBid);
+        wrap.setAttribute("role", "link");
+        wrap.setAttribute("tabindex", "0");
+        wrap.setAttribute("aria-label", "Chi tiết BOSS Ác mộng 10");
+      }
       if (n === 4) {
         wrap.setAttribute("data-bundle-grid", "2x2");
+        wrap.style.setProperty("--bundle-cols", "2");
+        wrap.style.setProperty("--bundle-rows", "2");
+        wrap.style.setProperty("display", "grid", "important");
+        wrap.style.setProperty(
+          "grid-template-columns",
+          "repeat(2, minmax(0, max-content))",
+          "important"
+        );
+        wrap.style.setProperty(
+          "grid-template-rows",
+          "repeat(2, minmax(0, max-content))",
+          "important"
+        );
+        wrap.style.setProperty("gap", "0", "important");
+        wrap.style.setProperty("justify-content", "center", "important");
+        wrap.style.setProperty("align-content", "center", "important");
       } else if (n > 4) {
         var g = clusterGridDims(n);
-        if (
-          typeof window.matchMedia !== "undefined" &&
-          window.matchMedia("(max-width: 639px)").matches &&
-          g.cols > 3
-        ) {
-          g.cols = 3;
-          g.rows = Math.ceil(n / g.cols);
-        }
+        g = clusterGridDimsMobile(n, g);
         wrap.style.setProperty("--bundle-cols", String(g.cols));
         wrap.style.setProperty("--bundle-rows", String(g.rows));
         wrap.setAttribute("data-bundle-grid", g.cols + "x" + g.rows);
@@ -277,7 +444,7 @@
   /** Fallback 2 hàng: vừa viewport, không cần cụm tier quá rộng */
   var FALLBACK_STRIP_ROW_N = 12;
 
-  function buildTieredLayout(bundleTiers) {
+  function buildTieredLayout(bundleTiers, pathToDetailId) {
     var pathTiers = tiersFlatFromBundles(bundleTiers);
     var deco = document.getElementById("home-boss-deco");
     var strip = document.getElementById("home-boss-strip");
@@ -329,7 +496,12 @@
         var section = document.createElement("section");
         section.className = "home-boss-tier home-boss-tier--" + key;
 
-        appendBundleStrip(section, "home-boss-stack home-boss-stack--strip", picked);
+        appendBundleStrip(
+          section,
+          "home-boss-stack home-boss-stack--strip",
+          picked,
+          pathToDetailId
+        );
         strip.appendChild(section);
       });
     }
@@ -346,7 +518,8 @@
         appendStack(
           deco,
           cfg.cls + " home-boss-stack--diff-t" + cfg.tier,
-          part
+          part,
+          pathToDetailId
         );
       });
     }
@@ -355,7 +528,90 @@
   /**
    * Fallback: pool đã unique, xáo rồi chia đều vòng quanh 4 góc + 2 dải — không lặp path.
    */
-  /** Cụm lưới: hover phóng x3 — đẩy avatar lân cận theo vector từ tâm (chỉ khi có hover chuột). */
+  /**
+   * Dải tier (4 section): một nhóm repel — hover một bundle/ảnh thì đẩy mọi avatar trong
+   * toàn bộ #home-boss-strip, không chỉ trong cùng .home-boss-stack--cluster.
+   */
+  function initTieredStripUnifiedRepel(strip, PUSH) {
+    var clusterStacks = strip.querySelectorAll(".home-boss-stack--cluster");
+    var imgs = strip.querySelectorAll(".home-boss-stack__img");
+    if (!imgs.length) return;
+
+    function clearRepel() {
+      Array.prototype.forEach.call(clusterStacks, function (s) {
+        s.classList.remove("home-boss-stack--repel-active");
+      });
+      Array.prototype.forEach.call(imgs, function (img) {
+        img.style.removeProperty("--repel-x");
+        img.style.removeProperty("--repel-y");
+      });
+    }
+
+    function applyRepel(hovered) {
+      var hr = hovered.getBoundingClientRect();
+      if (hr.width < 1 || hr.height < 1) return;
+      var hx = hr.left + hr.width * 0.5;
+      var hy = hr.top + hr.height * 0.5;
+      Array.prototype.forEach.call(clusterStacks, function (s) {
+        s.classList.add("home-boss-stack--repel-active");
+      });
+      var hoveredIsBundle =
+        hovered.classList &&
+        hovered.classList.contains("home-boss-bundle");
+      Array.prototype.forEach.call(imgs, function (img) {
+        if (hoveredIsBundle) {
+          if (hovered.contains(img)) {
+            img.style.removeProperty("--repel-x");
+            img.style.removeProperty("--repel-y");
+            return;
+          }
+        } else if (img === hovered) {
+          img.style.removeProperty("--repel-x");
+          img.style.removeProperty("--repel-y");
+          return;
+        }
+        var ir = img.getBoundingClientRect();
+        if (ir.width < 1 || ir.height < 1) return;
+        var ix = ir.left + ir.width * 0.5;
+        var iy = ir.top + ir.height * 0.5;
+        var dx = ix - hx;
+        var dy = iy - hy;
+        var len = Math.sqrt(dx * dx + dy * dy);
+        if (len < 0.5) len = 0.5;
+        var boost = PUSH * (1 + 24 / len);
+        if (hoveredIsBundle) {
+          boost *= 1.12;
+        }
+        if (len > 95) {
+          boost *= Math.max(0.82, 1 - (len - 95) / 2100);
+        }
+        var tx = (dx / len) * boost;
+        var ty = (dy / len) * boost;
+        img.style.setProperty("--repel-x", tx.toFixed(2) + "px");
+        img.style.setProperty("--repel-y", ty.toFixed(2) + "px");
+      });
+    }
+
+    var bundles = strip.querySelectorAll(".home-boss-bundle");
+    Array.prototype.forEach.call(bundles, function (bundle) {
+      bundle.addEventListener("mouseenter", function () {
+        applyRepel(bundle);
+      });
+    });
+    Array.prototype.forEach.call(imgs, function (img) {
+      if (img.closest(".home-boss-bundle")) return;
+      img.addEventListener("mouseenter", function () {
+        applyRepel(img);
+      });
+    });
+
+    strip.addEventListener("mouseleave", function (e) {
+      var rt = e.relatedTarget;
+      if (!rt || !strip.contains(rt)) clearRepel();
+    });
+  }
+
+  /** Cụm lưới: hover phóng — đẩy lân cận (chỉ khi có hover chuột). */
   function initClusterHoverRepel() {
     if (
       typeof window.matchMedia === "undefined" ||
@@ -363,9 +619,24 @@
     ) {
       return;
     }
-    var PUSH = 56;
+    var PUSH = 66;
+    var tierStrip = document.getElementById("home-boss-strip");
+    if (
+      tierStrip &&
+      tierStrip.classList.contains("home-boss-strip--tiered")
+    ) {
+      initTieredStripUnifiedRepel(tierStrip, PUSH);
+    }
+
     var stacks = document.querySelectorAll(".home-boss-stack--cluster");
     stacks.forEach(function (stack) {
+      if (
+        tierStrip &&
+        tierStrip.classList.contains("home-boss-strip--tiered") &&
+        tierStrip.contains(stack)
+      ) {
+        return;
+      }
       var imgs = stack.querySelectorAll(".home-boss-stack__img");
       if (!imgs.length) return;
       var bundleMode = stack.classList.contains("home-boss-stack--bundles");
@@ -404,7 +675,13 @@
           var dy = iy - hy;
           var len = Math.sqrt(dx * dx + dy * dy);
           if (len < 0.5) len = 0.5;
-          var boost = PUSH * (1 + 26 / len);
+          var boost = PUSH * (1 + 24 / len);
+          if (bundleMode) {
+            boost *= 1.12;
+          }
+          if (len > 95) {
+            boost *= Math.max(0.82, 1 - (len - 95) / 2100);
+          }
           var tx = (dx / len) * boost;
           var ty = (dy / len) * boost;
           img.style.setProperty("--repel-x", tx.toFixed(2) + "px");
@@ -434,7 +711,7 @@
     });
   }
 
-  function buildFallbackLayout(pool) {
+  function buildFallbackLayout(pool, pathToDetailId) {
     var deco = document.getElementById("home-boss-deco");
     var strip = document.getElementById("home-boss-strip");
     var sh = uniqueInOrder(pool);
@@ -475,7 +752,7 @@
       CORNER_STACKS.forEach(function (cfg) {
         var part = buckets[cfg.i];
         if (part.length === 0) return;
-        appendStack(deco, cfg.cls, part);
+        appendStack(deco, cfg.cls, part, pathToDetailId);
       });
     }
 
@@ -488,9 +765,20 @@
       STRIP_ROWS.forEach(function (cfg) {
         var part = buckets[cfg.i];
         if (part.length === 0) return;
-        appendStack(strip, cfg.cls, part);
+        appendStack(strip, cfg.cls, part, pathToDetailId);
       });
     }
+  }
+
+  var pathToDetailId = Object.create(null);
+  if (
+    typeof window.BOSS_TABLE_DETAIL_ROW_ID === "function" &&
+    Array.isArray(window.BOSS_TABLE_DATA)
+  ) {
+    pathToDetailId = buildPathToDetailId(
+      window.BOSS_TABLE_DATA,
+      window.BOSS_TABLE_DETAIL_ROW_ID
+    );
   }
 
   var rows = window.BOSS_TABLE_DATA;
@@ -506,94 +794,25 @@
       }
     }
     if (pathTotal > 0) {
-      buildTieredLayout(bundleTiers);
+      buildTieredLayout(bundleTiers, pathToDetailId);
     } else {
-      buildFallbackLayout(shuffleInPlace(PB10.concat(PB5)));
+      buildFallbackLayout(shuffleInPlace(PB10.concat(PB5)), pathToDetailId);
     }
   } else {
-    buildFallbackLayout(shuffleInPlace(PB10.concat(PB5)));
+    buildFallbackLayout(shuffleInPlace(PB10.concat(PB5)), pathToDetailId);
   }
 
   initClusterHoverRepel();
+  initHomeAcMongDetailNav();
 
-  /** Định kỳ đổi preset animation (inline) */
-  var XP_NAMES = [
-    "home-avl-xp1",
-    "home-avl-xp2",
-    "home-avl-xp3",
-    "home-avl-xp4",
-    "home-avl-xp5",
-    "home-avl-xp6",
-    "home-avl-xp7",
-    "home-avl-xp8",
-  ];
-  var XP_EASE = [
-    "cubic-bezier(0.4, 0, 0.2, 1)",
-    "ease-in-out",
-    "cubic-bezier(0.45, 0, 0.55, 1)",
-    "cubic-bezier(0.34, 0.85, 0.47, 1.1)",
-    "cubic-bezier(0.42, 0, 0.58, 1)",
-  ];
-
-  function rndDur() {
-    return (2.85 + Math.random() * 1.35).toFixed(2) + "s";
-  }
-
-  function pick(arr) {
-    return arr[Math.floor(Math.random() * arr.length)];
-  }
-
-  function stableDelay(idx) {
-    return (idx * 0.052).toFixed(3) + "s";
-  }
-
-  function swapAvatarAnim(img, idx, revertToCss) {
-    var delay = stableDelay(idx);
-    img.style.transition = "opacity 0.18s ease-out";
-    img.style.opacity = "0.93";
-    setTimeout(function () {
-      if (revertToCss) {
-        img.style.animation = "";
-        img.style.animationDelay = "";
-      } else {
-        img.style.animation = "none";
-        void img.offsetHeight;
-        var name = pick(XP_NAMES);
-        var ease = pick(XP_EASE);
-        var dur = rndDur();
-        img.style.animation =
-          name + " " + dur + " " + ease + " infinite";
-        img.style.animationDelay = delay;
-      }
-      requestAnimationFrame(function () {
-        img.style.opacity = "1";
-        setTimeout(function () {
-          img.style.transition = "";
-        }, 220);
-      });
-    }, 55);
-  }
-
-  function rotateAvatarAnimations() {
-    var imgs = document.querySelectorAll(
-      ".home-boss-deco .home-boss-stack__img, .home-boss-strip .home-boss-stack__img"
-    );
-    if (!imgs.length) return;
-    imgs.forEach(function (img, idx) {
-      if (Math.random() > 0.42) return;
-      swapAvatarAnim(img, idx, Math.random() < 0.22);
-    });
-  }
-
-  function scheduleAvatarAnimShuffle() {
-    var next = 15000 + Math.random() * 18000;
-    setTimeout(function () {
-      rotateAvatarAnimations();
-      scheduleAvatarAnimShuffle();
-    }, next);
-  }
-
-  setTimeout(function () {
-    scheduleAvatarAnimShuffle();
-  }, 16000 + Math.random() * 12000);
+  /** Tab ẩn → tạm dừng CSS animation (giảm CPU; class dùng trong ac-mong-10.css) */
+  (function syncHomeAvatarsWithVisibility() {
+    var root = document.documentElement;
+    function apply() {
+      if (typeof document.hidden !== "boolean") return;
+      root.classList.toggle("home-page--avatars-paused", document.hidden);
+    }
+    apply();
+    document.addEventListener("visibilitychange", apply);
+  })();
 })();

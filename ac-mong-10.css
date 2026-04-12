@@ -15,8 +15,8 @@ body.home-page {
   height: 100%;
   max-height: 100dvh;
   padding-block: clamp(1rem, 3.5vw, 2.25rem);
-  /* Chừa thêm 2 bên — hover scale avatar ít tràn */
-  padding-inline: clamp(1.2rem, 4.5vw, 2.75rem);
+  /* Chừa 2 bên rộng hơn — avatar / lưới cụm ít sát mép */
+  padding-inline: clamp(1.55rem, 5.8vw, 3.6rem);
   box-sizing: border-box;
   overflow: hidden;
   overscroll-behavior: none;
@@ -51,6 +51,72 @@ html.home-index body.home-page {
     ),
     linear-gradient(165deg, #f8fafc 0%, #eef2ff 38%, #e2e8f0 100%);
   pointer-events: none;
+}
+
+/* Mosaic nền PB5: 2 hàng (chia đôi số ảnh), chồng nhẹ ~6% size — home-pb5-fill.js */
+.home-pb5-fill {
+  --pb5-size: clamp(2.15rem, 5.5vw, 3.6rem);
+  --pb5-overlap: 0.065; /* ~5–8% đường kính giữa hai ảnh kề / hai hàng */
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: clamp(0.85rem, 3vw, 1.85rem) clamp(1.1rem, 4vw, 2.35rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0;
+  min-height: 100%;
+  min-height: 100dvh;
+  opacity: 1;
+}
+
+.home-pb5-fill__row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  position: relative;
+}
+
+.home-pb5-fill__row--top {
+  z-index: 1;
+}
+
+.home-pb5-fill__row--bottom {
+  z-index: 2;
+  margin-top: calc(var(--pb5-size) * var(--pb5-overlap) * -1);
+}
+
+.home-pb5-fill__row .home-pb5-fill__img {
+  position: relative;
+  flex: 0 0 auto;
+  width: var(--pb5-size);
+  height: var(--pb5-size);
+}
+
+.home-pb5-fill__row .home-pb5-fill__img:not(:first-child) {
+  margin-left: calc(var(--pb5-size) * var(--pb5-overlap) * -1);
+}
+
+.home-pb5-fill__img {
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  box-shadow: 0 2px 9px rgba(15, 23, 42, 0.1);
+}
+
+@media (max-width: 639px) {
+  .home-pb5-fill {
+    --pb5-size: clamp(1.95rem, 6.2vw, 3rem);
+    padding: clamp(0.65rem, 2.5vw, 1.2rem) clamp(0.85rem, 3.2vw, 1.35rem);
+  }
 }
 
 .home-shell {
@@ -376,6 +442,26 @@ body.home-page .home-card {
   overflow: hidden;
 }
 
+/* Hiệu năng: tab ẩn / chuyển tab → pause animation (home-boss-avatars.js gắn class) */
+html.home-index.home-page--avatars-paused .home-boss-deco .home-boss-stack__img,
+html.home-index.home-page--avatars-paused
+  .home-boss-strip
+  .home-boss-stack__img,
+html.home-index.home-page--avatars-paused .home-links > li {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.home-index .home-boss-deco .home-boss-stack__img,
+  html.home-index .home-boss-strip .home-boss-stack__img {
+    animation: none !important;
+  }
+
+  html.home-index .home-links > li {
+    animation: none !important;
+  }
+}
+
 .home-boss-stack {
   position: absolute;
   display: flex;
@@ -469,10 +555,6 @@ body.home-page .home-card {
     0 0 0 1px rgba(35, 95, 55, 0.28),
     0 6px 22px rgba(130, 210, 155, 0.35),
     0 4px 16px rgba(15, 23, 42, 0.18);
-}
-
-.home-boss-deco .home-boss-stack__img {
-  will-change: transform;
 }
 
 .home-boss-deco .home-boss-stack__img:nth-child(1) {
@@ -648,7 +730,7 @@ body.home-page .home-card {
   animation-delay: 0.04s;
 }
 
-/* Hover: góc / strip hàng — phóng vừa; cụm lưới — phóng x3 + lân cận đẩy (JS + --repel-*) */
+/* Hover: góc / strip hàng — phóng vừa; cụm lưới — phóng ~2.15x + lân cận đẩy (JS + --repel-*) */
 @media (hover: hover) and (pointer: fine) {
   .home-boss-deco .home-boss-stack__img {
     pointer-events: auto;
@@ -684,24 +766,24 @@ body.home-page .home-card {
       0 0 0 1px rgba(15, 23, 42, 0.08);
   }
 
-  /* Tắt animation trên ảnh hover — keyframes transform sẽ thắng scale(3) nếu chỉ pause */
+  /* Tắt animation trên ảnh hover — keyframes transform sẽ thắng scale hover nếu chỉ pause */
   .home-boss-stack--strip.home-boss-stack--cluster:not(
       .home-boss-stack--bundles
     )
     .home-boss-stack__img:hover {
     animation: none !important;
-    transform: scale(3);
+    transform: scale(2.15);
     z-index: 999999;
   }
 
   /*
-   * Bundle: phóng cả khối — giữ layout chồng ~12% (không scale từng ảnh x3 → chồng quá dày).
-   * Cụm 2–3 ảnh: scale nhỏ hơn (ít tràn màn).
+   * Bundle: phóng cả khối — scale vừa để lân cận còn hover được (kết hợp repel JS).
+   * Cụm 2–3 ảnh: nhỏ hơn nữa.
    */
   .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--bundles
     .home-boss-bundle:hover {
     animation: none !important;
-    transform: scale(3);
+    transform: scale(2.15);
     transform-origin: center center;
     z-index: 999999;
     filter: brightness(1.06) saturate(1.05);
@@ -711,7 +793,7 @@ body.home-page .home-card {
     .home-boss-bundle--2:hover,
   .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--bundles
     .home-boss-bundle--3:hover {
-    transform: scale(2.35);
+    transform: scale(1.85);
   }
 
   .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--bundles
@@ -793,13 +875,13 @@ body.home-page .home-card {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: start;
   justify-items: stretch;
-  gap: clamp(0.45rem, 1.85vw, 1.15rem);
+  gap: clamp(0.18rem, 0.72vw, 0.88rem);
 }
 
 @media (max-width: 1024px) {
   .home-boss-strip--tiered {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(0.5rem, 2.2vw, 1.35rem);
+    gap: clamp(0.1rem, 0.62vw, 0.44rem);
   }
 }
 
@@ -836,8 +918,8 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   left: auto;
   transform: none;
   box-sizing: border-box;
-  padding-inline: clamp(0.85rem, 3vw, 1.85rem);
-  padding-bottom: clamp(0.85rem, 2.75vw, 1.65rem);
+  padding-inline: clamp(1.45rem, 2.65vw, 2.05rem);
+  padding-bottom: clamp(0.6rem, 2vw, 1.2rem);
   margin-top: clamp(1.75rem, 4.5vw, 3.25rem);
   justify-content: stretch;
 }
@@ -852,8 +934,8 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   min-width: 0;
   max-width: 100%;
   overflow: visible;
-  padding-inline: clamp(0.08rem, 0.45vw, 0.28rem);
-  padding-block: clamp(0.04rem, 0.35vw, 0.14rem);
+  padding-inline: clamp(0, 0.22vw, 0.1rem);
+  padding-block: clamp(0, 0.18vw, 0.06rem);
 }
 
 /* Avatar strip: scale nhẹ theo độ khó — khó nhất 100%, dễ nhất ~80% (4 bậc tuyến tính) */
@@ -931,6 +1013,37 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   width: 100%;
   max-width: 100%;
   padding-block: 0.06rem;
+}
+
+/* Tránh fallback 3 cột khi --cluster-cols lỗi: 4 ảnh → 3+1 thay vì 2×2 */
+.home-boss-stack--strip.home-boss-stack--cluster:not(
+    .home-boss-stack--bundles
+  )[data-cluster-cols="2"] {
+  grid-template-columns: repeat(2, minmax(0, max-content)) !important;
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster:not(
+    .home-boss-stack--bundles
+  )[data-cluster-cols="3"] {
+  grid-template-columns: repeat(3, minmax(0, max-content));
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster:not(
+    .home-boss-stack--bundles
+  )[data-cluster-cols="4"] {
+  grid-template-columns: repeat(4, minmax(0, max-content));
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster:not(
+    .home-boss-stack--bundles
+  )[data-cluster-cols="5"] {
+  grid-template-columns: repeat(5, minmax(0, max-content)) !important;
+}
+
+.home-boss-stack--strip.home-boss-stack--cluster:not(
+    .home-boss-stack--bundles
+  )[data-cluster-cols="6"] {
+  grid-template-columns: repeat(6, minmax(0, max-content)) !important;
 }
 
 .home-boss-stack--strip.home-boss-stack--cluster:not(.home-boss-stack--bundles)
@@ -1049,10 +1162,10 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   align-content: center;
   justify-content: center;
   /* Hẹp hơn — avatar đơn / cụm xích gần nhau */
-  gap: clamp(0.04rem, 0.28vw, 0.12rem) clamp(0.06rem, 0.38vw, 0.18rem);
+  gap: clamp(0.02rem, 0.16vw, 0.08rem) clamp(0.04rem, 0.26vw, 0.11rem);
   width: 100%;
   max-width: 100%;
-  padding-block: clamp(0.06rem, 0.35vw, 0.14rem);
+  padding-block: clamp(0.02rem, 0.22vw, 0.08rem);
 }
 
 /* Kéo cụm kế tiến lại gần cụm trước (flex không có gap âm) */
@@ -1198,11 +1311,11 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   );
 }
 
-/* Cụm 4 ảnh: lưới 2×2 cố định (thứ tự DOM: 1|2 / 3|4) */
+/* Cụm 4 ảnh: lưới 2×2 cố định (thứ tự DOM: 1|2 / 3|4) — !important tránh bị rule khác/3 cột */
 .home-boss-bundle--4 {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, max-content));
-  grid-template-rows: repeat(2, minmax(0, max-content));
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, max-content)) !important;
+  grid-template-rows: repeat(2, minmax(0, max-content)) !important;
   gap: 0;
   justify-content: center;
   align-content: center;
@@ -1280,12 +1393,28 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
 
 .home-boss-bundle--many {
   display: grid;
+  /* Mặc định 3 cột — nếu lớp lỡ là --many với 4 ảnh → 3+1; override bên dưới */
   grid-template-columns: repeat(var(--bundle-cols, 3), minmax(0, max-content));
   grid-auto-rows: auto;
   gap: clamp(0.06rem, 0.35vw, 0.14rem);
   justify-items: center;
   align-content: start;
   justify-content: center;
+}
+
+/* 4 ảnh luôn 2×2 (kể cả khi modifier lỡ thành --many / thiếu --bundle-cols) */
+.home-boss-bundle--many[data-bundle-n="4"] {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, max-content)) !important;
+  grid-template-rows: repeat(2, minmax(0, max-content)) !important;
+  gap: 0;
+  align-content: center;
+  align-items: center;
+  isolation: isolate;
+}
+
+.home-boss-bundle--many[data-bundle-n="4"] .home-boss-stack__img {
+  margin: 0;
 }
 
 .home-boss-bundle--many .home-boss-stack__img {
@@ -1337,7 +1466,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   }
 
   .home-boss-strip--tiered {
-    gap: clamp(0.65rem, 3.5vw, 1.5rem);
+    gap: clamp(0.14rem, 0.78vw, 0.3rem);
   }
 
   .home-boss-stack--strip.home-boss-stack--cluster:not(
@@ -2365,6 +2494,11 @@ body.boss-detail-page .site-nav {
   box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
   width: fit-content;
   max-width: 100%;
+}
+
+/* Mở từ trang chủ (?from=index): ẩn link về bảng — chỉ cần « Trang chủ » */
+html.ac-detail-from-index .site-nav a[href="ac-mong-10.html"] {
+  display: none;
 }
 
 body.boss-detail-page article.boss-detail {

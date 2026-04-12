@@ -197,6 +197,13 @@
       ) {
         return;
       }
+      try {
+        if (new URLSearchParams(location.search).get("from") === "index") {
+          e.preventDefault();
+          location.href = "index.html";
+          return;
+        }
+      } catch (err) {}
       var a = document.querySelector(
         '.site-nav a[href$="ac-mong-10.html"], .site-nav a[href$="luyen-nguc-10.html"], .site-nav a[href$="phu-ban-5.html"]'
       );
