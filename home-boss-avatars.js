@@ -40,6 +40,66 @@
     return rel.split("/").map(encodeURIComponent).join("/");
   }
 
+  /** Khoảng cách từ điểm đến biên hình chữ nhật (0 nếu điểm nằm trong). */
+  function distPointToRect(px, py, rect) {
+    var cx = Math.min(Math.max(px, rect.left), rect.right);
+    var cy = Math.min(Math.max(py, rect.top), rect.bottom);
+    var dx = px - cx;
+    var dy = py - cy;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  /**
+   * Ảnh bị translate (--repel-*) làm lệch vị trí vẽ so với vùng hit layout;
+   * dùng elementsFromPoint + fallback “gần nhất trong slop” để hover sang lân cận vẫn ổn.
+   */
+  function findRepelHoverTarget(root, clientX, clientY, bundles, standaloneImgs, slop) {
+    if (!root) return null;
+    /* Repel có thể >150px với lân cận rất gần — slop nhỏ sẽ clear giữa chừng khi rê sang ảnh kế. */
+    slop = slop != null ? slop : 220;
+    var list = document.elementsFromPoint(clientX, clientY);
+    var i;
+    var el;
+    for (i = 0; i < list.length; i++) {
+      el = list[i];
+      if (!root.contains(el)) continue;
+      if (el.classList && el.classList.contains("home-boss-bundle")) {
+        return el;
+      }
+      if (el.classList && el.classList.contains("home-boss-stack__img")) {
+        if (!el.closest(".home-boss-bundle")) {
+          return el;
+        }
+      }
+    }
+    var best = null;
+    var bestD = Infinity;
+    Array.prototype.forEach.call(bundles, function (b) {
+      var rect = b.getBoundingClientRect();
+      if (rect.width < 1 || rect.height < 1) return;
+      var d = distPointToRect(clientX, clientY, rect);
+      if (d < bestD) {
+        bestD = d;
+        best = b;
+      }
+    });
+    var j;
+    for (j = 0; j < standaloneImgs.length; j++) {
+      var img = standaloneImgs[j];
+      var ir = img.getBoundingClientRect();
+      if (ir.width < 1 || ir.height < 1) continue;
+      var d2 = distPointToRect(clientX, clientY, ir);
+      if (d2 < bestD) {
+        bestD = d2;
+        best = img;
+      }
+    }
+    if (best && bestD <= slop) {
+      return best;
+    }
+    return null;
+  }
+
   function buildPathToDetailId(rows, idFn) {
     var map = Object.create(null);
     if (!Array.isArray(rows) || typeof idFn !== "function") return map;
@@ -537,7 +597,18 @@
     var imgs = strip.querySelectorAll(".home-boss-stack__img");
     if (!imgs.length) return;
 
+    var bundles = strip.querySelectorAll(".home-boss-bundle");
+    var standaloneImgs = [];
+    Array.prototype.forEach.call(imgs, function (img) {
+      if (!img.closest(".home-boss-bundle")) {
+        standaloneImgs.push(img);
+      }
+    });
+
+    var lastRepelTarget = null;
+
     function clearRepel() {
+      lastRepelTarget = null;
       Array.prototype.forEach.call(clusterStacks, function (s) {
         s.classList.remove("home-boss-stack--repel-active");
       });
@@ -592,23 +663,30 @@
       });
     }
 
-    var bundles = strip.querySelectorAll(".home-boss-bundle");
-    Array.prototype.forEach.call(bundles, function (bundle) {
-      bundle.addEventListener("mouseenter", function () {
-        applyRepel(bundle);
-      });
-    });
-    Array.prototype.forEach.call(imgs, function (img) {
-      if (img.closest(".home-boss-bundle")) return;
-      img.addEventListener("mouseenter", function () {
-        applyRepel(img);
-      });
-    });
+    function onPointerMove(e) {
+      var br = strip.getBoundingClientRect();
+      var x = e.clientX;
+      var y = e.clientY;
+      if (x < br.left || x > br.right || y < br.top || y > br.bottom) {
+        if (lastRepelTarget !== null) {
+          clearRepel();
+        }
+        return;
+      }
+      var t = findRepelHoverTarget(strip, x, y, bundles, standaloneImgs);
+      if (t === lastRepelTarget) {
+        return;
+      }
+      lastRepelTarget = t;
+      if (t) {
+        applyRepel(t);
+      } else {
+        clearRepel();
+      }
+    }
 
-    strip.addEventListener("mouseleave", function (e) {
-      var rt = e.relatedTarget;
-      if (!rt || !strip.contains(rt)) clearRepel();
-    });
+    strip.addEventListener("pointermove", onPointerMove, { passive: true });
+    strip.addEventListener("pointerleave", clearRepel);
   }
 
   /** Cụm lưới: hover phóng — đẩy lân cận (chỉ khi có hover chuột). */
@@ -640,8 +718,18 @@
       var imgs = stack.querySelectorAll(".home-boss-stack__img");
       if (!imgs.length) return;
       var bundleMode = stack.classList.contains("home-boss-stack--bundles");
+      var bundles = stack.querySelectorAll(".home-boss-bundle");
+      var standaloneImgs = [];
+      Array.prototype.forEach.call(imgs, function (img) {
+        if (!img.closest(".home-boss-bundle")) {
+          standaloneImgs.push(img);
+        }
+      });
+
+      var lastRepelTarget = null;
 
       function clearRepel() {
+        lastRepelTarget = null;
         stack.classList.remove("home-boss-stack--repel-active");
         Array.prototype.forEach.call(imgs, function (img) {
           img.style.removeProperty("--repel-x");
@@ -689,25 +777,30 @@
         });
       }
 
-      if (bundleMode) {
-        var bundles = stack.querySelectorAll(".home-boss-bundle");
-        Array.prototype.forEach.call(bundles, function (bundle) {
-          bundle.addEventListener("mouseenter", function () {
-            applyRepel(bundle);
-          });
-        });
-      } else {
-        Array.prototype.forEach.call(imgs, function (img) {
-          img.addEventListener("mouseenter", function () {
-            applyRepel(img);
-          });
-        });
+      function onPointerMove(e) {
+        var br = stack.getBoundingClientRect();
+        var x = e.clientX;
+        var y = e.clientY;
+        if (x < br.left || x > br.right || y < br.top || y > br.bottom) {
+          if (lastRepelTarget !== null) {
+            clearRepel();
+          }
+          return;
+        }
+        var t = findRepelHoverTarget(stack, x, y, bundles, standaloneImgs);
+        if (t === lastRepelTarget) {
+          return;
+        }
+        lastRepelTarget = t;
+        if (t) {
+          applyRepel(t);
+        } else {
+          clearRepel();
+        }
       }
 
-      stack.addEventListener("mouseleave", function (e) {
-        var rt = e.relatedTarget;
-        if (!rt || !stack.contains(rt)) clearRepel();
-      });
+      stack.addEventListener("pointermove", onPointerMove, { passive: true });
+      stack.addEventListener("pointerleave", clearRepel);
     });
   }
 
