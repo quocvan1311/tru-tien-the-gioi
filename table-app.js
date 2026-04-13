@@ -7,7 +7,7 @@
   function el(tag, props, children) {
     const node = document.createElement(tag);
     if (props) Object.assign(node, props);
-    if (children) children.forEach((c) => node.appendChild(c));
+    if (children) children.forEach(c => node.appendChild(c));
     return node;
   }
 
@@ -58,9 +58,9 @@
   ];
   /** Phụ bản 5 — cột Mùa (Excel) */
   const PHU_BAN_MUA_BG = Object.assign(Object.create(null), {
-    "1": "#93eaff",
-    "2": "#d6c1ff",
-    "3": "#ffff99",
+    1: "#93eaff",
+    2: "#d6c1ff",
+    3: "#ffff99",
   });
   const TUAN_TIEU_DIET_RE = /Tu[ầa]n\s*(\d+)/i;
 
@@ -206,12 +206,12 @@
     rows,
     seasonKey,
     useTierDifficultyBg,
-    acMongRowsForIndexSeason
+    acMongRowsForIndexSeason,
   ) {
     const seasonMap = buildSeasonBgMap(rows, seasonKey);
     const indexToSeasonBg = buildAcMongSeasonBgByIndexFirstNum(
       acMongRowsForIndexSeason,
-      seasonKey
+      seasonKey,
     );
     return function resolve(row, colKey) {
       const sn = String(row[seasonKey] ?? "").trim();
@@ -224,8 +224,7 @@
         seasonBg = seasonMap[sn];
       }
       if (!seasonBg) {
-        seasonBg =
-          SEASON_BG_PALETTE[hashString(sn) % SEASON_BG_PALETTE.length];
+        seasonBg = SEASON_BG_PALETTE[hashString(sn) % SEASON_BG_PALETTE.length];
       }
       const w = parseTuanTieuDietWeek(row["Tuần tiêu diệt"]);
       const weekBg =
@@ -277,7 +276,7 @@
       return makeAcMongNgucCellBgResolver(
         rows,
         tableOptions.seasonKey || "Tên season",
-        true
+        true,
       );
     }
     if (mode === "luyen-nguc") {
@@ -289,7 +288,7 @@
         rows,
         tableOptions.seasonKey || "Tên season",
         false,
-        acRef
+        acRef,
       );
     }
     return null;
@@ -335,14 +334,14 @@
 
   function collectKeys(rows) {
     const set = new Set();
-    rows.forEach((row) => {
-      Object.keys(row).forEach((k) => set.add(k));
+    rows.forEach(row => {
+      Object.keys(row).forEach(k => set.add(k));
     });
     return Array.from(set);
   }
 
   function isRowBlank(row, keys) {
-    return keys.every((k) => !cellText(rowValueForColumn(row, k)).trim());
+    return keys.every(k => !cellText(rowValueForColumn(row, k)).trim());
   }
 
   /** URL-safe id from boss name + Index (or No.) — detail page ?id=… */
@@ -378,17 +377,15 @@
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
-    const no = String(row["No."] ?? "")
-      .replace(/[^\d]/g, "") || "0";
-    const mua = String(row["Mùa"] ?? "")
-      .replace(/[^\d]/g, "") || "0";
+    const no = String(row["No."] ?? "").replace(/[^\d]/g, "") || "0";
+    const mua = String(row["Mùa"] ?? "").replace(/[^\d]/g, "") || "0";
     return "phu-ban-" + no + "-" + mua + "-" + (pb || "map");
   }
 
   function countBySeason(rows, seasonKey, emptyLabel) {
     const fallback = emptyLabel || "(no season name)";
     const m = Object.create(null);
-    rows.forEach((r) => {
+    rows.forEach(r => {
       const label = cellText(r[seasonKey]).trim() || fallback;
       m[label] = (m[label] || 0) + 1;
     });
@@ -404,9 +401,9 @@
       columnKeysForSearch && columnKeysForSearch.length
         ? columnKeysForSearch
         : null;
-    return rows.filter((row) => {
+    return rows.filter(row => {
       const kList = keysToUse || Object.keys(row);
-      return kList.some((k) => {
+      return kList.some(k => {
         const text = cellText(rowValueForColumn(row, k));
         const hay = useFold ? foldVi(text) : text.toLowerCase();
         return hay.includes(needle);
@@ -435,7 +432,7 @@
     detailBaseUrl,
     resolveCellBg,
     getRowDetailId,
-    cellBgMode
+    cellBgMode,
   ) {
     columnDisplay = columnDisplay || {};
     container.innerHTML = "";
@@ -448,7 +445,7 @@
     let anyCellBg = false;
     if (columnWidths) {
       const cg = document.createElement("colgroup");
-      keys.forEach((k) => {
+      keys.forEach(k => {
         const col = document.createElement("col");
         const w = columnWidths[k];
         if (w) col.style.width = w;
@@ -458,7 +455,7 @@
     }
     const thead = el("thead");
     const trh = el("tr");
-    keys.forEach((k) => {
+    keys.forEach(k => {
       const th = el("th", { textContent: k, title: "Sort" });
       th.dataset.sortKey = k;
       th.dataset.col = k;
@@ -470,7 +467,7 @@
     thead.appendChild(trh);
 
     const tbody = el("tbody");
-    rows.forEach((row) => {
+    rows.forEach(row => {
       const tr = el("tr");
       if (detailBaseUrl) {
         tr.classList.add("data-table__row--detail");
@@ -478,7 +475,7 @@
         tr.setAttribute("tabindex", "0");
         tr.setAttribute("role", "link");
       }
-      keys.forEach((k) => {
+      keys.forEach(k => {
         const spec = columnDisplay[k];
         const raw = row[k];
         let text;
@@ -560,6 +557,7 @@
           if (spec && spec.bossExcel) {
             td.style.fontWeight = "700";
             td.style.color = row.__bossColor || "#000000";
+            td.style.fontSize = row.__bossColor ? "1.05rem" : "1rem";
           }
         }
         const derivedBg = resolveCellBg ? resolveCellBg(row, k) : null;
@@ -593,13 +591,13 @@
     paintStatus,
     resolveCellBg,
     getRowDetailId,
-    cellBgMode
+    cellBgMode,
   ) {
     let rows = filterRows(
       rawRows,
       searchInput ? searchInput.value : "",
       keysForSearch,
-      searchFold
+      searchFold,
     );
     rows = sortRows(rows, sortState.key, sortState.dir);
     renderTable(
@@ -612,7 +610,7 @@
       detailBaseUrl,
       resolveCellBg,
       getRowDetailId,
-      cellBgMode
+      cellBgMode,
     );
     if (typeof paintStatus === "function") paintStatus(rows.length);
     if (detailBaseUrl && typeof getRowDetailId === "function") {
@@ -664,14 +662,17 @@
     }
 
     let keysForSearch = keys;
-    if (Array.isArray(tableOptions.searchKeys) && tableOptions.searchKeys.length > 0) {
+    if (
+      Array.isArray(tableOptions.searchKeys) &&
+      tableOptions.searchKeys.length > 0
+    ) {
       keysForSearch = tableOptions.searchKeys;
     }
     const searchFold = tableOptions.searchFold !== false;
 
     let rows = data;
     if (skipBlankRows) {
-      rows = rows.filter((r) => !isRowBlank(r, keys));
+      rows = rows.filter(r => !isRowBlank(r, keys));
     }
     rawRows = rows;
     const resolveCellBg = makeCellBgResolver(tableOptions, rawRows);
@@ -792,7 +793,7 @@
       paintStatus,
       resolveCellBg,
       getRowDetailId,
-      cellBgMode
+      cellBgMode,
     );
 
     if (searchInput) {
@@ -810,12 +811,12 @@
           paintStatus,
           resolveCellBg,
           getRowDetailId,
-          cellBgMode
+          cellBgMode,
         );
       });
     }
 
-    tableWrap.addEventListener("click", (e) => {
+    tableWrap.addEventListener("click", e => {
       const th = e.target.closest("th[data-sort-key]");
       if (!th) return;
       const key = th.dataset.sortKey;
@@ -843,7 +844,7 @@
         paintStatus,
         resolveCellBg,
         getRowDetailId,
-        cellBgMode
+        cellBgMode,
       );
     });
   }
@@ -870,11 +871,13 @@
   window.initBossTable = function (options) {
     options = options || {};
     const title = options.title || "";
-    const data = options.data !== undefined ? options.data : window.BOSS_TABLE_DATA;
+    const data =
+      options.data !== undefined ? options.data : window.BOSS_TABLE_DATA;
     if (data === undefined) {
       const statusEl = document.getElementById("status");
       if (statusEl) {
-        statusEl.textContent = "Missing data: load the sheet .js file before table-app.js.";
+        statusEl.textContent =
+          "Missing data: load the sheet .js file before table-app.js.";
       }
       return;
     }
@@ -893,7 +896,7 @@
     }
     let rows = data.slice();
     if (options.skipBlankRows) {
-      rows = rows.filter((r) => !isRowBlank(r, keys));
+      rows = rows.filter(r => !isRowBlank(r, keys));
     }
     return { keys: keys, rows: rows };
   };
@@ -914,8 +917,7 @@
     const sn = String(row[seasonKey] ?? "").trim();
     let seasonBg = seasonMap[sn];
     if (!seasonBg) {
-      seasonBg =
-        SEASON_BG_PALETTE[hashString(sn) % SEASON_BG_PALETTE.length];
+      seasonBg = SEASON_BG_PALETTE[hashString(sn) % SEASON_BG_PALETTE.length];
     }
     return {
       season: seasonBg,
@@ -975,9 +977,10 @@
         return s;
       }
     } catch (e) {}
-    const base = String(
-      window.BOSS_TABLE_REPO_MEDIA_VIDEO_BASE || ""
-    ).replace(/\/?$/, "/");
+    const base = String(window.BOSS_TABLE_REPO_MEDIA_VIDEO_BASE || "").replace(
+      /\/?$/,
+      "/",
+    );
     return base + s.replace(/^\//, "");
   };
 })();

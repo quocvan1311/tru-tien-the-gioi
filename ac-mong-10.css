@@ -1195,10 +1195,9 @@ html.home-index.home-page--avatars-paused .home-links > li {
 
 /* Vùng avatar: chiều cao theo nội dung (không flex-grow); spacing rõ với 3 thẻ phía trên */
 .home-boss-strip {
-  margin-top: clamp(2rem, 5.5vw, 3.85rem);
   margin-bottom: 0;
   padding-inline: clamp(0.45rem, 2vw, 1rem);
-  padding-bottom: clamp(0.15rem, 1vw, 0.4rem);
+  padding-bottom: clamp(0.5rem, 2vw, 1rem);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -1207,7 +1206,7 @@ html.home-index.home-page--avatars-paused .home-links > li {
   gap: clamp(0.28rem, 1.4vw, 0.5rem);
   width: 100%;
   max-width: 100%;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   min-height: 0;
   overflow: visible;
 }
@@ -1219,7 +1218,7 @@ html.home-index.home-page--avatars-paused .home-links > li {
 .home-boss-strip--tiered {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: start;
+  align-items: center;
   justify-items: stretch;
   justify-content: center;
   gap: clamp(1px, 0.14vw, 3px);
@@ -1307,8 +1306,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   transform: none;
   box-sizing: border-box;
   padding-inline: clamp(0px, 0.35vw, 4px);
-  padding-bottom: clamp(0.45rem, 1.5vw, 0.95rem);
-  margin-top: clamp(1.35rem, 3.5vw, 2.6rem);
+  padding-bottom: clamp(2rem, 4vw, 5rem);
   margin-left: auto;
   margin-right: auto;
   justify-content: center;
