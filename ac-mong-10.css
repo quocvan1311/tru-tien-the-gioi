@@ -886,7 +886,7 @@ html.home-index.home-page--avatars-paused .home-links > li {
     .home-boss-bundle--3.home-boss-bundle--detail-hover
     .home-boss-stack__img:nth-child(1) {
     transform: translateX(
-      calc(var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.048)
+      calc(var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.072)
     );
   }
 
@@ -897,12 +897,13 @@ html.home-index.home-page--avatars-paused .home-links > li {
     .home-boss-bundle--3.home-boss-bundle--detail-hover
     .home-boss-stack__img:nth-child(1) {
     transform: translateX(
-      calc(var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.048)
+      calc(var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.072)
     );
   }
 
   /*
-   * Cụm 2–4 mặt cùng boss: khi hover bớt chồng (≈8% cạnh thay vì 15%) để các ảnh tách nhẹ.
+   * Cụm 2–4 mặt cùng boss: khi hover bớt chồng so với rest (-15%).
+   * Cụm 2: -5.2% cạnh; cụm 3–4: rule kế tiếp.
    */
   .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
     .home-boss-bundle--2:hover
@@ -911,7 +912,7 @@ html.home-index.home-page--avatars-paused .home-links > li {
     .home-boss-bundle--2.home-boss-bundle--detail-hover
     .home-boss-stack__img:not(:first-child) {
     margin-left: calc(
-      var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.08
+      var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.052
     );
     transition: margin 0.32s ease-out;
   }
@@ -923,7 +924,7 @@ html.home-index.home-page--avatars-paused .home-links > li {
     .home-boss-bundle--2.home-boss-bundle--detail-hover
     .home-boss-stack__img:not(:first-child) {
     margin-left: calc(
-      var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.08
+      var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.052
     );
     transition: margin 0.32s ease-out;
   }
@@ -1306,7 +1307,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   transform: none;
   box-sizing: border-box;
   padding-inline: clamp(0px, 0.35vw, 4px);
-  padding-bottom: clamp(2rem, 4vw, 5rem);
+  padding-bottom: clamp(1rem, 2vw, 2rem);
   margin-left: auto;
   margin-right: auto;
   justify-content: center;
