@@ -22,7 +22,7 @@ body.home-page {
   margin: 0;
   min-height: 100%;
   min-height: 100dvh;
-  padding-block: clamp(0.72rem, 2.8vw, 1.65rem);
+  padding-block: clamp(0.25rem, 2vw, 1rem);
   /* Chừa 2 bên rộng hơn — avatar / lưới cụm ít sát mép */
   padding-inline: clamp(1.55rem, 5.8vw, 3.6rem);
   box-sizing: border-box;
@@ -108,7 +108,7 @@ body.home-page {
   box-sizing: border-box;
   margin-top: clamp(0.65rem, 2.2vw, 1.35rem);
   padding: clamp(0.5rem, 1.8vw, 1rem) clamp(1.1rem, 4vw, 2.35rem)
-    clamp(0.85rem, 3vw, 1.85rem);
+    clamp(0.15rem, 1vw, 0.35rem);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -874,6 +874,221 @@ html.home-index.home-page--avatars-paused .home-links > li {
     box-shadow:
       0 10px 28px rgba(15, 23, 42, 0.32),
       0 0 0 1px rgba(15, 23, 42, 0.08);
+  }
+
+  /*
+   * Cụm 3 (tam giác): bù translateX cho ảnh trên (tâm quang học hay lệch phải khi đổi margin).
+   */
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle--3:hover
+    .home-boss-stack__img:nth-child(1),
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle--3.home-boss-bundle--detail-hover
+    .home-boss-stack__img:nth-child(1) {
+    transform: translateX(
+      calc(var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.048)
+    );
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-bundle--3:hover
+    .home-boss-stack__img:nth-child(1),
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-bundle--3.home-boss-bundle--detail-hover
+    .home-boss-stack__img:nth-child(1) {
+    transform: translateX(
+      calc(var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.048)
+    );
+  }
+
+  /*
+   * Cụm 2–4 mặt cùng boss: khi hover bớt chồng (≈8% cạnh thay vì 15%) để các ảnh tách nhẹ.
+   */
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle--2:hover
+    .home-boss-stack__img:not(:first-child),
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle--2.home-boss-bundle--detail-hover
+    .home-boss-stack__img:not(:first-child) {
+    margin-left: calc(
+      var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.08
+    );
+    transition: margin 0.32s ease-out;
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-bundle--2:hover
+    .home-boss-stack__img:not(:first-child),
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-bundle--2.home-boss-bundle--detail-hover
+    .home-boss-stack__img:not(:first-child) {
+    margin-left: calc(
+      var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.08
+    );
+    transition: margin 0.32s ease-out;
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle--3:hover
+    .home-boss-stack__img:nth-child(1),
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle--3.home-boss-bundle--detail-hover
+    .home-boss-stack__img:nth-child(1) {
+    margin-bottom: calc(
+      var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.08
+    );
+    transition: margin 0.32s ease-out;
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle--3:hover
+    .home-boss-stack__img:nth-child(2),
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle--3.home-boss-bundle--detail-hover
+    .home-boss-stack__img:nth-child(2) {
+    /* Ngang: chồng gần rest (-0.12) để hai mặt dưới không tách quá; dọc vẫn bớt chồng (-0.08). */
+    margin-right: calc(
+      var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.12
+    );
+    margin-top: calc(
+      var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.08
+    );
+    transition: margin 0.32s ease-out;
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle--3:hover
+    .home-boss-stack__img:nth-child(3),
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle--3.home-boss-bundle--detail-hover
+    .home-boss-stack__img:nth-child(3) {
+    margin-left: calc(
+      var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.12
+    );
+    margin-top: calc(
+      var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.08
+    );
+    transition: margin 0.32s ease-out;
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-bundle--3:hover
+    .home-boss-stack__img:nth-child(1),
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-bundle--3.home-boss-bundle--detail-hover
+    .home-boss-stack__img:nth-child(1) {
+    margin-bottom: calc(
+      var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.08
+    );
+    transition: margin 0.32s ease-out;
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-bundle--3:hover
+    .home-boss-stack__img:nth-child(2),
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-bundle--3.home-boss-bundle--detail-hover
+    .home-boss-stack__img:nth-child(2) {
+    margin-right: calc(
+      var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.12
+    );
+    margin-top: calc(
+      var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.08
+    );
+    transition: margin 0.32s ease-out;
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-bundle--3:hover
+    .home-boss-stack__img:nth-child(3),
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-bundle--3.home-boss-bundle--detail-hover
+    .home-boss-stack__img:nth-child(3) {
+    margin-left: calc(
+      var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.12
+    );
+    margin-top: calc(
+      var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.08
+    );
+    transition: margin 0.32s ease-out;
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle--4:hover
+    .home-boss-stack__img:nth-child(2),
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle--4.home-boss-bundle--detail-hover
+    .home-boss-stack__img:nth-child(2) {
+    margin-left: calc(
+      var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.08
+    );
+    transition: margin 0.32s ease-out;
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle--4:hover
+    .home-boss-stack__img:nth-child(3),
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle--4.home-boss-bundle--detail-hover
+    .home-boss-stack__img:nth-child(3) {
+    margin-top: calc(
+      var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.08
+    );
+    transition: margin 0.32s ease-out;
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle--4:hover
+    .home-boss-stack__img:nth-child(4),
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap
+    .home-boss-bundle--4.home-boss-bundle--detail-hover
+    .home-boss-stack__img:nth-child(4) {
+    margin-left: calc(
+      var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.08
+    );
+    margin-top: calc(
+      var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.08
+    );
+    transition: margin 0.32s ease-out;
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-bundle--4:hover
+    .home-boss-stack__img:nth-child(2),
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-bundle--4.home-boss-bundle--detail-hover
+    .home-boss-stack__img:nth-child(2) {
+    margin-left: calc(
+      var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.08
+    );
+    transition: margin 0.32s ease-out;
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-bundle--4:hover
+    .home-boss-stack__img:nth-child(3),
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-bundle--4.home-boss-bundle--detail-hover
+    .home-boss-stack__img:nth-child(3) {
+    margin-top: calc(
+      var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.08
+    );
+    transition: margin 0.32s ease-out;
+  }
+
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-bundle--4:hover
+    .home-boss-stack__img:nth-child(4),
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--strip-dense
+    .home-boss-bundle--4.home-boss-bundle--detail-hover
+    .home-boss-stack__img:nth-child(4) {
+    margin-left: calc(
+      var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.08
+    );
+    margin-top: calc(
+      var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.08
+    );
+    transition: margin 0.32s ease-out;
   }
 
   /*
@@ -3260,16 +3475,16 @@ body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   body.boss-detail-page--luyen-detail
     .boss-detail__layout:not(.boss-detail__layout--no-video) {
     grid-template-columns:
-      minmax(550px, 1.35fr)
+      minmax(490px, 1.2fr)
       minmax(0, max-content)
-      minmax(400px, 2.4fr);
+      minmax(600px, 2.4fr);
   }
 
   /* Cột video tối thiểu 680px khi chưa wrap (3 cột cùng hàng) */
   body.boss-detail-page--ac-mong-detail
     .boss-detail__layout:not(.boss-detail__layout--no-video) {
     grid-template-columns:
-      minmax(550px, 1.35fr)
+      minmax(490px, 1.2fr)
       minmax(0, max-content)
       minmax(680px, 2.4fr);
   }
@@ -3340,7 +3555,7 @@ body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   .boss-detail__info-col
   .boss-detail__field {
   display: grid;
-  grid-template-columns: 12.5rem minmax(0, 1fr);
+  grid-template-columns: 11rem minmax(0, 1fr);
   column-gap: 1.5rem;
   row-gap: 0;
   align-items: baseline;
@@ -3354,7 +3569,7 @@ body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
 body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   .boss-detail__info-col
   .boss-detail__field--wide {
-  grid-template-columns: 12.5rem minmax(0, 1fr);
+  grid-template-columns: 11rem minmax(0, 1fr);
 }
 
 body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
@@ -3518,7 +3733,7 @@ body.boss-detail-page
   position: fixed;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50.75%);
   z-index: 10050;
   width: 92%;
   max-width: min(92vw, 100rem);
