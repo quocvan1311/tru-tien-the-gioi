@@ -2,7 +2,7 @@
  * Trang chủ: avatar BOSS — dải #home-boss-strip: 3 section = 3 mùa (cột Tên season trong Ác mộng 10);
  * cụm mỗi mùa: mỗi boss = bundle 1/2/3/4/many như strip; các boss xếp hàng (~√n ô);
  * góc trang: gom theo Độ khó + viền diff-t*; mỗi ảnh một lần;
- * cần ac-mong-10.js (BOSS_TABLE_DATA).
+ * cần ac-mong-10.js (AC_MONG_10_TABLE_DATA).
  */
 (function () {
   "use strict";
@@ -1359,15 +1359,15 @@
   var pathToDetailId = Object.create(null);
   if (
     typeof window.BOSS_TABLE_DETAIL_ROW_ID === "function" &&
-    Array.isArray(window.BOSS_TABLE_DATA)
+    Array.isArray(window.AC_MONG_10_TABLE_DATA)
   ) {
     pathToDetailId = buildPathToDetailId(
-      window.BOSS_TABLE_DATA,
+      window.AC_MONG_10_TABLE_DATA,
       window.BOSS_TABLE_DETAIL_ROW_ID
     );
   }
 
-  var rows = window.BOSS_TABLE_DATA;
+  var rows = window.AC_MONG_10_TABLE_DATA;
   if (hasAcMongBossData(rows)) {
     var bundleTiers = collectBundlesByTier(rows);
     var seasonStripBuckets = collectBundlesBySeasonForStrip(rows);

@@ -193,21 +193,23 @@
    * @param {string} profile.notFoundDocTitle
    * @param {function(string): boolean} profile.fieldWide
    * @param {function(object): object[]} profile.getVideoEntries
+   * @param {object[]|undefined} profile.tableData — mảng dòng (vd. AC_MONG_10_TABLE_DATA)
    * @param {{allowLocalFiles: boolean, youtubeMuteFirst: boolean}} profile.videoCfg
    */
   function mountBossDetailThreeCol(profile) {
     var errEl = document.getElementById("detail-error");
     var titleEl = document.getElementById("detail-title");
     var contentEl = document.getElementById("detail-content");
+    var tableData = profile.tableData;
 
-    if (!global.BOSS_TABLE_PREPARE || !global.BOSS_TABLE_DATA) {
+    if (!global.BOSS_TABLE_PREPARE || !Array.isArray(tableData)) {
       errEl.hidden = false;
       errEl.textContent = "Thiếu dữ liệu hoặc table-app.js.";
       titleEl.textContent = "Lỗi";
       return;
     }
 
-    var prep = global.BOSS_TABLE_PREPARE(global.BOSS_TABLE_DATA, {
+    var prep = global.BOSS_TABLE_PREPARE(tableData, {
       columns: profile.cols,
       skipBlankRows: true,
     });
@@ -411,6 +413,7 @@
    */
   global.mountAcMong10BossDetailPage = function (defaultBossDetailVideoUrl) {
     mountBossDetailThreeCol({
+      tableData: global.AC_MONG_10_TABLE_DATA,
       cols: AC_MONG_DETAIL_COLS,
       columnDisplay: AC_MONG_DETAIL_COLUMN_DISPLAY,
       pageTitleSuffix: "Ác mộng 10",
@@ -429,6 +432,7 @@
    */
   global.mountLuyenNguc10BossDetailPage = function (defaultBossDetailVideoUrl) {
     mountBossDetailThreeCol({
+      tableData: global.LUYEN_NGUC_10_TABLE_DATA,
       cols: LUYEN_DETAIL_COLS,
       columnDisplay: LUYEN_DETAIL_COLUMN_DISPLAY,
       pageTitleSuffix: "Luyện ngục 10",

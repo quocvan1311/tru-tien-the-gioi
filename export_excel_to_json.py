@@ -17,14 +17,14 @@ XLSM = ROOT / "Tru Tien BOSS.xlsm"
 PHU_BAN10_IMAGES_DIR = ROOT / "phu ban 10"
 # Phụ bản 5: ảnh đặt tay, ghép theo tên boss (tên file gần giống tên boss)
 PHU_BAN_IMAGES_DIR = ROOT / "phu ban 5"
-# Nối sau `window.BOSS_TABLE_DATA` khi export sheet Ác mộng 10 (video + hằng số trailer).
+# Nối sau mảng dữ liệu sheet Ác mộng 10 khi export (video + trailer trong ac-mong-10-trailer.js).
 AC_MONG_10_TRAILER_APPEND = ROOT / "ac-mong-10-trailer.js"
 
-# URL-safe .js filenames (loaded before table-app.js; sets window.BOSS_TABLE_DATA)
+# Mỗi tuple: (tên sheet Excel, file .js, tên biến window — tránh dùng chung BOSS_TABLE_DATA).
 SHEET_FILES = [
-    ("Ác mộng 10", "ac-mong-10.js"),
-    ("Luyện ngục 10", "luyen-nguc-10.js"),
-    ("Phụ bản 5", "phu-ban-5.js"),
+    ("Ác mộng 10", "ac-mong-10.js", "AC_MONG_10_TABLE_DATA"),
+    ("Luyện ngục 10", "luyen-nguc-10.js", "LUYEN_NGUC_10_TABLE_DATA"),
+    ("Phụ bản 5", "phu-ban-5.js", "PHU_BAN_5_TABLE_DATA"),
 ]
 
 
@@ -660,7 +660,7 @@ def main():
     wb = load_workbook(XLSM, data_only=True)
     wb_fmt = load_workbook(XLSM, data_only=False)
     try:
-        for sheet_name, js_name in SHEET_FILES:
+        for sheet_name, js_name, data_global in SHEET_FILES:
             if sheet_name not in wb.sheetnames:
                 raise SystemExit(f"Missing sheet {sheet_name!r}. Found: {wb.sheetnames}")
             data = sheet_to_rows(wb[sheet_name])
@@ -685,7 +685,7 @@ def main():
             body = (
                 "// Auto-generated from Tru Tien BOSS.xlsm — do not edit by hand.\n"
                 f'// Sheet: "{sheet_name}"\n'
-                "window.BOSS_TABLE_DATA = "
+                f"window.{data_global} = "
                 + payload
                 + ";\n"
             )

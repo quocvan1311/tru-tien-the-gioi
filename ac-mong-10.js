@@ -1,6 +1,6 @@
 // Auto-generated from Tru Tien BOSS.xlsm — do not edit by hand.
 // Sheet: "Ác mộng 10"
-window.BOSS_TABLE_DATA = [
+window.AC_MONG_10_TABLE_DATA = [
   {
     "No.": 1,
     Index: "123",

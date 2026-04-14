@@ -1,6 +1,6 @@
 // Auto-generated from Tru Tien BOSS.xlsm — do not edit by hand.
 // Sheet: "Luyện ngục 10"
-window.BOSS_TABLE_DATA = [
+window.LUYEN_NGUC_10_TABLE_DATA = [
   {
     "No.": 1,
     "Index": "233",

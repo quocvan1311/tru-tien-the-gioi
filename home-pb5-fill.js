@@ -1,6 +1,6 @@
 /**
  * Trang chủ: nền ảnh phụ bản 5 (mỗi path một lần), 2 hàng chia gần đều, chồng trong hàng.
- * Cần phu-ban-5.js (PHU_BAN_5_TABLE_DATA).
+ * Cần phu-ban-5.js — `window.PHU_BAN_5_TABLE_DATA`.
  */
 (function () {
   "use strict";

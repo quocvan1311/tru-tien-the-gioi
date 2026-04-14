@@ -61,6 +61,7 @@
     };
     global.initBossTable(
       Object.assign({}, baseAcMongStyleListing(), {
+        data: global.AC_MONG_10_TABLE_DATA,
         title: "Ác mộng 10",
         columns: cols,
         columnWidths: w,
@@ -113,6 +114,7 @@
     };
     global.initBossTable(
       Object.assign({}, baseAcMongStyleListing(), {
+        data: global.LUYEN_NGUC_10_TABLE_DATA,
         title: "Luyện ngục 10",
         columns: cols,
         columnWidths: w,
@@ -145,6 +147,7 @@
       "Boss 3": "23%",
     };
     global.initBossTable({
+      data: global.PHU_BAN_5_TABLE_DATA,
       title: "Phụ bản 5",
       columns: cols,
       columnWidths: w,

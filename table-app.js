@@ -283,7 +283,7 @@
       const acRef =
         tableOptions.acMongRowsForSeasonColor !== undefined
           ? tableOptions.acMongRowsForSeasonColor
-          : window.BOSS_TABLE_AC_MONG_ROWS;
+          : window.BOSS_TABLE_AC_MONG_ROWS || window.AC_MONG_10_TABLE_DATA;
       return makeAcMongNgucCellBgResolver(
         rows,
         tableOptions.seasonKey || "Tên season",
@@ -851,7 +851,7 @@
 
   /**
    * options.title — page heading
-   * options.data — row array (optional if a prior script set window.BOSS_TABLE_DATA)
+   * options.data — row array (bắt buộc; vd. window.AC_MONG_10_TABLE_DATA — không dùng chung BOSS_TABLE_DATA)
    * options.columns — optional ordered list of property names to show (subset / order)
    * options.columnWidths — optional map header key → CSS width (e.g. "32ch") for Excel-like layout
    * options.tableExtraClass — extra class on <table> (e.g. Excel styling)
@@ -865,19 +865,18 @@
    * options.searchFold — if not false, search is diacritic-insensitive (Vietnamese); default true
    * options.seasonChipPrefix — e.g. "Mùa" → chips show "Mùa 1: 6" instead of "1: 6"
    * options.cellBgMode — "ac-mong" | "luyen-nguc" | "phu-ban" — tô màu ô theo dữ liệu (không dùng __cellBg trong .js)
-   * options.acMongRowsForSeasonColor — (luyen-nguc) mảng dòng Ác mộng để map màu season theo số đầu trong Index; mặc định window.BOSS_TABLE_AC_MONG_ROWS
+   * options.acMongRowsForSeasonColor — (luyen-nguc) mảng dòng Ác mộng để map màu season theo số đầu trong Index; mặc định BOSS_TABLE_AC_MONG_ROWS hoặc AC_MONG_10_TABLE_DATA
    * options.detailRowId — hàm (row) => id cho ?id=; mặc định BOSS + Index (Ác mộng / Luyện ngục). Phụ bản: BOSS_TABLE_PHU_BAN_DETAIL_ROW_ID
    */
   window.initBossTable = function (options) {
     options = options || {};
     const title = options.title || "";
-    const data =
-      options.data !== undefined ? options.data : window.BOSS_TABLE_DATA;
-    if (data === undefined) {
+    const data = options.data;
+    if (data === undefined || data === null) {
       const statusEl = document.getElementById("status");
       if (statusEl) {
         statusEl.textContent =
-          "Missing data: load the sheet .js file before table-app.js.";
+          "Missing table data: pass options.data (e.g. window.AC_MONG_10_TABLE_DATA).";
       }
       return;
     }

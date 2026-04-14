@@ -1,6 +1,6 @@
 // Auto-generated from Tru Tien BOSS.xlsm — do not edit by hand.
 // Sheet: "Phụ bản 5"
-window.BOSS_TABLE_DATA = [
+window.PHU_BAN_5_TABLE_DATA = [
   {
     "No.": 1,
     "Mùa": 1,

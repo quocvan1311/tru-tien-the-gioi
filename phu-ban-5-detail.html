@@ -113,14 +113,14 @@
         var titleEl = document.getElementById("detail-title");
         var contentEl = document.getElementById("detail-content");
 
-        if (!window.BOSS_TABLE_PREPARE || !window.BOSS_TABLE_DATA) {
+        if (!window.BOSS_TABLE_PREPARE || !window.PHU_BAN_5_TABLE_DATA) {
           errEl.hidden = false;
           errEl.textContent = "Thiếu dữ liệu hoặc table-app.js.";
           titleEl.textContent = "Lỗi";
           return;
         }
 
-        var prep = window.BOSS_TABLE_PREPARE(window.BOSS_TABLE_DATA, {
+        var prep = window.BOSS_TABLE_PREPARE(window.PHU_BAN_5_TABLE_DATA, {
           columns: COLS,
           skipBlankRows: true,
         });
