@@ -1,0 +1,190 @@
+/**
+ * Khởi tạo bảng listing dùng chung pattern Excel (initBossTable từ table-app.js).
+ * Gọi sau khi load data .js + table-app.js.
+ */
+(function (global) {
+  "use strict";
+
+  var SEASON_ORDER_THIEN_AM = [
+    "Đạo Khởi Thanh Vân",
+    "Cô Tâm Hám Hải",
+    "Thiện Âm Phá Hiểu",
+  ];
+
+  var AC_MONG_STYLE_SEARCH_KEYS = [
+    "Tên season",
+    "Tên BOSS (Ác mộng)",
+    "Tên phụ bản",
+  ];
+
+  function baseAcMongStyleListing() {
+    return {
+      searchKeys: AC_MONG_STYLE_SEARCH_KEYS.slice(),
+      tableExtraClass: "excel-ac-mong",
+      skipBlankRows: true,
+      seasonKey: "Tên season",
+      statusLocale: "vi",
+      seasonSummaryOrder: SEASON_ORDER_THIEN_AM.slice(),
+    };
+  }
+
+  function initAcMong10ListingTable() {
+    var cols = [
+      "No.",
+      "Index",
+      "Tên season",
+      "Ngày ra mắt",
+      "Ngày tiêu diệt",
+      "Tuần tiêu diệt",
+      "Số ngày",
+      "Tên BOSS (Ác mộng)",
+      "Tên phụ bản",
+      "Kỹ năng",
+      "Độ khó",
+      "Ghi chú",
+      "Ảnh",
+    ];
+    var w = {
+      "No.": "2.5%",
+      Index: "3.5%",
+      "Tên season": "10%",
+      "Ngày ra mắt": "6%",
+      "Ngày tiêu diệt": "6%",
+      "Tuần tiêu diệt": "6%",
+      "Số ngày": "4%",
+      "Tên BOSS (Ác mộng)": "11.33%",
+      "Tên phụ bản": "12.33%",
+      "Kỹ năng": "14.34%",
+      "Độ khó": "5%",
+      "Ghi chú": "10%",
+      Ảnh: "9%",
+    };
+    global.initBossTable(
+      Object.assign({}, baseAcMongStyleListing(), {
+        title: "Ác mộng 10",
+        columns: cols,
+        columnWidths: w,
+        detailPage: "ac-mong-detail.html",
+        columnDisplay: {
+          "No.": { noWrap: true },
+          Index: { noWrap: true },
+          "Ngày ra mắt": { type: "date", noWrap: true },
+          "Ngày tiêu diệt": { type: "date", noWrap: true },
+          "Số ngày": { noWrap: true },
+          "Độ khó": { noWrap: true },
+          "Kỹ năng": { preWrap: true },
+          "Tên BOSS (Ác mộng)": { preWrap: true, bossExcel: true },
+          "Ghi chú": { preWrap: true },
+          Ảnh: { type: "images" },
+        },
+        cellBgMode: "ac-mong",
+      }),
+    );
+  }
+
+  function initLuyenNguc10ListingTable() {
+    var cols = [
+      "No.",
+      "Index",
+      "Tên season",
+      "Ngày ra mắt",
+      "Ngày tiêu diệt",
+      "Tuần tiêu diệt",
+      "Số ngày",
+      "Tên BOSS (Ác mộng)",
+      "Tên phụ bản",
+      "Độ khó",
+      "Ghi chú",
+      "Ảnh",
+    ];
+    var w = {
+      "No.": "2.5%",
+      Index: "3.5%",
+      "Tên season": "10%",
+      "Ngày ra mắt": "6%",
+      "Ngày tiêu diệt": "6%",
+      "Tuần tiêu diệt": "6%",
+      "Số ngày": "4%",
+      "Tên BOSS (Ác mộng)": "18.6%",
+      "Tên phụ bản": "13.6%",
+      "Độ khó": "5%",
+      "Ghi chú": "8.6%",
+      Ảnh: "16.2%",
+    };
+    global.initBossTable(
+      Object.assign({}, baseAcMongStyleListing(), {
+        title: "Luyện ngục 10",
+        columns: cols,
+        columnWidths: w,
+        detailPage: "luyen-nguc-detail.html",
+        columnDisplay: {
+          "No.": { noWrap: true },
+          Index: { noWrap: true },
+          "Ngày ra mắt": { type: "date", noWrap: true },
+          "Ngày tiêu diệt": { type: "date", noWrap: true },
+          "Số ngày": { noWrap: true },
+          "Độ khó": { noWrap: true },
+          "Tên BOSS (Ác mộng)": { preWrap: true, bossExcel: true },
+          "Tên phụ bản": { preWrap: true },
+          "Ghi chú": { preWrap: true },
+          Ảnh: { type: "images" },
+        },
+        cellBgMode: "luyen-nguc",
+      }),
+    );
+  }
+
+  function initPhuBan5ListingTable() {
+    var cols = ["No.", "Mùa", "Tên phụ bản", "Boss 1", "Boss 2", "Boss 3"];
+    var w = {
+      "No.": "5%",
+      Mùa: "8%",
+      "Tên phụ bản": "20%",
+      "Boss 1": "22%",
+      "Boss 2": "22%",
+      "Boss 3": "23%",
+    };
+    global.initBossTable({
+      title: "Phụ bản 5",
+      columns: cols,
+      columnWidths: w,
+      searchKeys: ["Mùa", "Tên phụ bản", "Boss 1", "Boss 2", "Boss 3"],
+      seasonChipPrefix: "Mùa",
+      detailPage: "phu-ban-5-detail.html",
+      detailRowId: global.BOSS_TABLE_PHU_BAN_DETAIL_ROW_ID,
+      columnDisplay: {
+        "No.": { noWrap: true },
+        Mùa: { noWrap: true },
+        "Tên phụ bản": { preWrap: true },
+        "Boss 1": { type: "bossWithImage" },
+        "Boss 2": { type: "bossWithImage" },
+        "Boss 3": { type: "bossWithImage" },
+      },
+      tableExtraClass: "excel-ac-mong excel-phu-ban",
+      skipBlankRows: true,
+      seasonKey: "Mùa",
+      statusLocale: "vi",
+      cellBgMode: "phu-ban",
+    });
+  }
+
+  /**
+   * @param {"ac-mong-10"|"luyen-nguc-10"|"phu-ban-5"} kind
+   */
+  global.initBossExcelListingPage = function (kind) {
+    if (typeof global.initBossTable !== "function") {
+      var st = document.getElementById("status");
+      if (st) {
+        st.textContent = "Missing table-app.js.";
+      }
+      return;
+    }
+    if (kind === "ac-mong-10") {
+      initAcMong10ListingTable();
+    } else if (kind === "luyen-nguc-10") {
+      initLuyenNguc10ListingTable();
+    } else if (kind === "phu-ban-5") {
+      initPhuBan5ListingTable();
+    }
+  };
+})(typeof window !== "undefined" ? window : this);

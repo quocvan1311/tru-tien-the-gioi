@@ -32,67 +32,9 @@
     </script>
     <script src="luyen-nguc-10.js"></script>
     <script src="table-app.js"></script>
+    <script src="boss-table-listing-pages.js"></script>
     <script>
-      (function () {
-        var cols = [
-          "No.",
-          "Index",
-          "Tên season",
-          "Ngày ra mắt",
-          "Ngày tiêu diệt",
-          "Tuần tiêu diệt",
-          "Số ngày",
-          "Tên BOSS (Ác mộng)",
-          "Tên phụ bản",
-          "Độ khó",
-          "Ghi chú",
-          "Ảnh",
-        ];
-        // Tỉ lệ % (tổng 100%) — có cột Ảnh như Ác mộng 10
-        var w = {
-          "No.": "2.5%",
-          Index: "3.5%",
-          "Tên season": "10%",
-          "Ngày ra mắt": "6%",
-          "Ngày tiêu diệt": "6%",
-          "Tuần tiêu diệt": "6%",
-          "Số ngày": "4%",
-          "Tên BOSS (Ác mộng)": "18.6%",
-          "Tên phụ bản": "13.6%",
-          "Độ khó": "5%",
-          "Ghi chú": "8.6%",
-          Ảnh: "16.2%",
-        };
-        initBossTable({
-          title: "Luyện ngục 10",
-          columns: cols,
-          columnWidths: w,
-          searchKeys: ["Tên season", "Tên BOSS (Ác mộng)", "Tên phụ bản"],
-          columnDisplay: {
-            "No.": { noWrap: true },
-            Index: { noWrap: true },
-            "Ngày ra mắt": { type: "date", noWrap: true },
-            "Ngày tiêu diệt": { type: "date", noWrap: true },
-            "Số ngày": { noWrap: true },
-            "Độ khó": { noWrap: true },
-            "Tên BOSS (Ác mộng)": { preWrap: true, bossExcel: true },
-            "Tên phụ bản": { preWrap: true },
-            "Ghi chú": { preWrap: true },
-            Ảnh: { type: "images" },
-          },
-          tableExtraClass: "excel-ac-mong",
-          skipBlankRows: true,
-          seasonKey: "Tên season",
-          statusLocale: "vi",
-          seasonSummaryOrder: [
-            "Đạo Khởi Thanh Vân",
-            "Cô Tâm Hám Hải",
-            "Thiện Âm Phá Hiểu",
-          ],
-          cellBgMode: "luyen-nguc",
-          detailPage: "luyen-nguc-detail.html",
-        });
-      })();
+      initBossExcelListingPage("luyen-nguc-10");
     </script>
     <script src="boss-table-hotkeys.js"></script>
   </body>

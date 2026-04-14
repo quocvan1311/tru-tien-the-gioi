@@ -23,69 +23,9 @@
     <div class="table-scroll" id="table-wrap"></div>
     <script src="ac-mong-10.js"></script>
     <script src="table-app.js"></script>
+    <script src="boss-table-listing-pages.js"></script>
     <script>
-      (function () {
-        var cols = [
-          "No.",
-          "Index",
-          "Tên season",
-          "Ngày ra mắt",
-          "Ngày tiêu diệt",
-          "Tuần tiêu diệt",
-          "Số ngày",
-          "Tên BOSS (Ác mộng)",
-          "Tên phụ bản",
-          "Kỹ năng",
-          "Độ khó",
-          "Ghi chú",
-          "Ảnh",
-        ];
-        // Tỉ lệ % (tổng 100%) — cột Ảnh rộng hơn để hiển thị 1–3 hình
-        var w = {
-          "No.": "2.5%",
-          Index: "3.5%",
-          "Tên season": "10%",
-          "Ngày ra mắt": "6%",
-          "Ngày tiêu diệt": "6%",
-          "Tuần tiêu diệt": "6%",
-          "Số ngày": "4%",
-          "Tên BOSS (Ác mộng)": "11.33%",
-          "Tên phụ bản": "12.33%",
-          "Kỹ năng": "14.34%",
-          "Độ khó": "5%",
-          "Ghi chú": "10%",
-          Ảnh: "9%",
-        };
-        initBossTable({
-          title: "Ác mộng 10",
-          columns: cols,
-          columnWidths: w,
-          detailPage: "ac-mong-detail.html",
-          searchKeys: ["Tên season", "Tên BOSS (Ác mộng)", "Tên phụ bản"],
-          columnDisplay: {
-            "No.": { noWrap: true },
-            Index: { noWrap: true },
-            "Ngày ra mắt": { type: "date", noWrap: true },
-            "Ngày tiêu diệt": { type: "date", noWrap: true },
-            "Số ngày": { noWrap: true },
-            "Độ khó": { noWrap: true },
-            "Kỹ năng": { preWrap: true },
-            "Tên BOSS (Ác mộng)": { preWrap: true, bossExcel: true },
-            "Ghi chú": { preWrap: true },
-            Ảnh: { type: "images" },
-          },
-          tableExtraClass: "excel-ac-mong",
-          skipBlankRows: true,
-          seasonKey: "Tên season",
-          statusLocale: "vi",
-          seasonSummaryOrder: [
-            "Đạo Khởi Thanh Vân",
-            "Cô Tâm Hám Hải",
-            "Thiện Âm Phá Hiểu",
-          ],
-          cellBgMode: "ac-mong",
-        });
-      })();
+      initBossExcelListingPage("ac-mong-10");
     </script>
     <script src="boss-table-hotkeys.js"></script>
   </body>

@@ -3,7 +3,7 @@
 window.BOSS_TABLE_DATA = [
   {
     "No.": 1,
-    "Index": "123",
+    Index: "123",
     "Tên season": "Đạo Khởi Thanh Vân",
     "Ngày ra mắt": "2025-03-19T00:00:00",
     "Ngày tiêu diệt": "2025-04-15T00:00:00",
@@ -17,16 +17,14 @@ window.BOSS_TABLE_DATA = [
       "Huyết Đồng Nhiếp Thế",
       "Huyết Thạch Thiên Vẫn",
       "Huyết Mâu Như Nhận",
-      "Ma Huyết Tẫn Nhiên"
+      "Ma Huyết Tẫn Nhiên",
     ],
     "Độ khó": 1100,
-    "__images": [
-      "phu ban 10/123 do ach nien lao dai.JPG"
-    ]
+    __images: ["phu ban 10/123 do ach nien lao dai.JPG"],
   },
   {
     "No.": 2,
-    "Index": "233",
+    Index: "233",
     "Tên season": "Cô Tâm Hám Hải",
     "Ngày ra mắt": "2025-11-05T00:00:00",
     "Ngày tiêu diệt": "2025-11-18T00:00:00",
@@ -39,16 +37,14 @@ window.BOSS_TABLE_DATA = [
       "Lôi Thú Truy Hồn",
       "Giá Trần Đạp Phong",
       "Vô Thường Phong Lôi",
-      "Phong Vân Sất Trá"
+      "Phong Vân Sất Trá",
     ],
     "Độ khó": 1050,
-    "__images": [
-      "phu ban 10/233 quy nguu dao nhiem no.JPG"
-    ]
+    __images: ["phu ban 10/233 quy nguu dao nhiem no.JPG"],
   },
   {
     "No.": 3,
-    "Index": "234",
+    Index: "234",
     "Tên season": "Cô Tâm Hám Hải",
     "Ngày ra mắt": "2025-11-05T00:00:00",
     "Ngày tiêu diệt": "2025-11-24T00:00:00",
@@ -63,17 +59,15 @@ window.BOSS_TABLE_DATA = [
       "Đảo Hải Khuynh Đào",
       "Cức Động Thương Hải",
       "Thượng Cổ Thú Hồn",
-      "Cửu Tiêu Lôi / Huyền Nguyên Nịch / Cương Phong Phược"
+      "Cửu Tiêu Lôi / Huyền Nguyên Nịch / Cương Phong Phược",
     ],
     "Độ khó": 1000,
-    "__bossColor": "#ff0000",
-    "__images": [
-      "phu ban 10/234 quy nguu dao quy nguu.JPG"
-    ]
+    __bossColor: "#ff0000",
+    __images: ["phu ban 10/234 quy nguu dao quy nguu.JPG"],
   },
   {
     "No.": 4,
-    "Index": "131",
+    Index: "131",
     "Tên season": "Đạo Khởi Thanh Vân",
     "Ngày ra mắt": "2025-04-30T00:00:00",
     "Ngày tiêu diệt": "2025-05-18T00:00:00",
@@ -88,16 +82,14 @@ window.BOSS_TABLE_DATA = [
       "Tử Địa Minh Uyên",
       "Minh Diệt Thiên Địa",
       "Quỷ Mạn Đột Tập",
-      "Sát Ý Vô Xá"
+      "Sát Ý Vô Xá",
     ],
     "Độ khó": 1000,
-    "__images": [
-      "phu ban 10/131 u kiep cuu u yeu thu.JPG"
-    ]
+    __images: ["phu ban 10/131 u kiep cuu u yeu thu.JPG"],
   },
   {
     "No.": 5,
-    "Index": "331",
+    Index: "331",
     "Tên season": "Thiện Âm Phá Hiểu",
     "Tên BOSS (Ác mộng)": "Chu Kỳ",
     "Tên phụ bản": "Giải Xu Đoạn Vọng Nhai",
@@ -107,17 +99,15 @@ window.BOSS_TABLE_DATA = [
       "Lôi Động Thiên La",
       "Đạo Hí Chúng Sinh",
       "Khôi Sinh Đồng Tù",
-      "Chung Mạt Vạn Quân"
+      "Chung Mạt Vạn Quân",
     ],
     "Độ khó": 999,
     "Ghi chú": "Chỉ Dục Giới Sư",
-    "__images": [
-      "phu ban 10/331 chi duc gioi su.JPG"
-    ]
+    __images: ["phu ban 10/331 chi duc gioi su.JPG"],
   },
   {
     "No.": 6,
-    "Index": "132",
+    Index: "132",
     "Tên season": "Đạo Khởi Thanh Vân",
     "Ngày ra mắt": "2025-04-30T00:00:00",
     "Ngày tiêu diệt": "2025-05-20T00:00:00",
@@ -134,17 +124,15 @@ window.BOSS_TABLE_DATA = [
       "Hắc Thủy Chi Thực",
       "Độc Dịch Phi Tiên",
       "Độc Triều Phiên Dũng",
-      "Độc Triều Vô Biên"
+      "Độc Triều Vô Biên",
     ],
     "Độ khó": 925,
-    "__bossColor": "#ff0000",
-    "__images": [
-      "phu ban 10/132 u kiep hac thuy huyen xa.JPG"
-    ]
+    __bossColor: "#ff0000",
+    __images: ["phu ban 10/132 u kiep hac thuy huyen xa.JPG"],
   },
   {
     "No.": 7,
-    "Index": "124",
+    Index: "124",
     "Tên season": "Đạo Khởi Thanh Vân",
     "Ngày ra mắt": "2025-03-19T00:00:00",
     "Ngày tiêu diệt": "2025-04-13T00:00:00",
@@ -159,16 +147,14 @@ window.BOSS_TABLE_DATA = [
       "Nguy Nham Hồi Oanh",
       "Địa Phược Tù Khu",
       "Toái Lãng Triều Kích",
-      "Nham Lãng Bài Không"
+      "Nham Lãng Bài Không",
     ],
     "Độ khó": 800,
-    "__images": [
-      "phu ban 10/124 do ach lam phong.JPG"
-    ]
+    __images: ["phu ban 10/124 do ach lam phong.JPG"],
   },
   {
     "No.": 8,
-    "Index": "231",
+    Index: "231",
     "Tên season": "Cô Tâm Hám Hải",
     "Ngày ra mắt": "2025-11-05T00:00:00",
     "Ngày tiêu diệt": "2025-11-09T00:00:00",
@@ -185,23 +171,19 @@ window.BOSS_TABLE_DATA = [
       "Hấp Huyết Đại Pháp",
       "Thiên Biến Độc Ôn",
       "Bách Độc Quy Nhất",
-      "Vạn Độc Chướng Vực"
+      "Vạn Độc Chướng Vực",
     ],
     "Độ khó": 775,
-    "Ghi chú": [
-      "Đoan Mộc Lão Tổ",
-      "Hấp Huyết Lão Yêu",
-      "Bách Độc Tử"
-    ],
-    "__images": [
+    "Ghi chú": ["Đoan Mộc Lão Tổ", "Hấp Huyết Lão Yêu", "Bách Độc Tử"],
+    __images: [
       "phu ban 10/231 quy nguu dao doan moc lao to.JPG",
       "phu ban 10/231 quy nguu dao hap huyet lao yeu.JPG",
-      "phu ban 10/231 quy nguu dao bach doc tu.JPG"
-    ]
+      "phu ban 10/231 quy nguu dao bach doc tu.JPG",
+    ],
   },
   {
     "No.": 9,
-    "Index": "122",
+    Index: "122",
     "Tên season": "Đạo Khởi Thanh Vân",
     "Ngày ra mắt": "2025-03-19T00:00:00",
     "Ngày tiêu diệt": "2025-03-29T00:00:00",
@@ -214,16 +196,14 @@ window.BOSS_TABLE_DATA = [
       "Ngọc Hàn Tỏa Xuân",
       "Phất Hoa Thúc Hồn",
       "Bộ Linh Hồi Xuân",
-      "Thiên Niên Hoa Linh"
+      "Thiên Niên Hoa Linh",
     ],
     "Độ khó": 725,
-    "__images": [
-      "phu ban 10/122 do ach dau nhi nuong.JPG"
-    ]
+    __images: ["phu ban 10/122 do ach dau nhi nuong.JPG"],
   },
   {
     "No.": 10,
-    "Index": "213",
+    Index: "213",
     "Tên season": "Cô Tâm Hám Hải",
     "Ngày ra mắt": "2025-08-27T00:00:00",
     "Ngày tiêu diệt": "2025-09-01T00:00:00",
@@ -239,16 +219,14 @@ window.BOSS_TABLE_DATA = [
       "Vẫn Tinh Hận Cao Thiên",
       "Bàn Long Ngâm",
       "Minh Đồng Huyền Thương Sinh",
-      "Lệ Điền Hải / Truy Ngọc Toái / Bỉ Hoan Kính"
+      "Lệ Điền Hải / Truy Ngọc Toái / Bỉ Hoan Kính",
     ],
     "Độ khó": 700,
-    "__images": [
-      "phu ban 10/213 co long lang tieu hanh van.JPG"
-    ]
+    __images: ["phu ban 10/213 co long lang tieu hanh van.JPG"],
   },
   {
     "No.": 11,
-    "Index": "111",
+    Index: "111",
     "Tên season": "Đạo Khởi Thanh Vân",
     "Ngày ra mắt": "2025-02-19T00:00:00",
     "Ngày tiêu diệt": "2025-02-23T00:00:00",
@@ -260,16 +238,14 @@ window.BOSS_TABLE_DATA = [
       "Huyền Diễm Phi Mang",
       "Thiên Địa Chi Tướng - Hỏa/Phong",
       "Định Phong Châu",
-      "Phong Tù Khung Thương"
+      "Phong Tù Khung Thương",
     ],
     "Độ khó": 600,
-    "__images": [
-      "phu ban 10/111 van sa ich ta.JPG"
-    ]
+    __images: ["phu ban 10/111 van sa ich ta.JPG"],
   },
   {
     "No.": 12,
-    "Index": "232",
+    Index: "232",
     "Tên season": "Cô Tâm Hám Hải",
     "Ngày ra mắt": "2025-11-05T00:00:00",
     "Ngày tiêu diệt": "2025-11-11T00:00:00",
@@ -284,16 +260,14 @@ window.BOSS_TABLE_DATA = [
       "Quang Âm Phiến Cục",
       "Sơn Lịch Lưu Chuyển",
       "Tru Diệt Chi Thời",
-      "Lưu Quang Tuyên Phán"
+      "Lưu Quang Tuyên Phán",
     ],
     "Độ khó": 600,
-    "__images": [
-      "phu ban 10/232 quy nguu dao tinh quy su.JPG"
-    ]
+    __images: ["phu ban 10/232 quy nguu dao tinh quy su.JPG"],
   },
   {
     "No.": 13,
-    "Index": "211",
+    Index: "211",
     "Tên season": "Cô Tâm Hám Hải",
     "Ngày ra mắt": "2025-08-27T00:00:00",
     "Ngày tiêu diệt": "2025-08-29T00:00:00",
@@ -308,20 +282,15 @@ window.BOSS_TABLE_DATA = [
       "Ấu Huyết Nhu Lũ",
       "Trầm Lục Thế",
       "Nguyện Giả Thượng Câu",
-      "Giải Giải Triều"
+      "Giải Giải Triều",
     ],
     "Độ khó": 575,
-    "Ghi chú": [
-      "Hoành Hành Công",
-      "Bá Đạo Công"
-    ],
-    "__images": [
-      "phu ban 10/211 co long lang hoanh hanh ba dao cong.JPG"
-    ]
+    "Ghi chú": ["Hoành Hành Công", "Bá Đạo Công"],
+    __images: ["phu ban 10/211 co long lang hoanh hanh ba dao cong.JPG"],
   },
   {
     "No.": 14,
-    "Index": "222",
+    Index: "222",
     "Tên season": "Cô Tâm Hám Hải",
     "Ngày ra mắt": "2025-10-22T00:00:00",
     "Ngày tiêu diệt": "2025-10-25T00:00:00",
@@ -334,16 +303,14 @@ window.BOSS_TABLE_DATA = [
       "Huyền Phúc Tả Ý",
       "Mặc Diễn Tam Hào",
       "Lưỡng Nghi Sát Trận",
-      "Độc Tiên Đồng Khế"
+      "Độc Tiên Đồng Khế",
     ],
     "Độ khó": 575,
-    "__images": [
-      "phu ban 10/222 du lan mac khue p2.JPG"
-    ]
+    __images: ["phu ban 10/222 du lan mac khue p2.JPG"],
   },
   {
     "No.": 15,
-    "Index": "321",
+    Index: "321",
     "Tên season": "Thiện Âm Phá Hiểu",
     "Ngày ra mắt": "2026-03-25T00:00:00",
     "Ngày tiêu diệt": "2026-03-28T00:00:00",
@@ -359,25 +326,20 @@ window.BOSS_TABLE_DATA = [
       "Táng Thế Sương Nghi",
       "Không Hoa Chiếu Dạ",
       "Xuyên Hài Sát",
-      "Vô Gian Băng Ngục"
+      "Vô Gian Băng Ngục",
     ],
     "Độ khó": 575,
-    "__images": [
-      "phu ban 10/321 suong phong phuong do.JPG"
-    ]
+    __images: ["phu ban 10/321 suong phong phuong do.JPG"],
   },
   {
     "No.": 16,
-    "Index": "322",
+    Index: "322",
     "Tên season": "Thiện Âm Phá Hiểu",
     "Ngày ra mắt": "2026-03-25T00:00:00",
     "Ngày tiêu diệt": "2026-03-29T00:00:00",
     "Tuần tiêu diệt": "Tuần 1, chủ nhật",
     "Số ngày": 4,
-    "Tên BOSS (Ác mộng)": [
-      "Sở Huyền",
-      "Phương Đồ"
-    ],
+    "Tên BOSS (Ác mộng)": ["Sở Huyền", "Phương Đồ"],
     "Tên phụ bản": "Sương Phong Vô Cấu Hải",
     "Kỹ năng": [
       "Tàn Hương Trụy Tuyết",
@@ -388,21 +350,18 @@ window.BOSS_TABLE_DATA = [
       "Tịnh Vực Thiên Khuynh",
       "Hàn Phong Hồi Tảo",
       "Huyền Băng Tịch Diệt",
-      "Sương Thiên Đồng Tâm"
+      "Sương Thiên Đồng Tâm",
     ],
     "Độ khó": 550,
-    "Ghi chú": [
-      "Thông Tuệ Giới Sư",
-      "Từ Bi Giới Sư"
-    ],
-    "__images": [
+    "Ghi chú": ["Thông Tuệ Giới Sư", "Từ Bi Giới Sư"],
+    __images: [
       "phu ban 10/322 suong phong so huyen.JPG",
-      "phu ban 10/322 suong phong phuong do.JPG"
-    ]
+      "phu ban 10/322 suong phong phuong do.JPG",
+    ],
   },
   {
     "No.": 17,
-    "Index": "121",
+    Index: "121",
     "Tên season": "Đạo Khởi Thanh Vân",
     "Ngày ra mắt": "2025-03-19T00:00:00",
     "Ngày tiêu diệt": "2025-03-23T00:00:00",
@@ -416,31 +375,25 @@ window.BOSS_TABLE_DATA = [
       "Huyết Hải Thao Thiên",
       "Tật Tiễn Túc Sát",
       "Huyết Tinh Tiễn",
-      "U Tinh Thích Huyết"
+      "U Tinh Thích Huyết",
     ],
     "Độ khó": 525,
-    "Ghi chú": [
-      "Thiên Sát Thánh Tượng",
-      "Huyền Minh Thánh Tượng"
-    ],
-    "__images": [
+    "Ghi chú": ["Thiên Sát Thánh Tượng", "Huyền Minh Thánh Tượng"],
+    __images: [
       "phu ban 10/121 do ach thien sat.JPG",
-      "phu ban 10/121 do ach huyen minh.JPG"
-    ]
+      "phu ban 10/121 do ach huyen minh.JPG",
+    ],
   },
   {
     "No.": 18,
-    "Index": "311",
+    Index: "311",
     "Tên season": "Thiện Âm Phá Hiểu",
     "Ngày ra mắt": "2026-02-04T00:00:00",
     "Ngày tiêu diệt": "2026-02-06T00:00:00",
     "Tuần tiêu diệt": "Tuần 1, thứ 6",
     "Số ngày": 2,
     "Tên BOSS (Ác mộng)": "Hỏa Tu La",
-    "Tên phụ bản": [
-      "Viêm Tẫn Tỏa Phong Nhận",
-      "Thần Binh Viêm Tẫn"
-    ],
+    "Tên phụ bản": ["Viêm Tẫn Tỏa Phong Nhận", "Thần Binh Viêm Tẫn"],
     "Kỹ năng": [
       "Lục Uyên Kiếp Triệu",
       "Tu La Phần Nghiệt",
@@ -450,16 +403,14 @@ window.BOSS_TABLE_DATA = [
       "Thập Phương Câu Diệt",
       "Dung Nghiệp Ma Trảm",
       "Phần Tội Chúng Sinh",
-      "Huyết Ngục Thương Kiếp Trận"
+      "Huyết Ngục Thương Kiếp Trận",
     ],
     "Độ khó": 475,
-    "__images": [
-      "phu ban 10/311 hoa tu la.JPG"
-    ]
+    __images: ["phu ban 10/311 hoa tu la.JPG"],
   },
   {
     "No.": 19,
-    "Index": "212",
+    Index: "212",
     "Tên season": "Cô Tâm Hám Hải",
     "Ngày ra mắt": "2025-08-27T00:00:00",
     "Ngày tiêu diệt": "2025-08-29T00:00:00",
@@ -474,23 +425,23 @@ window.BOSS_TABLE_DATA = [
       "Hàn Lao Tù Tâm",
       "Bát Phương Chuyển Viên",
       "Trọng Khí Tại Ác",
-      "Vạn Táng Quy Khư"
+      "Vạn Táng Quy Khư",
     ],
     "Độ khó": 425,
     "Ghi chú": [
       "Tướng Quân Hợp Bích (p2)",
       "Đại Nam Tướng Quân",
-      "Nhị Nam Tướng Quân"
+      "Nhị Nam Tướng Quân",
     ],
-    "__images": [
+    __images: [
       "phu ban 10/212 co long lang nam tuong quan.JPG",
       "phu ban 10/212 co long lang dai tuong quan.JPG",
-      "phu ban 10/212 co long lang nhi tuong quan.JPG"
-    ]
+      "phu ban 10/212 co long lang nhi tuong quan.JPG",
+    ],
   },
   {
     "No.": 20,
-    "Index": "221",
+    Index: "221",
     "Tên season": "Cô Tâm Hám Hải",
     "Ngày ra mắt": "2025-10-22T00:00:00",
     "Ngày tiêu diệt": "2025-10-23T00:00:00",
@@ -503,35 +454,33 @@ window.BOSS_TABLE_DATA = [
       "Hàn Độc Hóa Tủy",
       "Vạn Vật Đồng Vẫn",
       "Nghịch Thủ Hồi Phong - Tả/Hữu",
-      "Xích Luyện Độc Vi/Hoàn"
+      "Xích Luyện Độc Vi/Hoàn",
     ],
     "Độ khó": 375,
-    "__images": [
-      "phu ban 10/221 du lan mac khue p1.JPG"
-    ]
+    __images: ["phu ban 10/221 du lan mac khue p1.JPG"],
   },
   {
     "No.": 21,
-    "Index": "341",
+    Index: "341",
     "Tên season": "Thiện Âm Phá Hiểu",
     "Tên BOSS (Ác mộng)": "Vô Danh",
-    "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư"
+    "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư",
   },
   {
     "No.": 22,
-    "Index": "342",
+    Index: "342",
     "Tên season": "Thiện Âm Phá Hiểu",
     "Tên BOSS (Ác mộng)": "Phạm Không",
-    "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư"
+    "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư",
   },
   {
     "No.": 23,
-    "Index": "343",
+    Index: "343",
     "Tên season": "Thiện Âm Phá Hiểu",
     "Tên BOSS (Ác mộng)": "Hậu Khanh Ma Tượng",
     "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư",
-    "__bossColor": "#ff0000"
-  }
+    __bossColor: "#ff0000",
+  },
 ];
 
 /* --- Trailer PB 10 (file .mp4 cục bộ): khớp tên file trong thư mục `trailer pb 10/` --- */
@@ -545,35 +494,42 @@ window.BOSS_TABLE_DATA = [
     return BASE + filename;
   }
 
-  window.AC_MONG_BOSS_VIDEOS = Object.assign({}, window.AC_MONG_BOSS_VIDEOS || {}, {
-    "ich-ta-111": [T("111 ich ta trailer.mp4")],
-    "song-long-thanh-tuong-121": [T("121 do ach boss 1 trailer.mp4")],
-    "dau-nhi-nuong-122": [T("122 do ach boss 2 trailer.mp4")],
-    "nien-lao-dai-123": [T("123 do ach boss 3 trailer.mp4")],
-    "lam-phong-124": [T("124 do ach boss 4 trailer.mp4")],
-    "hoa-tu-la-311": [T("311 hoa tu la trailer.mp4")],
-    "chu-ky-331": [T("pb-33 giai xu doan vong nhai trailer.mp4")],
-    "vo-danh-341": [T("pb-33 giai xu doan vong nhai trailer.mp4")],
-    "pham-khong-342": [T("pb-33 giai xu doan vong nhai trailer.mp4")],
-    "hau-khanh-ma-tuong-343": [T("pb-33 giai xu doan vong nhai trailer.mp4")],
-    "nhiem-no-233": [T("233 quy nguu dao boss 3 trailer.mp4")],
-    "quy-nguu-234": [T("234 quy nguu dao boss 4 trailer.mp4")],
-    "cuu-u-yeu-thu-131": [T("131 u kiep boss 1 trailer.mp4")],
-    "hac-thuy-huyen-xa-132": [T("132 u kiep boss 2 trailer.mp4")],
-    "van-doc-tam-lao-231": [T("231 quy nguu dao boss 1 trailer.mp4")],
-    "tieu-hanh-van-213": [T("pb-21 co long lang trailer.mp4")],
-    "tinh-quy-su-232": [T("232 quy nguu dao boss 2 trailter.mp4")],
-    "hoanh-hanh-ba-dao-cong-211": [T("pb-21 co long lang trailer.mp4")],
-    "du-lan-mac-xa-p2-222": [T("222 oan trung thien dia boss 2 trailer.mp4")],
-    "phuong-do-321": [
-      T("321 suong phong vo cau hai boss 1 trailer.mp4"),
-      T("pb-32 suong phong vo cau hai trailer.mp4"),
-    ],
-    "so-huyen-phuong-do-322": [
-      T("322 suong phong vo cau hai boss 2 trailer.mp4"),
-      T("pb-32 suong phong vo cau hai trailer.mp4"),
-    ],
-    "nam-tuong-quan-212": [T("pb-21 co long lang trailer.mp4")],
-    "du-lan-mac-xa-p1-221": [T("221 oan trung thien dia boss 1 trailer.mp4")],
-  });
+  window.AC_MONG_BOSS_VIDEOS = Object.assign(
+    {},
+    window.AC_MONG_BOSS_VIDEOS || {},
+    {
+      "ich-ta-111": [T("111 ich ta trailer.mp4")],
+      "song-long-thanh-tuong-121": [T("121 do ach boss 1 trailer.mp4")],
+      "dau-nhi-nuong-122": [T("122 do ach boss 2 trailer.mp4")],
+      "nien-lao-dai-123": [T("123 do ach boss 3 trailer.mp4")],
+      "lam-phong-124": [T("124 do ach boss 4 trailer.mp4")],
+      "hoa-tu-la-311": [T("311 hoa tu la trailer.mp4")],
+      "chu-ky-331": [T("pb-33 giai xu doan vong nhai trailer.mp4")],
+      "vo-danh-341": [T("pb-33 giai xu doan vong nhai trailer.mp4")],
+      "pham-khong-342": [T("pb-33 giai xu doan vong nhai trailer.mp4")],
+      "hau-khanh-ma-tuong-343": [T("pb-33 giai xu doan vong nhai trailer.mp4")],
+      "nhiem-no-233": [T("233 quy nguu dao boss 3 trailer.mp4")],
+      "quy-nguu-234": [T("234 quy nguu dao boss 4 trailer.mp4")],
+      "cuu-u-yeu-thu-131": [T("131 u kiep boss 1 trailer.mp4")],
+      "hac-thuy-huyen-xa-132": [T("132 u kiep boss 2 trailer.mp4")],
+      "van-doc-tam-lao-231": [T("231 quy nguu dao boss 1 trailer.mp4")],
+      "tieu-hanh-van-213": [T("pb-21 co long lang trailer.mp4")],
+      "tinh-quy-su-232": [T("232 quy nguu dao boss 2 trailter.mp4")],
+      "hoanh-hanh-ba-dao-cong-211": [T("pb-21 co long lang trailer.mp4")],
+      "du-lan-mac-xa-p2-222": [T("222 oan trung thien dia boss 2 trailer.mp4")],
+      "phuong-do-321": [
+        T("321 suong phong vo cau hai boss 1 trailer.mp4"),
+        T("pb-32 suong phong vo cau hai trailer.mp4"),
+      ],
+      "so-huyen-phuong-do-322": [
+        T("322 suong phong vo cau hai boss 2 trailer.mp4"),
+        T("pb-32 suong phong vo cau hai trailer.mp4"),
+      ],
+      "nam-tuong-quan-212": [T("pb-21 co long lang trailer.mp4")],
+      "du-lan-mac-xa-p1-221": [T("221 oan trung thien dia boss 1 trailer.mp4")],
+      "vo-danh-341": [T("pb-34 nghich menh trailer.mp4")],
+      "pham-khong-342": [T("pb-34 nghich menh trailer.mp4")],
+      "hau-khanh-ma-tuong-343": [T("pb-34 nghich menh trailer.mp4")],
+    },
+  );
 })();
