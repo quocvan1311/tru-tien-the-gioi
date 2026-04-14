@@ -886,7 +886,7 @@ html.home-index.home-page--avatars-paused .home-links > li {
     .home-boss-bundle--3.home-boss-bundle--detail-hover
     .home-boss-stack__img:nth-child(1) {
     transform: translateX(
-      calc(var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.072)
+      calc(var(--boss-avatar-ref) * var(--boss-tier-scale, 1) * -0.11)
     );
   }
 
@@ -897,7 +897,7 @@ html.home-index.home-page--avatars-paused .home-links > li {
     .home-boss-bundle--3.home-boss-bundle--detail-hover
     .home-boss-stack__img:nth-child(1) {
     transform: translateX(
-      calc(var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.072)
+      calc(var(--boss-avatar-ref-dense) * var(--boss-tier-scale, 1) * -0.11)
     );
   }
 

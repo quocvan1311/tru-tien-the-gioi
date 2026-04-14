@@ -539,6 +539,13 @@ window.BOSS_TABLE_DATA = [
   }
 
   window.AC_MONG_BOSS_VIDEOS = Object.assign({}, window.AC_MONG_BOSS_VIDEOS || {}, {
+    "ich-ta-111": [T("111 ich ta trailer.mp4")],
+    "song-long-thanh-tuong-121": [T("121 do ach boss 1 trailer.mp4")],
+    "dau-nhi-nuong-122": [T("122 do ach boss 2 trailer.mp4")],
+    "nien-lao-dai-123": [T("123 do ach boss 3 trailer.mp4")],
+    "lam-phong-124": [T("124 do ach boss 4 trailer.mp4")],
+    "hoa-tu-la-311": [T("311 hoa tu la trailer.mp4")],
+    "chu-ky-331": [T("pb-33 giai xu doan vong nhai trailer.mp4")],
     "nhiem-no-233": [T("233 quy nguu dao boss 3 trailer.mp4")],
     "quy-nguu-234": [T("234 quy nguu dao boss 4 trailer.mp4")],
     "cuu-u-yeu-thu-131": [T("131 u kiep boss 1 trailer.mp4")],
