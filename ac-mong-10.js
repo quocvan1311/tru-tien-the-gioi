@@ -514,14 +514,21 @@ window.BOSS_TABLE_DATA = [
     "No.": 21,
     "Index": "341",
     "Tên season": "Thiện Âm Phá Hiểu",
-    "Tên BOSS (Ác mộng)": "Tam Thiên Kiếp Hải Bất Không Thân",
+    "Tên BOSS (Ác mộng)": "Vô Danh",
     "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư"
   },
   {
     "No.": 22,
     "Index": "342",
     "Tên season": "Thiện Âm Phá Hiểu",
-    "Tên BOSS (Ác mộng)": "Vô Lượng Yết Giả",
+    "Tên BOSS (Ác mộng)": "Phạm Không",
+    "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư"
+  },
+  {
+    "No.": 23,
+    "Index": "343",
+    "Tên season": "Thiện Âm Phá Hiểu",
+    "Tên BOSS (Ác mộng)": "Hậu Khanh Ma Tượng",
     "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư",
     "__bossColor": "#ff0000"
   }
@@ -546,6 +553,9 @@ window.BOSS_TABLE_DATA = [
     "lam-phong-124": [T("124 do ach boss 4 trailer.mp4")],
     "hoa-tu-la-311": [T("311 hoa tu la trailer.mp4")],
     "chu-ky-331": [T("pb-33 giai xu doan vong nhai trailer.mp4")],
+    "vo-danh-341": [T("pb-33 giai xu doan vong nhai trailer.mp4")],
+    "pham-khong-342": [T("pb-33 giai xu doan vong nhai trailer.mp4")],
+    "hau-khanh-ma-tuong-343": [T("pb-33 giai xu doan vong nhai trailer.mp4")],
     "nhiem-no-233": [T("233 quy nguu dao boss 3 trailer.mp4")],
     "quy-nguu-234": [T("234 quy nguu dao boss 4 trailer.mp4")],
     "cuu-u-yeu-thu-131": [T("131 u kiep boss 1 trailer.mp4")],

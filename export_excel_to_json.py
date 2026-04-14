@@ -17,6 +17,8 @@ XLSM = ROOT / "Tru Tien BOSS.xlsm"
 PHU_BAN10_IMAGES_DIR = ROOT / "phu ban 10"
 # Phụ bản 5: ảnh đặt tay, ghép theo tên boss (tên file gần giống tên boss)
 PHU_BAN_IMAGES_DIR = ROOT / "phu ban 5"
+# Nối sau `window.BOSS_TABLE_DATA` khi export sheet Ác mộng 10 (video + hằng số trailer).
+AC_MONG_10_TRAILER_APPEND = ROOT / "ac-mong-10-trailer.js"
 
 # URL-safe .js filenames (loaded before table-app.js; sets window.BOSS_TABLE_DATA)
 SHEET_FILES = [
@@ -680,14 +682,16 @@ def main():
                 attach_phu_ban_folder_images(data, PHU_BAN_IMAGES_DIR)
             payload = json.dumps(data, ensure_ascii=False, indent=2, default=json_default)
             path = ROOT / js_name
-            path.write_text(
+            body = (
                 "// Auto-generated from Tru Tien BOSS.xlsm — do not edit by hand.\n"
                 f'// Sheet: "{sheet_name}"\n'
                 "window.BOSS_TABLE_DATA = "
                 + payload
-                + ";\n",
-                encoding="utf-8",
+                + ";\n"
             )
+            if js_name == "ac-mong-10.js" and AC_MONG_10_TRAILER_APPEND.is_file():
+                body += AC_MONG_10_TRAILER_APPEND.read_text(encoding="utf-8")
+            path.write_text(body, encoding="utf-8")
             print(f"Wrote {path.name} ({len(data)} rows)")
     finally:
         wb.close()
