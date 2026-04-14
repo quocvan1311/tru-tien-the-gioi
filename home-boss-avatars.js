@@ -7,36 +7,6 @@
 (function () {
   "use strict";
 
-  var PB10 = [
-    "phu ban 10/111 van sa ich ta.JPG",
-    "phu ban 10/123 do ach nien lao dai.JPG",
-    "phu ban 10/131 u kiep cuu u yeu thu.JPG",
-    "phu ban 10/213 co long lang tieu hanh van.JPG",
-    "phu ban 10/233 quy nguu dao nhiem no.JPG",
-    "phu ban 10/234 quy nguu dao quy nguu.JPG",
-    "phu ban 10/311 hoa tu la.JPG",
-    "phu ban 10/321 suong phong phuong do.JPG",
-    "phu ban 10/331 chi duc gioi su.JPG",
-    "phu ban 10/222 du lan mac khue p2.JPG",
-    "phu ban 10/231 quy nguu dao bach doc tu.JPG",
-    "phu ban 10/132 u kiep hac thuy huyen xa.JPG",
-  ];
-
-  var PB5 = [
-    "phu ban 5/11 han dam le anh boss 1 - son than.JPG",
-    "phu ban 5/11 han dam le anh boss 2 - tieu khoi.JPG",
-    "phu ban 5/12 ho thap boss 1 - khoc huyet la sat.JPG",
-    "phu ban 5/12 ho thap boss 3 - huyen ma am mi.JPG",
-    "phu ban 5/13 hoang tuyen boss 2 - manh ba.JPG",
-    "phu ban 5/14 ta tong boss 1 - ngao liet.JPG",
-    "phu ban 5/15 tram han boss 3 - bao le phi giao.JPG",
-    "phu ban 5/16 hac thach boss 1 - tam vi yeu ho.JPG",
-    "phu ban 5/21 phi chu boss 2 - hoanh hanh cong.JPG",
-    "phu ban 5/22 ham son boss 3 - thon sat ban son lao quai.JPG",
-    "phu ban 5/31 tuyet linh boss 1 - tham lam gia lau la.JPG",
-    "phu ban 5/31 tuyet linh boss 3 - no tuong ma la.JPG",
-  ];
-
   function encPath(rel) {
     return rel.split("/").map(encodeURIComponent).join("/");
   }
@@ -54,7 +24,14 @@
    * Ảnh bị translate (--repel-*) làm lệch vị trí vẽ so với vùng hit layout;
    * dùng elementsFromPoint + fallback “gần nhất trong slop” để hover sang lân cận vẫn ổn.
    */
-  function findRepelHoverTarget(root, clientX, clientY, bundles, standaloneImgs, slop) {
+  function findRepelHoverTarget(
+    root,
+    clientX,
+    clientY,
+    bundles,
+    standaloneImgs,
+    slop,
+  ) {
     if (!root) return null;
     /* Repel có thể >150px với lân cận rất gần — slop nhỏ sẽ clear giữa chừng khi rê sang ảnh kế. */
     slop = slop != null ? slop : 220;
@@ -122,7 +99,7 @@
       var cx = r.left + r.width * 0.5;
       var cy = r.top + r.height * 0.5;
       var dCtr = Math.sqrt(
-        Math.pow(clientX - cx, 2) + Math.pow(clientY - cy, 2)
+        Math.pow(clientX - cx, 2) + Math.pow(clientY - cy, 2),
       );
       candidates.push({ b: b, dEdge: dEdge, dCtr: dCtr });
     });
@@ -150,9 +127,11 @@
   }
 
   function isPhuBan10Path(p) {
-    return String(p || "")
-      .toLowerCase()
-      .indexOf("phu ban 10/") !== -1;
+    return (
+      String(p || "")
+        .toLowerCase()
+        .indexOf("phu ban 10/") !== -1
+    );
   }
 
   function bundleDetailIdForPb10(paths, pathToDetailId) {
@@ -170,11 +149,7 @@
 
   function initHomeAcMongDetailNav() {
     function detailUrl(id) {
-      return (
-        "ac-mong-detail.html?id=" +
-        encodeURIComponent(id) +
-        "&from=index"
-      );
+      return "ac-mong-detail.html?id=" + encodeURIComponent(id) + "&from=index";
     }
     function go(e, id) {
       if (!id) return;
@@ -294,7 +269,10 @@
   }
 
   function leadingDigitsFromFilename(path) {
-    var base = String(path || "").split("/").pop() || "";
+    var base =
+      String(path || "")
+        .split("/")
+        .pop() || "";
     var m = base.match(/^\s*(\d+)/);
     return m ? m[1] : "";
   }
@@ -426,12 +404,12 @@
       wrap.style.setProperty(
         "grid-template-columns",
         "repeat(2, minmax(0, max-content))",
-        "important"
+        "important",
       );
       wrap.style.setProperty(
         "grid-template-rows",
         "repeat(2, minmax(0, max-content))",
-        "important"
+        "important",
       );
       wrap.style.setProperty("gap", "0", "important");
       wrap.style.setProperty("justify-content", "center", "important");
@@ -541,9 +519,7 @@
 
       /* Hòa: ưu tiên |c−r| nhỏ, rồi c gần round(√n) (vd 12 ảnh → 3 cột) */
       var tie =
-        Math.abs(c - r) * 1000 +
-        Math.abs(c - Math.round(sqrtn)) * 10 +
-        c;
+        Math.abs(c - r) * 1000 + Math.abs(c - Math.round(sqrtn)) * 10 + c;
       if (
         !best ||
         score < bestScore ||
@@ -603,7 +579,7 @@
         stack.style.setProperty(
           "grid-template-columns",
           "repeat(2, minmax(0, max-content))",
-          "important"
+          "important",
         );
         stack.style.setProperty("grid-auto-rows", "auto", "important");
       }
@@ -674,14 +650,19 @@
    * Dải theo mùa: mỗi dòng bảng = một boss — layout 1 / 2 ngang / 3 tam giác / 4+ lưới như strip --bundles;
    * các boss xếp hàng theo seasonStripRowPattern (đơn vị = boss, không tách ảnh cùng boss).
    */
-  function appendSeasonStripFlexCluster(parent, className, pickedBundles, pathToDetailId, opts) {
+  function appendSeasonStripFlexCluster(
+    parent,
+    className,
+    pickedBundles,
+    pathToDetailId,
+    opts,
+  ) {
     if (!pickedBundles || !pickedBundles.length) return;
     opts = opts || {};
     pathToDetailId = pathToDetailId || Object.create(null);
     var stack = document.createElement("div");
     stack.className =
-      className +
-      " home-boss-stack--cluster home-boss-stack--cluster-wrap";
+      className + " home-boss-stack--cluster home-boss-stack--cluster-wrap";
     var totalImgs = 0;
     var bi;
     for (bi = 0; bi < pickedBundles.length; bi++) {
@@ -701,7 +682,7 @@
     });
 
     var rowsPattern =
-      opts.wrapExtraRow && units.length > 1
+      units.length >= 7
         ? seasonStripRowPatternOneExtraRow(units.length)
         : seasonStripRowPattern(units.length);
     var ui = 0;
@@ -740,8 +721,7 @@
     pathToDetailId = pathToDetailId || Object.create(null);
     var stack = document.createElement("div");
     stack.className =
-      className +
-      " home-boss-stack--bundles home-boss-stack--cluster";
+      className + " home-boss-stack--bundles home-boss-stack--cluster";
     var totalImgs = 0;
     var b;
     for (b = 0; b < bundles.length; b++) {
@@ -787,7 +767,11 @@
    * @param bundleTiersForCorners — theo Độ khó (chỉ dùng cho góc + pathTiers)
    * @param seasonStripBuckets — 3 mảng bundle theo "Tên season" (mùa 1…3)
    */
-  function buildTieredLayout(bundleTiersForCorners, seasonStripBuckets, pathToDetailId) {
+  function buildTieredLayout(
+    bundleTiersForCorners,
+    seasonStripBuckets,
+    pathToDetailId,
+  ) {
     var pathTiers = tiersFlatFromBundles(bundleTiersForCorners);
     var deco = document.getElementById("home-boss-deco");
     var strip = document.getElementById("home-boss-strip");
@@ -838,7 +822,8 @@
         });
 
         var section = document.createElement("section");
-        section.className = "home-boss-tier home-boss-tier--season-" + seasonNum;
+        section.className =
+          "home-boss-tier home-boss-tier--season-" + seasonNum;
         section.setAttribute("data-boss-season", String(seasonNum));
 
         appendSeasonStripFlexCluster(
@@ -846,7 +831,6 @@
           "home-boss-stack home-boss-stack--strip",
           picked,
           pathToDetailId,
-          { wrapExtraRow: idx === 0 }
         );
         strip.appendChild(section);
       }
@@ -858,14 +842,14 @@
           pathTiers,
           cfg.tier,
           CORNER_AVATAR_COUNT,
-          used
+          used,
         );
         if (part.length === 0) return;
         appendStack(
           deco,
           cfg.cls + " home-boss-stack--diff-t" + cfg.tier,
           part,
-          pathToDetailId
+          pathToDetailId,
         );
       });
     }
@@ -874,9 +858,7 @@
   function escapeDetailIdAttr(id) {
     return typeof CSS !== "undefined" && typeof CSS.escape === "function"
       ? CSS.escape(id)
-      : String(id)
-          .replace(/\\/g, "\\\\")
-          .replace(/"/g, '\\"');
+      : String(id).replace(/\\/g, "\\\\").replace(/"/g, '\\"');
   }
 
   /** Bbox bao tất cả bundle cùng boss (cùng data-ac-detail-id) trong strip — dùng cho vùng hover + repel. */
@@ -884,9 +866,9 @@
     if (!detailId) return null;
     var esc = escapeDetailIdAttr(detailId);
     var sel =
-      ".home-boss-stack--cluster-wrap .home-boss-bundle[data-ac-detail-id=\"" +
+      '.home-boss-stack--cluster-wrap .home-boss-bundle[data-ac-detail-id="' +
       esc +
-      "\"]";
+      '"]';
     var list = strip.querySelectorAll(sel);
     var r = null;
     Array.prototype.forEach.call(list, function (b) {
@@ -1019,8 +1001,7 @@
       void strip.offsetHeight;
 
       var hoveredIsBundle =
-        hovered.classList &&
-        hovered.classList.contains("home-boss-bundle");
+        hovered.classList && hovered.classList.contains("home-boss-bundle");
       var hoverDetailId =
         hovered.getAttribute && hovered.getAttribute("data-ac-detail-id");
 
@@ -1159,7 +1140,7 @@
       "mouseover",
       function (e) {
         var bundle = e.target.closest(
-          ".home-boss-stack--cluster-wrap .home-boss-bundle[data-ac-detail-id]"
+          ".home-boss-stack--cluster-wrap .home-boss-bundle[data-ac-detail-id]",
         );
         if (!bundle || !strip.contains(bundle)) return;
         var id = bundle.getAttribute("data-ac-detail-id");
@@ -1168,15 +1149,15 @@
         var esc = escapeDetailIdAttr(id);
         strip
           .querySelectorAll(
-            ".home-boss-stack--cluster-wrap .home-boss-bundle[data-ac-detail-id=\"" +
+            '.home-boss-stack--cluster-wrap .home-boss-bundle[data-ac-detail-id="' +
               esc +
-              "\"]"
+              '"]',
           )
           .forEach(function (b) {
             b.classList.add("home-boss-bundle--detail-hover");
           });
       },
-      true
+      true,
     );
     strip.addEventListener("mouseleave", clearDetailHover);
   }
@@ -1191,10 +1172,7 @@
     }
     var PUSH = 66;
     var tierStrip = document.getElementById("home-boss-strip");
-    if (
-      tierStrip &&
-      tierStrip.classList.contains("home-boss-strip--tiered")
-    ) {
+    if (tierStrip && tierStrip.classList.contains("home-boss-strip--tiered")) {
       initSameBossDetailHoverStrip(tierStrip);
       initTieredStripUnifiedRepel(tierStrip, 18);
     }
@@ -1363,7 +1341,7 @@
   ) {
     pathToDetailId = buildPathToDetailId(
       window.AC_MONG_10_TABLE_DATA,
-      window.BOSS_TABLE_DETAIL_ROW_ID
+      window.BOSS_TABLE_DETAIL_ROW_ID,
     );
   }
 
@@ -1382,11 +1360,7 @@
     }
     if (pathTotal > 0) {
       buildTieredLayout(bundleTiers, seasonStripBuckets, pathToDetailId);
-    } else {
-      buildFallbackLayout(shuffleInPlace(PB10.concat(PB5)), pathToDetailId);
     }
-  } else {
-    buildFallbackLayout(shuffleInPlace(PB10.concat(PB5)), pathToDetailId);
   }
 
   initClusterHoverRepel();
