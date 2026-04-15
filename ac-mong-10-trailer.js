@@ -42,7 +42,10 @@
       ],
       "nam-tuong-quan-212": [T("pb-21 co long lang trailer.mp4")],
       "du-lan-mac-xa-p1-221": [T("221 oan trung thien dia boss 1 trailer.mp4")],
-      "vo-danh-341": [T("pb-34 nghich menh trailer.mp4")],
+      "vo-danh-341": [
+        T("341 nghich menh vo danh trailer.mp4"),
+        T("pb-34 nghich menh trailer.mp4"),
+      ],
       "pham-khong-342": [T("pb-34 nghich menh trailer.mp4")],
       "hau-khanh-ma-tuong-343": [T("pb-34 nghich menh trailer.mp4")],
     },
