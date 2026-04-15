@@ -553,21 +553,20 @@ html.home-index.home-page--avatars-paused .home-links > li {
   margin-left: clamp(-2.05rem, -4.65vw, -1.35rem);
 }
 
-/* Góc: cùng công thức scale 100% → 80% như strip */
 .home-boss-stack--diff-t0 {
-  --boss-tier-scale: 1;
+  --boss-tier-scale: 1.5;
 }
 
 .home-boss-stack--diff-t1 {
-  --boss-tier-scale: 0.98;
+  --boss-tier-scale: 1.25;
 }
 
 .home-boss-stack--diff-t2 {
-  --boss-tier-scale: 0.96;
+  --boss-tier-scale: 1.15;
 }
 
 .home-boss-stack--diff-t3 {
-  --boss-tier-scale: 0.94;
+  --boss-tier-scale: 1;
 }
 
 .home-boss-stack--diff-t0 .home-boss-stack__img,
@@ -1362,15 +1361,15 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img {
 }
 
 .home-boss-tier--t750 {
-  --boss-tier-scale: 0.98;
+  --boss-tier-scale: 0.92;
 }
 
 .home-boss-tier--t500 {
-  --boss-tier-scale: 0.96;
+  --boss-tier-scale: 0.86;
 }
 
 .home-boss-tier--tlow {
-  --boss-tier-scale: 0.94;
+  --boss-tier-scale: 0.8;
 }
 
 .home-boss-tier .home-boss-stack--strip {
@@ -1413,19 +1412,19 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img {
 
 /* Dải 3 mùa: chênh độ khó nhỏ (dễ ↔ khó ~2%) — size chủ yếu từ --home-boss-avatar-base trên home */
 .home-boss-strip--tiered .home-boss-stack--diff-t0 {
-  --boss-tier-scale: 1;
+  --boss-tier-scale: 1.25;
 }
 
 .home-boss-strip--tiered .home-boss-stack--diff-t1 {
-  --boss-tier-scale: 0.993;
+  --boss-tier-scale: 1.1;
 }
 
 .home-boss-strip--tiered .home-boss-stack--diff-t2 {
-  --boss-tier-scale: 0.986;
+  --boss-tier-scale: 0.95;
 }
 
 .home-boss-strip--tiered .home-boss-stack--diff-t3 {
-  --boss-tier-scale: 0.98;
+  --boss-tier-scale: 0.875;
 }
 
 /* Độ khó tầng 500 / <500: animation strip-b — gắn theo bundle (không còn theo cột season) */
@@ -3680,14 +3679,102 @@ body.boss-detail-page .boss-detail__video-heading-row {
   margin: 0 0 0.15rem;
 }
 
+body.boss-detail-page .boss-detail__video-heading--tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+body.boss-detail-page .boss-detail__video-tab-arrow {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  line-height: 1;
+  color: #475569;
+  background: #f1f5f9;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+body.boss-detail-page .boss-detail__video-tab-arrow:hover {
+  background: #e2e8f0;
+  border-color: rgba(15, 23, 42, 0.22);
+  color: #0f172a;
+}
+
+body.boss-detail-page .boss-detail__video-tab-arrow:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+body.boss-detail-page .boss-detail__video-tab-arrow__inner {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: -0.14em;
+}
+
+body.boss-detail-page .boss-detail__video-tabs {
+  display: flex;
+  align-items: strecth;
+  justify-content: flex-start;
+  gap: 0.35rem;
+  margin: 0;
+  min-width: 0;
+}
+
+body.boss-detail-page .boss-detail__video-tab {
+  margin: 0;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.825rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #475569;
+  background: #f1f5f9;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  border-radius: 7px;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+body.boss-detail-page .boss-detail__video-tab:hover {
+  background: #e2e8f0;
+  border-color: rgba(15, 23, 42, 0.22);
+  color: #0f172a;
+}
+
+body.boss-detail-page .boss-detail__video-tab--active {
+  color: #0f172a;
+  background: linear-gradient(180deg, #fff 0%, #e8f0fe 100%);
+  border-color: rgba(59, 130, 246, 0.45);
+  box-shadow: 0 1px 2px rgba(59, 130, 246, 0.12);
+}
+
+body.boss-detail-page .boss-detail__video-tab:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
 body.boss-detail-page .boss-detail__video-heading {
   flex: 1 1 auto;
   margin: 0;
-  font-size: 0.82rem;
-  font-weight: 800;
-  color: #334155;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  min-width: 0;
 }
 
 body.boss-detail-page .boss-detail__video-popout-btn {
@@ -3752,10 +3839,13 @@ body.boss-detail-page
     0 0 0 1px rgba(255, 255, 255, 0.06);
 }
 
-/* Một video: stack = khối 16:9; nhiều video: mỗi frame giữ 16:9, stack cao theo cột */
+/* Một video: stack = khối 16:9; tab nhiều trailer: một khối 16:9; nhiều video xếp dọc: stack cuộn */
 body.boss-detail-page
   .boss-detail__aside--videos.boss-detail__aside--videos--popout
-  .boss-detail__video-stack:has(> .boss-detail__video-frame:only-child) {
+  .boss-detail__video-stack:has(> .boss-detail__video-frame:only-child),
+body.boss-detail-page
+  .boss-detail__aside--videos.boss-detail__aside--videos--popout
+  .boss-detail__video-stack.boss-detail__video-stack--tabs {
   width: 100%;
   aspect-ratio: 16 / 9;
   flex: 0 0 auto;
@@ -3765,7 +3855,9 @@ body.boss-detail-page
 
 body.boss-detail-page
   .boss-detail__aside--videos.boss-detail__aside--videos--popout
-  .boss-detail__video-stack:not(:has(> .boss-detail__video-frame:only-child)) {
+  .boss-detail__video-stack:not(.boss-detail__video-stack--tabs):not(
+    :has(> .boss-detail__video-frame:only-child)
+  ) {
   width: 100%;
   max-height: calc(92vh - 3.5rem);
   overflow: auto;
@@ -3784,6 +3876,20 @@ body.boss-detail-page .boss-detail__video-stack {
   flex: 0 0 auto;
   width: 100%;
   min-height: 0;
+}
+
+body.boss-detail-page .boss-detail__video-stack--tabs {
+  gap: 0;
+}
+
+body.boss-detail-page .boss-detail__video-tab-panel {
+  flex: 0 0 auto;
+  min-height: 0;
+  width: 100%;
+}
+
+body.boss-detail-page .boss-detail__video-tab-panel[hidden] {
+  display: none !important;
 }
 
 body.boss-detail-page .boss-detail__video-frame {

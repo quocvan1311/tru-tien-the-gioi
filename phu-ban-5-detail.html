@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Chi tiết phụ bản — Phụ bản 5</title>
+    <link rel="icon" href="https://zxsj.wanmei.com/favicon.ico" />
     <link rel="stylesheet" href="table-app.css" />
     <link rel="stylesheet" href="ac-mong-10.css" />
   </head>
@@ -143,9 +144,7 @@
         var mapName = cellText(row["Tên phụ bản"]).trim() || "Phụ bản";
         var seasonRaw = cellText(row["Mùa"]).trim();
         var titleText =
-          seasonRaw !== ""
-            ? "Mùa " + seasonRaw + " - " + mapName
-            : mapName;
+          seasonRaw !== "" ? "Mùa " + seasonRaw + " - " + mapName : mapName;
         titleEl.textContent = titleText;
         document.title = titleText + " — Phụ bản 5";
 
