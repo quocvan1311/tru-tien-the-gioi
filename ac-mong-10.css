@@ -231,11 +231,11 @@ body.home-page .home-card {
 
 .home-kicker {
   margin: 0 0 0.35rem;
-  font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: #0070c0;
+  color: #02528b;
 }
 
 .home-title {
@@ -1295,7 +1295,7 @@ body.home-page
 /* Trang chủ: dải 3 mùa — grid theo nội dung, không căng full màn; avatar nhỏ hơn, scale chủ yếu theo độ khó */
 body.home-page .home-boss-strip.home-boss-strip--tiered {
   /* Base avatar ~×1.5 so với bản trước; margin chồng/inter vẫn tỉ lệ theo base */
-  --home-boss-avatar-base: clamp(4.4rem, 6.75vw, 5.9rem);
+  --home-boss-avatar-base: clamp(4.8rem, 7vw, 6.25rem);
   --boss-avatar-ref: var(--home-boss-avatar-base);
   --boss-avatar-ref-dense: calc(var(--home-boss-avatar-base) * 0.805);
   --boss-avatar-inter: calc(var(--home-boss-avatar-base) * 0.958);
@@ -2887,6 +2887,12 @@ body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
 
 body.excel-boss-page table.excel-ac-mong td[data-col="Độ khó"] {
   vertical-align: top;
+}
+
+body.excel-boss-page table td[data-col="No."],
+body.excel-boss-page table td[data-col="Index"],
+body.excel-boss-page table td[data-col="Độ khó"] {
+  text-align: center;
 }
 
 body.excel-boss-page

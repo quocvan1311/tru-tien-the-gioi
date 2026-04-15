@@ -472,9 +472,8 @@ window.AC_MONG_10_TABLE_DATA = [
     "No.": 22,
     Index: "342",
     "Tên season": "Thiện Âm Phá Hiểu",
-    "Tên BOSS (Ác mộng)": "Phạm Không",
+    "Tên BOSS (Ác mộng)": "Cô Thần Tôn - Phạm Không",
     "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư",
-    "Ghi chú": ["Cô Thần Tôn - Phạm Không"],
     __images: ["phu ban 10/342 nghich menh pham khong.JPG"],
   },
   {
