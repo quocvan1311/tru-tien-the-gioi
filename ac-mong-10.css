@@ -22,7 +22,7 @@ body.home-page {
   margin: 0;
   min-height: 100%;
   min-height: 100dvh;
-  padding-block: clamp(0.25rem, 2vw, 1rem);
+  padding-block: clamp(0.25rem, 2vw, 0.8rem) 0.1rem;
   /* Chừa 2 bên rộng hơn — avatar / lưới cụm ít sát mép */
   padding-inline: clamp(1.55rem, 5.8vw, 3.6rem);
   box-sizing: border-box;
@@ -194,7 +194,7 @@ body.home-page .home-header {
 }
 
 body.home-page .home-kicker {
-  margin: 0 0 0.22rem;
+  margin: 0 0 0.1rem;
 }
 
 body.home-page .home-title {
@@ -207,7 +207,7 @@ body.home-page .home-links {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  margin-bottom: clamp(0.32rem, 1.15vw, 0.75rem);
+  margin-bottom: clamp(0.2rem, 1vw, 0.5rem);
 }
 
 body.home-page .home-links > li {
@@ -230,10 +230,10 @@ body.home-page .home-card {
 }
 
 .home-kicker {
-  margin: 0 0 0.35rem;
-  font-size: clamp(2rem, 5vw, 3rem);
+  margin: 0 0 0.2rem;
+  font-size: clamp(2rem, 5vw, 2.75rem);
   font-weight: 700;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #02528b;
 }
@@ -554,27 +554,27 @@ html.home-index.home-page--avatars-paused .home-links > li {
 }
 
 .home-boss-stack--diff-t0 {
-  --boss-tier-scale: 1.5;
+  --boss-tier-scale: 1;
 }
 
 .home-boss-stack--diff-t1 {
-  --boss-tier-scale: 1.25;
+  --boss-tier-scale: 0.95;
 }
 
 .home-boss-stack--diff-t2 {
-  --boss-tier-scale: 1.15;
+  --boss-tier-scale: 0.925;
 }
 
 .home-boss-stack--diff-t3 {
-  --boss-tier-scale: 1;
+  --boss-tier-scale: 0.92;
 }
 
 .home-boss-stack--diff-t0 .home-boss-stack__img,
 .home-boss-stack--diff-t1 .home-boss-stack__img,
 .home-boss-stack--diff-t2 .home-boss-stack__img,
 .home-boss-stack--diff-t3 .home-boss-stack__img {
-  width: calc(clamp(4.05rem, 9.85vw, 6.2rem) * var(--boss-tier-scale, 1));
-  height: calc(clamp(4.05rem, 9.85vw, 6.2rem) * var(--boss-tier-scale, 1));
+  width: calc(clamp(4rem, 9.5vw, 5.5rem) * var(--boss-tier-scale, 1));
+  height: calc(clamp(4rem, 9.5vw, 5.5rem) * var(--boss-tier-scale, 1));
 }
 
 /* Viền avatar — cùng palette chip Độ khó (bảng listing): đỏ / lam / vàng / lá */
@@ -1412,19 +1412,19 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img {
 
 /* Dải 3 mùa: chênh độ khó nhỏ (dễ ↔ khó ~2%) — size chủ yếu từ --home-boss-avatar-base trên home */
 .home-boss-strip--tiered .home-boss-stack--diff-t0 {
-  --boss-tier-scale: 1.25;
+  --boss-tier-scale: 1.15;
 }
 
 .home-boss-strip--tiered .home-boss-stack--diff-t1 {
-  --boss-tier-scale: 1.1;
+  --boss-tier-scale: 0.98;
 }
 
 .home-boss-strip--tiered .home-boss-stack--diff-t2 {
-  --boss-tier-scale: 0.95;
+  --boss-tier-scale: 0.97;
 }
 
 .home-boss-strip--tiered .home-boss-stack--diff-t3 {
-  --boss-tier-scale: 0.875;
+  --boss-tier-scale: 0.96;
 }
 
 /* Độ khó tầng 500 / <500: animation strip-b — gắn theo bundle (không còn theo cột season) */
