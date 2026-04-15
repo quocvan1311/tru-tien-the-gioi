@@ -3,7 +3,7 @@
 window.LUYEN_NGUC_10_TABLE_DATA = [
   {
     "No.": 1,
-    "Index": "233",
+    Index: "233",
     "Tên season": "Cô Tâm Hám Hải",
     "Ngày ra mắt": "2025-11-05T00:00:00",
     "Ngày tiêu diệt": "2025-12-04T00:00:00",
@@ -12,13 +12,11 @@ window.LUYEN_NGUC_10_TABLE_DATA = [
     "Tên BOSS (Ác mộng)": "Nhiêm Nô",
     "Tên phụ bản": "Luyện Ngục Trục Quỷ Ảnh",
     "Độ khó": 1000,
-    "__images": [
-      "phu ban 10/233 quy nguu dao nhiem no.JPG"
-    ]
+    __images: ["phu ban 10/233 quy nguu dao nhiem no.JPG"],
   },
   {
     "No.": 2,
-    "Index": "234",
+    Index: "234",
     "Tên season": "Cô Tâm Hám Hải",
     "Ngày ra mắt": "2025-11-05T00:00:00",
     "Ngày tiêu diệt": "2025-12-07T00:00:00",
@@ -27,20 +25,23 @@ window.LUYEN_NGUC_10_TABLE_DATA = [
     "Tên BOSS (Ác mộng)": "Quỳ Ngưu",
     "Tên phụ bản": "Luyện Ngục Trục Quỷ Ảnh",
     "Độ khó": 1000,
-    "__images": [
-      "phu ban 10/234 quy nguu dao quy nguu.JPG"
-    ]
+    __images: ["phu ban 10/234 quy nguu dao quy nguu.JPG"],
   },
   {
     "No.": 3,
-    "Index": "341",
+    Index: "342",
     "Tên season": "Thiện Âm Phá Hiểu",
-    "Tên BOSS (Ác mộng)": "Tam Thiên Kiếp Hải Bất Không Thân"
+    "Tên BOSS (Ác mộng)": "Phạm Không",
+    "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư",
+    "Ghi chú": ["Cô Thần Tôn - Phạm Không"],
+    __images: ["phu ban 10/342 nghich menh pham khong.JPG"],
   },
   {
     "No.": 4,
-    "Index": "342",
+    Index: "343",
     "Tên season": "Thiện Âm Phá Hiểu",
-    "Tên BOSS (Ác mộng)": "Vô Lượng Yết Giả"
-  }
+    "Tên BOSS (Ác mộng)": "Hậu Khanh Ma Tướng",
+    "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư",
+    __images: ["phu ban 10/343 nghich menh hau khanh ma tuong.JPG"],
+  },
 ];

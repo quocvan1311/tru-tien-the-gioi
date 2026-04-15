@@ -205,7 +205,6 @@
   function makeAcMongNgucCellBgResolver(
     rows,
     seasonKey,
-    useTierDifficultyBg,
     acMongRowsForIndexSeason,
   ) {
     const seasonMap = buildSeasonBgMap(rows, seasonKey);
@@ -233,7 +232,7 @@
           : "#eeeeee";
       if (colKey === "Ghi chú") return "#ffffff";
       /* Ác mộng 10: chưa nhập Tuần tiêu diệt → các ô ngày/tuần/số ngày trắng (chip Độ khó do renderTable) */
-      if (useTierDifficultyBg && isTuanTieuDietMissing(row)) {
+      if (isTuanTieuDietMissing(row)) {
         if (
           colKey === "Ngày tiêu diệt" ||
           colKey === "Tuần tiêu diệt" ||
@@ -276,7 +275,6 @@
       return makeAcMongNgucCellBgResolver(
         rows,
         tableOptions.seasonKey || "Tên season",
-        true,
       );
     }
     if (mode === "luyen-nguc") {
@@ -287,7 +285,6 @@
       return makeAcMongNgucCellBgResolver(
         rows,
         tableOptions.seasonKey || "Tên season",
-        false,
         acRef,
       );
     }
