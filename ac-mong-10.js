@@ -93,6 +93,7 @@ window.AC_MONG_10_TABLE_DATA = [
     "Tên season": "Thiện Âm Phá Hiểu",
     "Tên BOSS (Ác mộng)": "Chu Kỳ",
     "Tên phụ bản": "Giải Xu Đoạn Vọng Nhai",
+    "Ngày ra mắt": "2026-04-22T00:00:00",
     "Kỹ năng": [
       "Thần Xu Dẫn Quát",
       "Phương Tấc Băng Giải",
@@ -473,13 +474,14 @@ window.AC_MONG_10_TABLE_DATA = [
     "Tên season": "Thiện Âm Phá Hiểu",
     "Tên BOSS (Ác mộng)": "Phạm Không",
     "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư",
+    "Ghi chú": ["Cô Thần Tôn - Phạm Không"],
     __images: ["phu ban 10/342 nghich menh pham khong.JPG"],
   },
   {
     "No.": 23,
     Index: "343",
     "Tên season": "Thiện Âm Phá Hiểu",
-    "Tên BOSS (Ác mộng)": "Hậu Khanh Ma Tượng",
+    "Tên BOSS (Ác mộng)": "Hậu Khanh Ma Tướng",
     "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư",
     __bossColor: "#ff0000",
     __images: ["phu ban 10/343 nghich menh hau khanh ma tuong.JPG"],
