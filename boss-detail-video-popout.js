@@ -102,7 +102,7 @@
     var lastPlayingFrameIndex = null;
 
     function getFrameEls() {
-      return stack.querySelectorAll(":scope > .boss-detail__video-frame");
+      return stack.querySelectorAll(".boss-detail__video-frame");
     }
 
     function wireFrameTracking() {
@@ -173,6 +173,9 @@
     }
 
     function applyPreferredOrder() {
+      if (stack.classList.contains("boss-detail__video-stack--tabs")) {
+        return;
+      }
       var frames = getFrameEls();
       if (frames.length < 2) {
         return;
@@ -185,6 +188,10 @@
     }
 
     function restoreFrameOrder() {
+      if (stack.classList.contains("boss-detail__video-stack--tabs")) {
+        savedFrameOrder = null;
+        return;
+      }
       if (!savedFrameOrder || !savedFrameOrder.length) {
         savedFrameOrder = null;
         return;

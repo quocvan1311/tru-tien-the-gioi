@@ -132,56 +132,308 @@
     };
   }
 
+  var YT_EMBED_ORIGIN = "https://www.youtube.com";
+
+  function pauseBossDetailYoutubeIframe(iframe) {
+    if (!iframe || !iframe.contentWindow) {
+      return;
+    }
+    try {
+      iframe.contentWindow.postMessage(
+        '{"event":"command","func":"pauseVideo","args":""}',
+        YT_EMBED_ORIGIN,
+      );
+    } catch (e) {}
+  }
+
+  function playBossDetailYoutubeIframe(iframe) {
+    if (!iframe || !iframe.contentWindow) {
+      return;
+    }
+    try {
+      iframe.contentWindow.postMessage(
+        '{"event":"command","func":"playVideo","args":""}',
+        YT_EMBED_ORIGIN,
+      );
+    } catch (e) {}
+  }
+
+  /**
+   * @param {object} entry
+   * @param {number} vi
+   * @param {string} bossName
+   * @param {number} videoCount
+   * @param {{allowLocalFiles: boolean, youtubeMuteFirst: boolean}} videoCfg
+   * @param {{youtubeAutoplay: boolean, html5Autoplay: boolean, youtubeEnableJsApi: boolean}} playOpts
+   */
+  function createBossDetailVideoFrame(
+    entry,
+    vi,
+    bossName,
+    videoCount,
+    videoCfg,
+    playOpts,
+  ) {
+    var ytAuto = !!playOpts.youtubeAutoplay;
+    var html5Auto = !!playOpts.html5Autoplay;
+    var ytApi = !!playOpts.youtubeEnableJsApi;
+
+    var frame = document.createElement("div");
+    frame.className = "boss-detail__video-frame";
+    var titleSuffix =
+      bossName + (videoCount > 1 ? " — video " + (vi + 1) : "");
+    if (entry.kind === "youtube") {
+      var iframe = document.createElement("iframe");
+      var q = new URLSearchParams();
+      if (ytAuto) {
+        q.set("autoplay", "1");
+        if (videoCfg.youtubeMuteFirst) {
+          q.set("mute", "1");
+        }
+      }
+      if (ytApi) {
+        q.set("enablejsapi", "1");
+      }
+      q.set("rel", "0");
+      q.set("playsinline", "1");
+      iframe.src =
+        "https://www.youtube.com/embed/" + entry.id + "?" + q.toString();
+      iframe.title = titleSuffix;
+      iframe.loading = ytAuto ? "eager" : "lazy";
+      iframe.setAttribute("allowfullscreen", "");
+      iframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      frame.appendChild(iframe);
+    } else if (entry.kind === "file" && videoCfg.allowLocalFiles) {
+      var video = document.createElement("video");
+      video.src =
+        typeof global.resolveRepoMediaVideoSrc === "function"
+          ? global.resolveRepoMediaVideoSrc(entry.src)
+          : entry.src;
+      video.controls = true;
+      video.playsInline = true;
+      video.setAttribute("playsinline", "");
+      video.title = titleSuffix;
+      if (html5Auto) {
+        video.autoplay = true;
+      }
+      frame.appendChild(video);
+    }
+    return frame;
+  }
+
   function appendBossDetailVideoAside(aside, videos, bossName, videoCfg) {
-    var vHeading = document.createElement("h2");
-    vHeading.className = "boss-detail__video-heading";
-    vHeading.textContent = "Video";
-    aside.appendChild(vHeading);
+    var lead = document.createElement("div");
+    lead.className = "boss-detail__video-heading";
+    aside.appendChild(lead);
 
     var stack = document.createElement("div");
     stack.className = "boss-detail__video-stack";
-    videos.forEach(function (entry, vi) {
-      var frame = document.createElement("div");
-      frame.className = "boss-detail__video-frame";
-      var titleSuffix =
-        bossName + (videos.length > 1 ? " — video " + (vi + 1) : "");
-      if (entry.kind === "youtube") {
-        var iframe = document.createElement("iframe");
-        var q = new URLSearchParams();
-        if (vi === 0) {
-          q.set("autoplay", "1");
-          if (videoCfg.youtubeMuteFirst) {
-            q.set("mute", "1");
-          }
-        }
-        q.set("rel", "0");
-        q.set("playsinline", "1");
-        iframe.src =
-          "https://www.youtube.com/embed/" + entry.id + "?" + q.toString();
-        iframe.title = titleSuffix;
-        iframe.loading = vi === 0 ? "eager" : "lazy";
-        iframe.setAttribute("allowfullscreen", "");
-        iframe.allow =
-          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-        iframe.referrerPolicy = "strict-origin-when-cross-origin";
-        frame.appendChild(iframe);
-      } else if (entry.kind === "file" && videoCfg.allowLocalFiles) {
-        var video = document.createElement("video");
-        video.src =
-          typeof global.resolveRepoMediaVideoSrc === "function"
-            ? global.resolveRepoMediaVideoSrc(entry.src)
-            : entry.src;
-        video.controls = true;
-        video.playsInline = true;
-        video.setAttribute("playsinline", "");
-        video.title = titleSuffix;
-        if (vi === 0) {
-          video.autoplay = true;
-        }
-        frame.appendChild(video);
+
+    if (videos.length <= 1) {
+      videos.forEach(function (entry, vi) {
+        var frame = createBossDetailVideoFrame(
+          entry,
+          vi,
+          bossName,
+          videos.length,
+          videoCfg,
+          {
+            youtubeAutoplay: vi === 0,
+            html5Autoplay: vi === 0,
+            youtubeEnableJsApi: false,
+          },
+        );
+        stack.appendChild(frame);
+      });
+      aside.appendChild(stack);
+      return;
+    }
+
+    lead.classList.add("boss-detail__video-heading--tabs");
+    stack.classList.add("boss-detail__video-stack--tabs");
+
+    var btnPrev = document.createElement("button");
+    btnPrev.type = "button";
+    btnPrev.className = "boss-detail__video-tab-arrow boss-detail__video-tab-arrow--prev";
+    btnPrev.setAttribute("aria-label", "Trailer trước");
+    var prevGlyph = document.createElement("span");
+    prevGlyph.className = "boss-detail__video-tab-arrow__inner";
+    prevGlyph.setAttribute("aria-hidden", "true");
+    prevGlyph.textContent = "\u2039";
+    btnPrev.appendChild(prevGlyph);
+
+    var btnNext = document.createElement("button");
+    btnNext.type = "button";
+    btnNext.className = "boss-detail__video-tab-arrow boss-detail__video-tab-arrow--next";
+    btnNext.setAttribute("aria-label", "Trailer sau");
+    var nextGlyph = document.createElement("span");
+    nextGlyph.className = "boss-detail__video-tab-arrow__inner";
+    nextGlyph.setAttribute("aria-hidden", "true");
+    nextGlyph.textContent = "\u203a";
+    btnNext.appendChild(nextGlyph);
+
+    var tabs = document.createElement("div");
+    tabs.className = "boss-detail__video-tabs";
+    tabs.setAttribute("role", "tablist");
+    tabs.setAttribute("aria-label", "Trailer");
+
+    lead.appendChild(btnPrev);
+    lead.appendChild(tabs);
+    lead.appendChild(btnNext);
+
+    var panels = [];
+    var tabButtons = [];
+
+    function pauseFrameMedia(frameEl) {
+      if (!frameEl) {
+        return;
       }
-      stack.appendChild(frame);
+      var vid = frameEl.querySelector("video");
+      if (vid) {
+        try {
+          vid.pause();
+        } catch (e) {}
+        return;
+      }
+      var iframe = frameEl.querySelector('iframe[src*="youtube.com/embed"]');
+      if (iframe) {
+        pauseBossDetailYoutubeIframe(iframe);
+      }
+    }
+
+    function playFrameMedia(frameEl) {
+      if (!frameEl) {
+        return;
+      }
+      var vid = frameEl.querySelector("video");
+      if (vid) {
+        var p = vid.play();
+        if (p && typeof p.catch === "function") {
+          p.catch(function () {});
+        }
+        return;
+      }
+      var iframe = frameEl.querySelector('iframe[src*="youtube.com/embed"]');
+      if (iframe) {
+        playBossDetailYoutubeIframe(iframe);
+      }
+    }
+
+    function setActiveTab(index) {
+      var t;
+      for (t = 0; t < tabButtons.length; t++) {
+        var isOn = t === index;
+        tabButtons[t].classList.toggle("boss-detail__video-tab--active", isOn);
+        tabButtons[t].setAttribute("aria-selected", isOn ? "true" : "false");
+        tabButtons[t].tabIndex = isOn ? 0 : -1;
+        panels[t].hidden = !isOn;
+        panels[t].classList.toggle("boss-detail__video-tab-panel--active", isOn);
+      }
+    }
+
+    function commitTabChange(index) {
+      if (index < 0 || index >= panels.length) {
+        return;
+      }
+      var prev;
+      for (prev = 0; prev < panels.length; prev++) {
+        if (!panels[prev].hidden) {
+          pauseFrameMedia(
+            panels[prev].querySelector(".boss-detail__video-frame"),
+          );
+        }
+      }
+      setActiveTab(index);
+      playFrameMedia(panels[index].querySelector(".boss-detail__video-frame"));
+    }
+
+    function currentTabIndex() {
+      var i;
+      for (i = 0; i < panels.length; i++) {
+        if (!panels[i].hidden) {
+          return i;
+        }
+      }
+      return 0;
+    }
+
+    function activateTab(index) {
+      if (index < 0 || index >= panels.length) {
+        return;
+      }
+      if (!panels[index].hidden) {
+        return;
+      }
+      commitTabChange(index);
+    }
+
+    btnPrev.addEventListener("click", function () {
+      var n = panels.length;
+      if (n < 2) {
+        return;
+      }
+      commitTabChange((currentTabIndex() - 1 + n) % n);
     });
+
+    btnNext.addEventListener("click", function () {
+      var n = panels.length;
+      if (n < 2) {
+        return;
+      }
+      commitTabChange((currentTabIndex() + 1) % n);
+    });
+
+    videos.forEach(function (entry, vi) {
+      var tabId = "boss-detail-video-tab-" + vi;
+      var panelId = "boss-detail-video-panel-" + vi;
+
+      var tabBtn = document.createElement("button");
+      tabBtn.type = "button";
+      tabBtn.className =
+        "boss-detail__video-tab" +
+        (vi === 0 ? " boss-detail__video-tab--active" : "");
+      tabBtn.id = tabId;
+      tabBtn.setAttribute("role", "tab");
+      tabBtn.setAttribute("aria-selected", vi === 0 ? "true" : "false");
+      tabBtn.setAttribute("aria-controls", panelId);
+      tabBtn.setAttribute("tabindex", vi === 0 ? "0" : "-1");
+      tabBtn.textContent = "Trailer " + (vi + 1);
+      tabs.appendChild(tabBtn);
+      tabButtons.push(tabBtn);
+
+      var panel = document.createElement("div");
+      panel.className = "boss-detail__video-tab-panel";
+      panel.id = panelId;
+      panel.setAttribute("role", "tabpanel");
+      panel.setAttribute("aria-labelledby", tabId);
+      panel.hidden = vi !== 0;
+      if (vi === 0) {
+        panel.classList.add("boss-detail__video-tab-panel--active");
+      }
+
+      var frame = createBossDetailVideoFrame(
+        entry,
+        vi,
+        bossName,
+        videos.length,
+        videoCfg,
+        {
+          youtubeAutoplay: vi === 0,
+          html5Autoplay: vi === 0,
+          youtubeEnableJsApi: true,
+        },
+      );
+      panel.appendChild(frame);
+      stack.appendChild(panel);
+      panels.push(panel);
+
+      tabBtn.addEventListener("click", function () {
+        activateTab(vi);
+      });
+    });
+
     aside.appendChild(stack);
   }
 
