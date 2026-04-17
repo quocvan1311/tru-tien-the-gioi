@@ -571,7 +571,7 @@
           if (spec && spec.bossExcel) {
             td.style.fontWeight = "700";
             td.style.color = row.__bossColor || "#000000";
-            td.style.fontSize = row.__bossColor ? "1.15rem" : "1.075rem";
+            td.style.fontSize = row.__bossColor ? "1.125rem" : "1.025rem";
           }
         }
         const derivedBg = resolveCellBg ? resolveCellBg(row, k) : null;
