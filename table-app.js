@@ -543,6 +543,8 @@
           if (spec && spec.noWrap) td.style.whiteSpace = "nowrap";
         } else {
           if (k === "Tên BOSS (Ác mộng)") {
+            td.style.fontFamily = "Calistoga, cursive";
+            td.style.letterSpacing = "0.0625em";
             td.appendChild(document.createTextNode(text));
             var iconImg = document.createElement("img");
             iconImg.className = "boss-table__title-icon";

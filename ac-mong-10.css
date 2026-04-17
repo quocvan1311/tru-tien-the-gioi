@@ -3345,13 +3345,15 @@ body.boss-detail-page .boss-detail__back a:hover {
 
 body.boss-detail-page .boss-detail__title {
   flex: 0 0 auto;
-  font-size: clamp(1.05rem, 2.2vw, 1.45rem);
+  font-family: "Pacifico", cursive;
+  font-size: clamp(2rem, 6vw, 3rem);
+  letter-spacing: 0.15em;
   font-weight: 800;
   margin: 0 0 0.5rem;
   line-height: 1.25;
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 2rem;
   flex-wrap: wrap;
   background: linear-gradient(135deg, #ffffff 0%, #f3f7ff 100%);
   border-left: 4px solid #0070c0;
