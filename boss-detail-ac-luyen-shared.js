@@ -484,7 +484,21 @@
       "boss-detail__layout boss-detail__layout--ac-mong-3col";
 
     var bossName = cellText(row["Tên BOSS (Ác mộng)"]).trim() || "BOSS";
-    titleEl.textContent = bossName;
+    var bossIndex = cellText(row["Index"]).trim();
+    titleEl.textContent = "";
+    if (bossIndex) {
+      var iconImg = document.createElement("img");
+      iconImg.className = "boss-detail__title-icon";
+      iconImg.src = "boss%20icon/" + encodeURIComponent(bossIndex) + ".JPG";
+      iconImg.alt = "";
+      iconImg.loading = "eager";
+      iconImg.decoding = "async";
+      iconImg.addEventListener("error", function () {
+        iconImg.remove();
+      });
+      titleEl.appendChild(iconImg);
+    }
+    titleEl.appendChild(document.createTextNode(bossName));
     document.title = bossName + " — " + profile.pageTitleSuffix;
 
     var fmt = global.BOSS_TABLE_FORMAT_DATE;

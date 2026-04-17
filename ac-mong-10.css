@@ -3306,11 +3306,26 @@ body.boss-detail-page .boss-detail__title {
   font-weight: 800;
   margin: 0 0 0.5rem;
   line-height: 1.25;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
   padding: 0.45rem 0.65rem 0.5rem 0.75rem;
   background: linear-gradient(135deg, #ffffff 0%, #f3f7ff 100%);
   border-left: 4px solid #0070c0;
   border-radius: 0 10px 10px 0;
   box-shadow: 0 3px 18px rgba(0, 70, 140, 0.1);
+}
+
+body.boss-detail-page .boss-detail__title-icon {
+  flex: 0 0 auto;
+  width: clamp(2.75rem, 5.5vw, 4rem);
+  height: clamp(2.75rem, 5.5vw, 4rem);
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.18);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.14);
+  background: #0f172a;
 }
 
 body.boss-detail-page .boss-detail__error {
