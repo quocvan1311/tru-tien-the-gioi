@@ -60,7 +60,7 @@
     var dec = wantId;
     try {
       dec = decodeURIComponent(wantId);
-    } catch (e) {}
+    } catch (e) { }
     if (dec !== wantId) {
       for (var j = 0; j < rows.length; j++) {
         if (idFn(rows[j]) === dec) return rows[j];
@@ -143,7 +143,7 @@
         '{"event":"command","func":"pauseVideo","args":""}',
         YT_EMBED_ORIGIN,
       );
-    } catch (e) {}
+    } catch (e) { }
   }
 
   function playBossDetailYoutubeIframe(iframe) {
@@ -155,7 +155,7 @@
         '{"event":"command","func":"playVideo","args":""}',
         YT_EMBED_ORIGIN,
       );
-    } catch (e) {}
+    } catch (e) { }
   }
 
   /**
@@ -294,7 +294,7 @@
       if (vid) {
         try {
           vid.pause();
-        } catch (e) {}
+        } catch (e) { }
         return;
       }
       var iframe = frameEl.querySelector('iframe[src*="youtube.com/embed"]');
@@ -311,7 +311,7 @@
       if (vid) {
         var p = vid.play();
         if (p && typeof p.catch === "function") {
-          p.catch(function () {});
+          p.catch(function () { });
         }
         return;
       }
@@ -489,7 +489,7 @@
     if (bossIndex) {
       var iconImg = document.createElement("img");
       iconImg.className = "boss-detail__title-icon";
-      iconImg.src = "boss%20icon/" + encodeURIComponent(bossIndex) + ".JPG";
+      iconImg.src = "boss%20icon/" + encodeURIComponent(bossIndex) + ".webp";
       iconImg.alt = "";
       iconImg.loading = "eager";
       iconImg.decoding = "async";
@@ -556,8 +556,8 @@
         chipDiff.style.borderColor =
           typeof global.BOSS_TABLE_BOSS_CHIP_BORDER_FOR_BG === "function"
             ? global.BOSS_TABLE_BOSS_CHIP_BORDER_FOR_BG(
-                acMongFieldBg.difficultyTier,
-              )
+              acMongFieldBg.difficultyTier,
+            )
             : acMongFieldBg.difficultyTier;
         chipDiff.textContent = text;
         dd.appendChild(chipDiff);
