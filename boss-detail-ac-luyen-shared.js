@@ -60,7 +60,7 @@
     var dec = wantId;
     try {
       dec = decodeURIComponent(wantId);
-    } catch (e) { }
+    } catch (e) {}
     if (dec !== wantId) {
       for (var j = 0; j < rows.length; j++) {
         if (idFn(rows[j]) === dec) return rows[j];
@@ -143,7 +143,7 @@
         '{"event":"command","func":"pauseVideo","args":""}',
         YT_EMBED_ORIGIN,
       );
-    } catch (e) { }
+    } catch (e) {}
   }
 
   function playBossDetailYoutubeIframe(iframe) {
@@ -155,7 +155,7 @@
         '{"event":"command","func":"playVideo","args":""}',
         YT_EMBED_ORIGIN,
       );
-    } catch (e) { }
+    } catch (e) {}
   }
 
   /**
@@ -180,8 +180,7 @@
 
     var frame = document.createElement("div");
     frame.className = "boss-detail__video-frame";
-    var titleSuffix =
-      bossName + (videoCount > 1 ? " — video " + (vi + 1) : "");
+    var titleSuffix = bossName + (videoCount > 1 ? " — video " + (vi + 1) : "");
     if (entry.kind === "youtube") {
       var iframe = document.createElement("iframe");
       var q = new URLSearchParams();
@@ -256,7 +255,8 @@
 
     var btnPrev = document.createElement("button");
     btnPrev.type = "button";
-    btnPrev.className = "boss-detail__video-tab-arrow boss-detail__video-tab-arrow--prev";
+    btnPrev.className =
+      "boss-detail__video-tab-arrow boss-detail__video-tab-arrow--prev";
     btnPrev.setAttribute("aria-label", "Trailer trước");
     var prevGlyph = document.createElement("span");
     prevGlyph.className = "boss-detail__video-tab-arrow__inner";
@@ -266,7 +266,8 @@
 
     var btnNext = document.createElement("button");
     btnNext.type = "button";
-    btnNext.className = "boss-detail__video-tab-arrow boss-detail__video-tab-arrow--next";
+    btnNext.className =
+      "boss-detail__video-tab-arrow boss-detail__video-tab-arrow--next";
     btnNext.setAttribute("aria-label", "Trailer sau");
     var nextGlyph = document.createElement("span");
     nextGlyph.className = "boss-detail__video-tab-arrow__inner";
@@ -294,7 +295,7 @@
       if (vid) {
         try {
           vid.pause();
-        } catch (e) { }
+        } catch (e) {}
         return;
       }
       var iframe = frameEl.querySelector('iframe[src*="youtube.com/embed"]');
@@ -311,7 +312,7 @@
       if (vid) {
         var p = vid.play();
         if (p && typeof p.catch === "function") {
-          p.catch(function () { });
+          p.catch(function () {});
         }
         return;
       }
@@ -329,7 +330,10 @@
         tabButtons[t].setAttribute("aria-selected", isOn ? "true" : "false");
         tabButtons[t].tabIndex = isOn ? 0 : -1;
         panels[t].hidden = !isOn;
-        panels[t].classList.toggle("boss-detail__video-tab-panel--active", isOn);
+        panels[t].classList.toggle(
+          "boss-detail__video-tab-panel--active",
+          isOn,
+        );
       }
     }
 
@@ -556,8 +560,8 @@
         chipDiff.style.borderColor =
           typeof global.BOSS_TABLE_BOSS_CHIP_BORDER_FOR_BG === "function"
             ? global.BOSS_TABLE_BOSS_CHIP_BORDER_FOR_BG(
-              acMongFieldBg.difficultyTier,
-            )
+                acMongFieldBg.difficultyTier,
+              )
             : acMongFieldBg.difficultyTier;
         chipDiff.textContent = text;
         dd.appendChild(chipDiff);

@@ -3328,6 +3328,14 @@ body.boss-detail-page .boss-detail__title-icon {
   background: #0f172a;
 }
 
+body.excel-boss-page .boss-table__title-icon {
+  display: block;
+  margin-top: 0.25rem;
+  width: 60%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
 body.boss-detail-page .boss-detail__error {
   flex: 0 0 auto;
   padding: 0.65rem 0.85rem;

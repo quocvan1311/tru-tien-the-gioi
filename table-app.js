@@ -542,7 +542,22 @@
           }
           if (spec && spec.noWrap) td.style.whiteSpace = "nowrap";
         } else {
-          td.textContent = text;
+          if (k === "Tên BOSS (Ác mộng)") {
+            td.appendChild(document.createTextNode(text));
+            var iconImg = document.createElement("img");
+            iconImg.className = "boss-table__title-icon";
+            iconImg.src =
+              "boss%20icon/" + encodeURIComponent(row["Index"]) + ".webp";
+            iconImg.alt = "";
+            iconImg.loading = "eager";
+            iconImg.decoding = "async";
+            iconImg.addEventListener("error", function () {
+              iconImg.remove();
+            });
+            td.appendChild(iconImg);
+          } else {
+            td.textContent = text;
+          }
           if (k === "Tuần tiêu diệt") {
             td.style.whiteSpace = "pre-line";
             td.classList.add("cell-tuan-tieu-diet");
