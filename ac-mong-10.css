@@ -2747,7 +2747,7 @@ body.excel-boss-page table.excel-ac-mong td[style*="white-space"] {
 
 /* Cột ảnh BOSS — padding trái/phải 4px; ảnh fill bề ngang vùng nội dung ô */
 body.excel-boss-page table.excel-ac-mong td.cell-images {
-  vertical-align: middle;
+  vertical-align: top;
   padding: 3px 4px;
   line-height: 0;
   box-sizing: border-box;
@@ -2927,7 +2927,7 @@ body.boss-detail-page .boss-detail__title-icon {
 body.excel-boss-page .boss-table__title-icon {
   display: block;
   margin-top: 0.25rem;
-  width: 60%;
+  width: 54%;
   object-fit: contain;
   border-radius: 16px;
 }
