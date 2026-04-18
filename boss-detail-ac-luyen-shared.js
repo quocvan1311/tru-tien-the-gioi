@@ -5,9 +5,9 @@
 (function (global) {
   "use strict";
 
-  function cellText(v) {
+  function cellText(v, separator = "\n") {
     if (v === null || v === undefined) return "";
-    if (Array.isArray(v)) return v.join(" - ");
+    if (Array.isArray(v)) return v.join(separator);
     if (typeof v === "object") return JSON.stringify(v);
     return String(v);
   }
@@ -60,7 +60,7 @@
     var dec = wantId;
     try {
       dec = decodeURIComponent(wantId);
-    } catch (e) {}
+    } catch (e) { }
     if (dec !== wantId) {
       for (var j = 0; j < rows.length; j++) {
         if (idFn(rows[j]) === dec) return rows[j];
@@ -143,7 +143,7 @@
         '{"event":"command","func":"pauseVideo","args":""}',
         YT_EMBED_ORIGIN,
       );
-    } catch (e) {}
+    } catch (e) { }
   }
 
   function playBossDetailYoutubeIframe(iframe) {
@@ -155,7 +155,7 @@
         '{"event":"command","func":"playVideo","args":""}',
         YT_EMBED_ORIGIN,
       );
-    } catch (e) {}
+    } catch (e) { }
   }
 
   /**
@@ -295,7 +295,7 @@
       if (vid) {
         try {
           vid.pause();
-        } catch (e) {}
+        } catch (e) { }
         return;
       }
       var iframe = frameEl.querySelector('iframe[src*="youtube.com/embed"]');
@@ -312,7 +312,7 @@
       if (vid) {
         var p = vid.play();
         if (p && typeof p.catch === "function") {
-          p.catch(function () {});
+          p.catch(function () { });
         }
         return;
       }
@@ -487,7 +487,7 @@
     contentEl.className =
       "boss-detail__layout boss-detail__layout--ac-mong-3col";
 
-    var bossName = cellText(row["Tên BOSS (Ác mộng)"]).trim() || "BOSS";
+    var bossName = cellText(row["Tên BOSS (Ác mộng)"], " - ").trim() || "BOSS";
     var bossIndex = cellText(row["Index"]).trim();
     titleEl.textContent = "";
     if (bossIndex) {
@@ -560,8 +560,8 @@
         chipDiff.style.borderColor =
           typeof global.BOSS_TABLE_BOSS_CHIP_BORDER_FOR_BG === "function"
             ? global.BOSS_TABLE_BOSS_CHIP_BORDER_FOR_BG(
-                acMongFieldBg.difficultyTier,
-              )
+              acMongFieldBg.difficultyTier,
+            )
             : acMongFieldBg.difficultyTier;
         chipDiff.textContent = text;
         dd.appendChild(chipDiff);
