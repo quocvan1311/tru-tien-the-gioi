@@ -3140,7 +3140,7 @@ body.excel-boss-page table.excel-phu-ban td.cell-boss-with-img {
 }
 
 body.excel-boss-page table.excel-phu-ban .boss-cell__name {
-  font-size: 13.5pt;
+  font-size: 13pt;
   font-weight: 700;
   line-height: 1.38;
   margin-bottom: 0.15rem;
@@ -4237,7 +4237,7 @@ body.boss-detail-page--phu-ban .boss-detail__field--phu-boss dt {
 }
 
 body.boss-detail-page--phu-ban .boss-detail__field--phu-boss .boss-detail__pre {
-  font-size: 1.02em;
+  font-size: 1.25em;
   font-weight: 600;
   color: #1e293b;
   line-height: 1.42;
