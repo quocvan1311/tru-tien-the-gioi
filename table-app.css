@@ -44,7 +44,7 @@ h1 {
   color: #555;
 }
 
-.table-scroll {
+.table-container {
   /* Không tạo scroll container — để body/html scroll, thead sticky bám viewport */
   overflow: visible;
   width: 100%;
@@ -57,7 +57,7 @@ h1 {
 }
 
 /* Khớp layout bảng Excel khi chỉ dùng table-app; trang boss ghi đè/ bổ sung trong ac-mong-10.css */
-.table-scroll > table {
+.table-container > table {
   min-width: 1500px;
 }
 
@@ -75,7 +75,7 @@ h1 {
 }
 
 /* Trang listing: --fixed không được kéo min-width xuống 100% — khớp ac-mong-10 */
-.table-scroll > table.data-table.data-table--fixed {
+.table-container > table.data-table.data-table--fixed {
   width: max(100%, 1500px);
   min-width: 1500px;
 }

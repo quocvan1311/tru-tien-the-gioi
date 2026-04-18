@@ -2757,6 +2757,14 @@ body.excel-boss-page {
   box-sizing: border-box;
 }
 
+body.excel-boss-page .boss-table__title-icon {
+  display: block;
+  margin-top: 0.25rem;
+  width: 54%;
+  object-fit: contain;
+  border-radius: 16px;
+}
+
 body.excel-boss-page h1 {
   font-size: 16pt;
   font-weight: 700;
@@ -2976,7 +2984,7 @@ body.excel-boss-page #search {
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-body.excel-boss-page .table-scroll {
+body.excel-boss-page .table-container {
   /* Cùng độ dày + màu với viền ô (divider) bên trong */
   border: 0.5px solid #9aa8b8;
   border-radius: 6px;
@@ -2987,10 +2995,10 @@ body.excel-boss-page .table-scroll {
   background-clip: padding-box;
 }
 
-/* Bảng list: tối thiểu 1500px; khung .table-scroll cuộn ngang */
-body.excel-boss-page .table-scroll > table,
-body.excel-boss-page .table-scroll table.excel-ac-mong,
-body.excel-boss-page .table-scroll table.data-table {
+/* Bảng list: tối thiểu 1500px; khung .table-container cuộn ngang */
+body.excel-boss-page .table-container > table,
+body.excel-boss-page .table-container table.excel-ac-mong,
+body.excel-boss-page .table-container table.data-table {
   min-width: 1500px;
 }
 
@@ -3132,7 +3140,7 @@ body.excel-boss-page table.excel-phu-ban td.cell-boss-with-img {
 }
 
 body.excel-boss-page table.excel-phu-ban .boss-cell__name {
-  font-size: 10pt;
+  font-size: 12pt;
   font-weight: 700;
   line-height: 1.38;
   margin-bottom: 0.28rem;
@@ -3223,16 +3231,16 @@ body.excel-boss-page table.excel-ac-mong.data-table--fixed {
   min-width: 100%;
 }
 
-/* Listing trong .table-scroll: không để --fixed ghi đè min 1500px (rule trên dùng cho ngữ cảnh khác nếu có) */
-body.excel-boss-page .table-scroll table.excel-ac-mong.data-table--fixed {
+/* Listing trong .table-container: không để --fixed ghi đè min 1500px (rule trên dùng cho ngữ cảnh khác nếu có) */
+body.excel-boss-page .table-container table.excel-ac-mong.data-table--fixed {
   width: max(100%, 1500px);
   min-width: 1500px;
 }
 
 /* Trang listing Phụ bản 5 (phu-ban-5.html) — min-width bảng 420px */
-body.excel-boss-page--phu-ban-5-list .table-scroll > table,
-body.excel-boss-page--phu-ban-5-list .table-scroll table.excel-ac-mong,
-body.excel-boss-page--phu-ban-5-list .table-scroll table.data-table {
+body.excel-boss-page--phu-ban-5-list .table-container > table,
+body.excel-boss-page--phu-ban-5-list .table-container table.excel-ac-mong,
+body.excel-boss-page--phu-ban-5-list .table-container table.data-table {
   min-width: 420px;
 }
 
@@ -3241,7 +3249,7 @@ body.excel-boss-page--phu-ban-5-list table.excel-ac-mong {
 }
 
 body.excel-boss-page--phu-ban-5-list
-  .table-scroll
+  .table-container
   table.excel-ac-mong.data-table--fixed {
   width: max(100%, 420px);
   min-width: 420px;
@@ -3366,14 +3374,6 @@ body.boss-detail-page .boss-detail__title-icon {
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.14);
   background: #0f172a;
   border-radius: 4px;
-}
-
-body.excel-boss-page .boss-table__title-icon {
-  display: block;
-  margin-top: 0.25rem;
-  width: 54%;
-  object-fit: contain;
-  border-radius: 16px;
 }
 
 body.boss-detail-page .boss-detail__error {
@@ -4130,6 +4130,8 @@ body.boss-detail-page--phu-ban .boss-detail__main {
 
 body.boss-detail-page--phu-ban .boss-detail__title {
   margin-bottom: 0.65rem;
+  padding: 1.2rem 2rem;
+  font-size: clamp(1.5rem, 4.5vw, 2.25rem);
 }
 
 body.boss-detail-page--phu-ban .boss-detail__fields-inner--phu-ban {
