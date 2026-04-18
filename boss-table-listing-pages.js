@@ -52,12 +52,12 @@
       "Ngày tiêu diệt": "6%",
       "Tuần tiêu diệt": "5%",
       "Số ngày": "3%",
-      "Tên BOSS (Ác mộng)": "11.33%",
+      "Tên BOSS (Ác mộng)": "11.83%",
       "Tên phụ bản": "12.87%",
       "Kỹ năng": "14.34%",
       "Độ khó": "4.5%",
       "Ghi chú": "11.75%",
-      Ảnh: "9.5%",
+      Ảnh: "9%",
     };
     global.initBossTable(
       Object.assign({}, baseAcMongStyleListing(), {
@@ -106,11 +106,11 @@
       "Ngày tiêu diệt": "6%",
       "Tuần tiêu diệt": "6%",
       "Số ngày": "4%",
-      "Tên BOSS (Ác mộng)": "15.6%",
+      "Tên BOSS (Ác mộng)": "15.8%",
       "Tên phụ bản": "13.6%",
       "Độ khó": "5%",
       "Ghi chú": "11.6%",
-      Ảnh: "16.2%",
+      Ảnh: "16%",
     };
     global.initBossTable(
       Object.assign({}, baseAcMongStyleListing(), {
