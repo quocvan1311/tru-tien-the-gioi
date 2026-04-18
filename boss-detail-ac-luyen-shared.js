@@ -60,7 +60,7 @@
     var dec = wantId;
     try {
       dec = decodeURIComponent(wantId);
-    } catch (e) { }
+    } catch (e) {}
     if (dec !== wantId) {
       for (var j = 0; j < rows.length; j++) {
         if (idFn(rows[j]) === dec) return rows[j];
@@ -143,7 +143,7 @@
         '{"event":"command","func":"pauseVideo","args":""}',
         YT_EMBED_ORIGIN,
       );
-    } catch (e) { }
+    } catch (e) {}
   }
 
   function playBossDetailYoutubeIframe(iframe) {
@@ -155,7 +155,7 @@
         '{"event":"command","func":"playVideo","args":""}',
         YT_EMBED_ORIGIN,
       );
-    } catch (e) { }
+    } catch (e) {}
   }
 
   /**
@@ -295,7 +295,7 @@
       if (vid) {
         try {
           vid.pause();
-        } catch (e) { }
+        } catch (e) {}
         return;
       }
       var iframe = frameEl.querySelector('iframe[src*="youtube.com/embed"]');
@@ -312,7 +312,7 @@
       if (vid) {
         var p = vid.play();
         if (p && typeof p.catch === "function") {
-          p.catch(function () { });
+          p.catch(function () {});
         }
         return;
       }
@@ -560,8 +560,8 @@
         chipDiff.style.borderColor =
           typeof global.BOSS_TABLE_BOSS_CHIP_BORDER_FOR_BG === "function"
             ? global.BOSS_TABLE_BOSS_CHIP_BORDER_FOR_BG(
-              acMongFieldBg.difficultyTier,
-            )
+                acMongFieldBg.difficultyTier,
+              )
             : acMongFieldBg.difficultyTier;
         chipDiff.textContent = text;
         dd.appendChild(chipDiff);
@@ -632,16 +632,16 @@
     "No.",
     "Index",
     "Tên season",
+    "Tên phụ bản",
+    "Ảnh",
+    "Tên BOSS (Ác mộng)",
+    "Độ khó",
     "Ngày ra mắt",
     "Ngày tiêu diệt",
     "Tuần tiêu diệt",
     "Số ngày",
-    "Tên BOSS (Ác mộng)",
-    "Tên phụ bản",
     "Kỹ năng",
-    "Độ khó",
     "Ghi chú",
-    "Ảnh",
   ];
 
   var AC_MONG_DETAIL_COLUMN_DISPLAY = {
@@ -657,15 +657,15 @@
     "No.",
     "Index",
     "Tên season",
+    "Tên phụ bản",
+    "Ảnh",
+    "Tên BOSS (Ác mộng)",
+    "Độ khó",
     "Ngày ra mắt",
     "Ngày tiêu diệt",
     "Tuần tiêu diệt",
     "Số ngày",
-    "Tên BOSS (Ác mộng)",
-    "Tên phụ bản",
-    "Độ khó",
     "Ghi chú",
-    "Ảnh",
   ];
 
   var LUYEN_DETAIL_COLUMN_DISPLAY = {

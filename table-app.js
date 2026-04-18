@@ -459,6 +459,9 @@
       if (sortState.key === k) {
         th.classList.add(sortState.dir === 1 ? "sort-asc" : "sort-desc");
       }
+      if (k === "No." || k === "Index") {
+        th.style.textAlign = "center";
+      }
       trh.appendChild(th);
     });
     thead.appendChild(trh);
