@@ -466,6 +466,14 @@ window.AC_MONG_10_TABLE_DATA = [
     "Tên season": "Thiện Âm Phá Hiểu",
     "Tên BOSS (Ác mộng)": "Vô Danh",
     "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư",
+    "Kỹ năng": [
+      "Kiếp Hải Truy Tích",
+      "Định Thần Thông",
+      "Xử Lạc Trấn Tà",
+      "Giáng Long Phục Tượng",
+      "Lao Lung",
+      "Như Lai Thần Chưởng",
+    ],
     __images: ["phu ban 10/341 nghich menh vo danh.JPG"],
   },
   {
@@ -474,6 +482,16 @@ window.AC_MONG_10_TABLE_DATA = [
     "Tên season": "Thiện Âm Phá Hiểu",
     "Tên BOSS (Ác mộng)": "Cô Thần Tôn - Phạm Không",
     "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư",
+    "Kỹ năng": [
+      "Tịch Diệt Phi Thiên",
+      "Tham Phệ Mạn Đà La",
+      "Diệt Thế Chi Quang",
+      "Tội Nghiệp Giáng Lâm",
+      "Trách Hình Chi Quang",
+      "Nhân Quả Tài Quyết",
+      "Ám Tinh Liệt Khích",
+      "Mạt Pháp Hạo Kiếp",
+    ],
     __images: ["phu ban 10/342 nghich menh pham khong.JPG"],
   },
   {
