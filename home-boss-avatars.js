@@ -713,34 +713,6 @@
     parent.appendChild(stack);
   }
 
-  /**
-   * Dải tier: nhiều bundle (mỗi bundle = một dòng __images); layout 1 / 2 / 3 / 4 / nhiều.
-   */
-  function appendBundleStrip(parent, className, bundles, pathToDetailId) {
-    if (!bundles || !bundles.length) return;
-    pathToDetailId = pathToDetailId || Object.create(null);
-    var stack = document.createElement("div");
-    stack.className =
-      className + " home-boss-stack--bundles home-boss-stack--cluster";
-    var totalImgs = 0;
-    var b;
-    for (b = 0; b < bundles.length; b++) {
-      totalImgs += bundles[b].paths.length;
-    }
-    if (totalImgs >= 8) {
-      stack.classList.add("home-boss-stack--strip-dense");
-    }
-
-    var globalIdx = 0;
-    bundles.forEach(function (bundle) {
-      var built = buildBossGroupElement(bundle, pathToDetailId, globalIdx);
-      if (!built) return;
-      globalIdx = built.nextAnim;
-      stack.appendChild(built.wrap);
-    });
-    parent.appendChild(stack);
-  }
-
   function hasAcMongBossData(rows) {
     if (!Array.isArray(rows) || rows.length === 0) return false;
     var i;
@@ -1273,65 +1245,6 @@
       stack.addEventListener("pointermove", onPointerMove, { passive: true });
       stack.addEventListener("pointerleave", clearRepel);
     });
-  }
-
-  function buildFallbackLayout(pool, pathToDetailId) {
-    var deco = document.getElementById("home-boss-deco");
-    var strip = document.getElementById("home-boss-strip");
-    var sh = uniqueInOrder(pool);
-    if (!sh.length) return;
-    shuffleInPlace(sh);
-
-    var caps = [
-      CORNER_AVATAR_COUNT,
-      CORNER_AVATAR_COUNT,
-      CORNER_AVATAR_COUNT,
-      CORNER_AVATAR_COUNT,
-      FALLBACK_STRIP_ROW_N,
-      FALLBACK_STRIP_ROW_N,
-    ];
-    var buckets = [[], [], [], [], [], []];
-    var bi = 0;
-    sh.forEach(function (p) {
-      var guard = 0;
-      while (guard < 12) {
-        if (buckets[bi].length < caps[bi]) {
-          buckets[bi].push(p);
-          bi = (bi + 1) % 6;
-          return;
-        }
-        bi = (bi + 1) % 6;
-        guard++;
-      }
-    });
-
-    var CORNER_STACKS = [
-      { cls: "home-boss-stack home-boss-stack--tl", i: 0 },
-      { cls: "home-boss-stack home-boss-stack--tr", i: 1 },
-      { cls: "home-boss-stack home-boss-stack--ml", i: 2 },
-      { cls: "home-boss-stack home-boss-stack--mr", i: 3 },
-    ];
-
-    if (deco) {
-      CORNER_STACKS.forEach(function (cfg) {
-        var part = buckets[cfg.i];
-        if (part.length === 0) return;
-        appendStack(deco, cfg.cls, part, pathToDetailId);
-      });
-    }
-
-    if (strip) {
-      strip.classList.remove("home-boss-strip--tiered");
-      var STRIP_ROWS = [
-        { cls: "home-boss-stack home-boss-stack--strip", i: 4 },
-        { cls: "home-boss-stack home-boss-stack--strip", i: 5 },
-      ];
-      STRIP_ROWS.forEach(function (cfg) {
-        var part = buckets[cfg.i];
-        if (part.length === 0) return;
-        appendStack(strip, cfg.cls, part, pathToDetailId);
-      });
-    }
   }
 
   var pathToDetailId = Object.create(null);
