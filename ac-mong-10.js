@@ -241,7 +241,7 @@ window.AC_MONG_10_TABLE_DATA = [
       "Định Phong Châu",
       "Phong Tù Khung Thương",
     ],
-    "Độ khó": 600,
+    "Độ khó": 700,
     __images: ["phu ban 10/111 van sa ich ta.JPG"],
   },
   {
@@ -506,7 +506,7 @@ window.AC_MONG_10_TABLE_DATA = [
       "Lục Phân Toái Giới",
       "Âm Dương Quang Kiếp",
       "Ma Tướng Quy Nguyên",
-      "Đọa Chuy Băng Giới"
+      "Đọa Chuy Băng Giới",
     ],
     __bossColor: "#ff0000",
     __images: ["phu ban 10/343 nghich menh hau khanh ma tuong.JPG"],
