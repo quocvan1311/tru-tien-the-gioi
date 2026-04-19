@@ -334,13 +334,13 @@
       if (!paths.length) return;
       seasons[col].push({
         paths: paths,
-        sortKey: sortKeyFromStripRow(row),
+        bossIndex: sortKeyFromStripRow(row),
         diffTier: tierIndex(parseDifficulty(row["Độ khó"])),
       });
     });
     seasons.forEach(function (list) {
       list.sort(function (a, b) {
-        return a.sortKey - b.sortKey;
+        return a.bossIndex - b.bossIndex;
       });
     });
     return seasons;
@@ -422,9 +422,10 @@
       wrap.setAttribute("data-bundle-grid", g.cols + "x" + g.rows);
     }
     var globalIdx = animStart | 0;
-    rels.forEach(function (rel) {
+    if (false) {
+      const rel = rels[0];
       var img = document.createElement("img");
-      img.src = encPath(rel);
+      img.src = encPath(`boss icon/${bundle.bossIndex}.webp`);
       img.alt = "";
       img.loading = "lazy";
       img.decoding = "async";
@@ -436,7 +437,23 @@
       }
       wrap.appendChild(img);
       globalIdx++;
-    });
+    } else {
+      rels.forEach(function (rel) {
+        var img = document.createElement("img");
+        img.src = encPath(rel);
+        img.alt = "";
+        img.loading = "lazy";
+        img.decoding = "async";
+        img.className = "home-boss-stack__img";
+        img.setAttribute("draggable", "false");
+        img.style.animationDelay = (globalIdx * 0.055).toFixed(3) + "s";
+        if (isPhuBan10Path(rel) && pathToDetailId[rel]) {
+          img.setAttribute("data-ac-detail-id", pathToDetailId[rel]);
+        }
+        wrap.appendChild(img);
+        globalIdx++;
+      });
+    }
     return { wrap: wrap, nextAnim: globalIdx };
   }
 
