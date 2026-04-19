@@ -500,6 +500,14 @@ window.AC_MONG_10_TABLE_DATA = [
     "Tên season": "Thiện Âm Phá Hiểu",
     "Tên BOSS (Ác mộng)": "Hậu Khanh Ma Tướng",
     "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư",
+    "Kỹ năng": [
+      "Lục Đạo Quy Diệt",
+      "Luyện Ngục Mạn Đà La",
+      "Lục Phân Toái Giới",
+      "Âm Dương Quang Kiếp",
+      "Ma Tướng Quy Nguyên",
+      "Đọa Chuy Băng Giới"
+    ],
     __bossColor: "#ff0000",
     __images: ["phu ban 10/343 nghich menh hau khanh ma tuong.JPG"],
   },
