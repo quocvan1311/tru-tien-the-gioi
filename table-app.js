@@ -2,7 +2,11 @@
   "use strict";
 
   let rawRows = [];
-  let sortState = { key: null, dir: 1 };
+  const STORAGE_KEY_SORT_STATE =
+    window.location.pathname.split("/").pop() + "-sortState";
+  let sortState = window.localStorage.getItem(STORAGE_KEY_SORT_STATE)
+    ? JSON.parse(window.localStorage.getItem(STORAGE_KEY_SORT_STATE))
+    : { key: null, dir: 1 };
 
   function el(tag, props, children) {
     const node = document.createElement(tag);
@@ -467,7 +471,7 @@
     thead.appendChild(trh);
 
     const tbody = el("tbody");
-    rows.forEach(row => {
+    rows.forEach((row, rowIndex) => {
       const tr = el("tr");
       if (detailBaseUrl) {
         tr.classList.add("data-table__row--detail");
@@ -486,6 +490,9 @@
         }
         if (k === "Tuần tiêu diệt") {
           text = formatTuanTieuDietTwoLines(text);
+        }
+        if (k === "No.") {
+          text = rowIndex + 1;
         }
         const td = document.createElement("td");
         td.dataset.col = k;
@@ -862,6 +869,10 @@
         resolveCellBg,
         getRowDetailId,
         cellBgMode,
+      );
+      window.localStorage.setItem(
+        STORAGE_KEY_SORT_STATE,
+        JSON.stringify(sortState),
       );
     });
   }
