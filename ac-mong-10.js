@@ -463,6 +463,7 @@ window.AC_MONG_10_TABLE_DATA = [
   {
     "No.": 21,
     Index: "341",
+    "Độ khó": 999,
     "Tên season": "Thiện Âm Phá Hiểu",
     "Tên BOSS (Ác mộng)": "Vô Danh",
     "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư",
@@ -479,6 +480,7 @@ window.AC_MONG_10_TABLE_DATA = [
   {
     "No.": 22,
     Index: "342",
+    "Độ khó": 999,
     "Tên season": "Thiện Âm Phá Hiểu",
     "Tên BOSS (Ác mộng)": "Cô Thần Tôn - Phạm Không",
     "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư",
@@ -497,6 +499,7 @@ window.AC_MONG_10_TABLE_DATA = [
   {
     "No.": 23,
     Index: "343",
+    "Độ khó": 999,
     "Tên season": "Thiện Âm Phá Hiểu",
     "Tên BOSS (Ác mộng)": "Hậu Khanh Ma Tướng",
     "Tên phụ bản": "Nghịch Mệnh Tịch Diệt Khư",

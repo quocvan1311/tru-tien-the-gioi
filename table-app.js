@@ -551,6 +551,7 @@
             const tierBg = difficultyColumnBgAcMong(raw);
             chip.style.backgroundColor = tierBg;
             chip.style.borderColor = bossChipBorderForBackground(tierBg);
+            chip.style.letterSpacing = "0.0375em";
             td.appendChild(chip);
           }
           if (spec && spec.noWrap) td.style.whiteSpace = "nowrap";
@@ -771,16 +772,19 @@
           const numEl = document.createElement("span");
           numEl.className = "table-status__chip-num";
           numEl.textContent = String(summary[name]?.count || 0);
+          numEl.style.letterSpacing = "0.075em";
           const pointEl = document.createElement("span");
           pointEl.className = "table-status__chip-num";
           pointEl.textContent = String(summary[name]?.point || 0);
           pointEl.style.color = "red";
+          pointEl.style.letterSpacing = "0.075em";
           const avgEl = document.createElement("span");
           avgEl.className = "table-status__chip-num";
           avgEl.textContent = String(
             Math.round(summary[name]?.point / summary[name]?.count || 0),
           );
           avgEl.style.color = "purple";
+          avgEl.style.letterSpacing = "0.075em";
           chip.appendChild(nameEl);
           chip.appendChild(numEl);
           if (cellBgMode === "ac-mong") {

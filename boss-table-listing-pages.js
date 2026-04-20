@@ -54,10 +54,10 @@
       "Số ngày": "3%",
       "Tên BOSS (Ác mộng)": "11.83%",
       "Tên phụ bản": "12.87%",
-      "Kỹ năng": "14.34%",
-      "Độ khó": "4.5%",
+      "Kỹ năng": "14.09%",
+      "Độ khó": "4.85%",
       "Ghi chú": "11.75%",
-      Ảnh: "9%",
+      Ảnh: "8.9%",
     };
     global.initBossTable(
       Object.assign({}, baseAcMongStyleListing(), {
