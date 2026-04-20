@@ -507,6 +507,8 @@ window.AC_MONG_10_TABLE_DATA = [
       "Lục Đạo Quy Diệt",
       "Luyện Ngục Mạn Đà La",
       "Lục Phân Toái Giới",
+      "Tội Nghiệp Giáng Lâm",
+      "Kiềm Hình Chi Quang",
       "Âm Dương Quang Kiếp",
       "Ma Tướng Quy Nguyên",
       "Đọa Chuy Băng Giới",
