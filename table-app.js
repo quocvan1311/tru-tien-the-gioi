@@ -383,12 +383,15 @@
     return "phu-ban-" + no + "-" + mua + "-" + (pb || "map");
   }
 
-  function countBySeason(rows, seasonKey, emptyLabel) {
+  function summaryBySeason(rows, seasonKey, emptyLabel) {
     const fallback = emptyLabel || "(no season name)";
     const m = Object.create(null);
     rows.forEach(r => {
       const label = cellText(r[seasonKey]).trim() || fallback;
-      m[label] = (m[label] || 0) + 1;
+      m[label] = {
+        count: (m[label]?.count || 0) + 1,
+        point: (m[label]?.point || 0) + (r["Độ khó"] || 0),
+      };
     });
     return m;
   }
@@ -742,8 +745,8 @@
         chips.className = "table-status__chips";
         chips.setAttribute("role", "list");
 
-        const counts = countBySeason(rawRows, seasonKey, emptySeason);
-        const names = Object.keys(counts).sort(function (a, b) {
+        const summary = summaryBySeason(rawRows, seasonKey, emptySeason);
+        const names = Object.keys(summary).sort(function (a, b) {
           if (seasonSummaryOrder && seasonSummaryOrder.length) {
             const ia = seasonSummaryOrder.indexOf(a);
             const ib = seasonSummaryOrder.indexOf(b);
@@ -767,9 +770,23 @@
           nameEl.textContent = chipLabel;
           const numEl = document.createElement("span");
           numEl.className = "table-status__chip-num";
-          numEl.textContent = String(counts[name]);
+          numEl.textContent = String(summary[name]?.count || 0);
+          const pointEl = document.createElement("span");
+          pointEl.className = "table-status__chip-num";
+          pointEl.textContent = String(summary[name]?.point || 0);
+          pointEl.style.color = "red";
+          const avgEl = document.createElement("span");
+          avgEl.className = "table-status__chip-num";
+          avgEl.textContent = String(
+            Math.round(summary[name]?.point / summary[name]?.count || 0),
+          );
+          avgEl.style.color = "purple";
           chip.appendChild(nameEl);
           chip.appendChild(numEl);
+          if (cellBgMode === "ac-mong") {
+            chip.appendChild(pointEl);
+            chip.appendChild(avgEl);
+          }
           chips.appendChild(chip);
         });
 
