@@ -3879,7 +3879,7 @@ html.boss-detail--video-popout-active {
   inset: 0;
   z-index: 10040;
   background: rgba(15, 23, 42, 0.52);
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(1px);
 }
 
 /* Chế độ phóng: khối video căn giữa, ~85% ngang, vùng player 16:9 */
@@ -3890,8 +3890,8 @@ body.boss-detail-page
   top: 50%;
   transform: translate(-50%, -50.75%);
   z-index: 10050;
-  width: 92%;
-  max-width: min(92vw, 100rem);
+  width: 85%;
+  max-width: min(85vw, 100rem);
   margin: 0;
   align-self: center;
   box-sizing: border-box;
@@ -3913,7 +3913,7 @@ body.boss-detail-page
   aspect-ratio: 16 / 9;
   flex: 0 0 auto;
   min-height: 0;
-  max-height: min(calc(92vw * 9 / 16), calc(95vh - 3.5rem));
+  max-height: min(calc(85vw * 9 / 16), calc(95vh - 3.5rem));
 }
 
 body.boss-detail-page
@@ -3922,7 +3922,7 @@ body.boss-detail-page
     :has(> .boss-detail__video-frame:only-child)
   ) {
   width: 100%;
-  max-height: calc(92vh - 3.5rem);
+  max-height: calc(85vh - 3.5rem);
   overflow: auto;
 }
 
