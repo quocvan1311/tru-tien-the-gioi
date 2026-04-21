@@ -3887,10 +3887,10 @@ body.boss-detail-page
   position: fixed;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50.75%);
+  transform: translate(-50%, -51%);
   z-index: 10050;
-  width: 92.5%;
-  max-width: min(92.5vw, 100rem);
+  width: 95%;
+  max-width: min(95vw, 110rem);
   margin: 0;
   align-self: center;
   box-sizing: border-box;
@@ -3912,7 +3912,7 @@ body.boss-detail-page
   aspect-ratio: 16 / 9;
   flex: 0 0 auto;
   min-height: 0;
-  max-height: min(calc(92.5vw * 9 / 16), calc(95vh - 3.5rem));
+  max-height: min(calc(95vw * 9 / 16), calc(95vh - 3.5rem));
 }
 
 body.boss-detail-page
@@ -3921,7 +3921,7 @@ body.boss-detail-page
     :has(> .boss-detail__video-frame:only-child)
   ) {
   width: 100%;
-  max-height: calc(92.5vh - 3.5rem);
+  max-height: calc(95vh - 3.5rem);
   overflow: auto;
 }
 
