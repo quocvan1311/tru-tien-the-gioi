@@ -225,6 +225,11 @@
   function appendBossDetailVideoAside(aside, videos, bossName, videoCfg) {
     var lead = document.createElement("div");
     lead.className = "boss-detail__video-heading";
+    var name = document.createElement("span");
+    name.className = "boss-detail__video-boss-name";
+    name.textContent = bossName;
+
+    lead.appendChild(name);
     aside.appendChild(lead);
 
     var stack = document.createElement("div");
