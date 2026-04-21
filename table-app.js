@@ -254,7 +254,7 @@
       }
       /* Độ khó: nền ô trắng; màu tier hiển thị bằng chip trong renderTable */
       if (colKey === "Độ khó") {
-        return "#ffffff";
+        return difficultyColumnBgAcMong(row[colKey]) + "33";
       }
       return seasonBg;
     };

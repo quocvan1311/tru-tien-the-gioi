@@ -3889,8 +3889,8 @@ body.boss-detail-page
   top: 50%;
   transform: translate(-50%, -51%);
   z-index: 10050;
-  width: 95%;
-  max-width: min(95vw, 110rem);
+  width: 92%;
+  max-width: min(92vw, 105rem);
   margin: 0;
   align-self: center;
   box-sizing: border-box;
@@ -3912,7 +3912,7 @@ body.boss-detail-page
   aspect-ratio: 16 / 9;
   flex: 0 0 auto;
   min-height: 0;
-  max-height: min(calc(95vw * 9 / 16), calc(95vh - 3.5rem));
+  max-height: min(calc(92vw * 9 / 16), calc(95vh - 3.5rem));
 }
 
 body.boss-detail-page
