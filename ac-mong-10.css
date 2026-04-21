@@ -3877,9 +3877,8 @@ html.boss-detail--video-popout-active {
 .boss-detail__video-popout-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 10040;
-  background: rgba(15, 23, 42, 0.52);
-  backdrop-filter: blur(1px);
+  z-index: 9999;
+  background: rgba(15, 23, 42, 0.65);
 }
 
 /* Chế độ phóng: khối video căn giữa, ~85% ngang, vùng player 16:9 */
