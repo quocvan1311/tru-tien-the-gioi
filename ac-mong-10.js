@@ -475,7 +475,7 @@ window.AC_MONG_10_TABLE_DATA = [
       "Lao Lung",
       "Như Lai Thần Chưởng",
     ],
-    __images: ["phu ban 10/341 nghich menh vo danh.JPG"],
+    __images: ["phu ban 10/341 nghich menh vo danh.JPG", "phu ban 10/341 nghich menh nhu lai.JPG"],
   },
   {
     "No.": 22,
