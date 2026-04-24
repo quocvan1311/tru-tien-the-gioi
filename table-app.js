@@ -203,7 +203,7 @@
     hover.className = "boss-table-img-hover";
     const tip = document.createElement("span");
     tip.className = "boss-table-img-hover__tip";
-    tip.style.backgroundColor =
+    tip.style.borderColor =
       difficultyColumnBgAcMong(row["Độ khó"]) || "#000000";
     const big = document.createElement("img");
     big.src = img.src;
