@@ -3266,11 +3266,11 @@ body.excel-boss-page .boss-table-img-hover__tip {
   left: 0;
   top: 0;
   width: auto;
-  padding: 6px;
+  padding: 8px;
   box-sizing: border-box;
   background: #000000;
   border: 1px solid #9aa8b8;
-  border-radius: 10px;
+  border-radius: 12px;
   box-shadow:
     0 10px 36px rgba(15, 23, 42, 0.22),
     0 2px 8px rgba(15, 23, 42, 0.1);
@@ -3293,11 +3293,11 @@ body.excel-boss-page
 body.excel-boss-page .boss-table-img-hover__tip img {
   display: block;
   width: auto;
-  max-width: 22vw;
+  max-width: 20vw;
   height: auto;
   max-height: min(55vh, 650px);
   object-fit: contain;
-  border-radius: 5px;
+  border-radius: 6px;
   margin: 0;
   padding: 0;
   border: none;

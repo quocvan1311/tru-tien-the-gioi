@@ -23,7 +23,7 @@
   }
 
   /**
-   * Tooltip preview: fixed, ảnh trong tip rộng đúng 22vw; neo bên phải thumbnail, kẹp vào viewport.
+   * Tooltip preview: fixed, ảnh trong tip rộng đúng 20vw; neo bên phải thumbnail, kẹp vào viewport.
    */
   function layoutBossListImageTip(hover, tip, thumbEl) {
     const vw = window.innerWidth;
