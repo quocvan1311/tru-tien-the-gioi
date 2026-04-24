@@ -3266,10 +3266,7 @@ body.excel-boss-page .boss-table-img-hover__tip {
   left: 0;
   top: 0;
   width: auto;
-  max-width: min(calc(30vw + 12px), calc(100vw - 16px));
-  max-height: min(92vh, 920px);
   padding: 4px;
-  overflow: auto;
   box-sizing: border-box;
   background: #ffffff;
   border: 1px solid #9aa8b8;
@@ -3286,7 +3283,8 @@ body.excel-boss-page .boss-table-img-hover__tip {
     visibility 0.14s ease;
 }
 
-body.excel-boss-page .boss-table-img-hover__tip.boss-table-img-hover__tip--open {
+body.excel-boss-page
+  .boss-table-img-hover__tip.boss-table-img-hover__tip--open {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -3294,9 +3292,10 @@ body.excel-boss-page .boss-table-img-hover__tip.boss-table-img-hover__tip--open 
 
 body.excel-boss-page .boss-table-img-hover__tip img {
   display: block;
-  width: 30vw;
-  max-width: 100%;
+  width: auto;
+  max-width: 25vw;
   height: auto;
+  max-height: min(60vh, 700px);
   object-fit: contain;
   border-radius: 5px;
   margin: 0;

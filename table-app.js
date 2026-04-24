@@ -23,7 +23,7 @@
   }
 
   /**
-   * Tooltip preview: fixed, ảnh trong tip rộng đúng 30vw; neo bên phải thumbnail, kẹp vào viewport.
+   * Tooltip preview: fixed, ảnh trong tip rộng đúng 25vw; neo bên phải thumbnail, kẹp vào viewport.
    */
   function layoutBossListImageTip(hover, tip, thumbEl) {
     const vw = window.innerWidth;
@@ -35,9 +35,7 @@
 
     const imgW = vw * 0.3;
     if (big) {
-      big.style.width = imgW + "px";
       big.style.maxWidth = imgW + "px";
-      big.style.height = "auto";
       big.style.display = "block";
       big.style.objectFit = "contain";
       big.style.boxSizing = "border-box";
@@ -45,8 +43,6 @@
 
     tip.style.position = "fixed";
     tip.style.boxSizing = "border-box";
-    tip.style.width = "auto";
-    tip.style.maxWidth = "none";
     tip.style.left = "-99999px";
     tip.style.top = "0";
     tip.style.visibility = "visible";
@@ -97,7 +93,7 @@
         if (!overHover && !overTip) {
           closeTip();
         }
-      }, 120);
+      }, 100);
     }
 
     function scheduleLayout() {
