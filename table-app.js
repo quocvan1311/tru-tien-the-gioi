@@ -22,6 +22,203 @@
     return String(v);
   }
 
+  /**
+   * Tooltip preview: fixed, ảnh trong tip rộng đúng 30vw; neo bên phải thumbnail, kẹp vào viewport.
+   */
+  function layoutBossListImageTip(hover, tip, thumbEl) {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const margin = 8;
+    const gap = 8;
+    const hr = thumbEl.getBoundingClientRect();
+    const big = tip.querySelector("img");
+
+    const imgW = vw * 0.3;
+    if (big) {
+      big.style.width = imgW + "px";
+      big.style.maxWidth = imgW + "px";
+      big.style.height = "auto";
+      big.style.display = "block";
+      big.style.objectFit = "contain";
+      big.style.boxSizing = "border-box";
+    }
+
+    tip.style.position = "fixed";
+    tip.style.boxSizing = "border-box";
+    tip.style.width = "auto";
+    tip.style.maxWidth = "none";
+    tip.style.left = "-99999px";
+    tip.style.top = "0";
+    tip.style.visibility = "visible";
+    tip.style.opacity = "0";
+
+    const tipOuterW = tip.offsetWidth;
+    let tipH = tip.offsetHeight;
+    if (tipH < 6) {
+      tipH = Math.min(vh * 0.72, 448);
+    }
+
+    const leftBase = hr.right + gap;
+    let left = leftBase;
+    if (left + tipOuterW > vw - margin) {
+      left = vw - margin - tipOuterW;
+    }
+    if (left < margin) {
+      left = margin;
+    }
+
+    let top = hr.top + hr.height / 2 - tipH / 2;
+    top = Math.max(margin, Math.min(top, vh - margin - tipH));
+
+    tip.style.left = Math.round(left) + "px";
+    tip.style.top = Math.round(top) + "px";
+    tip.style.opacity = "";
+  }
+
+  function bindBossTableImageTip(hover, tip, thumbEl) {
+    const big = tip.querySelector("img");
+    let raf = null;
+    let listenersAttached = false;
+    let closeTimer = null;
+    let overHover = false;
+    let overTip = false;
+
+    function cancelCloseTimer() {
+      if (closeTimer !== null) {
+        clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+    }
+
+    function scheduleMaybeClose() {
+      cancelCloseTimer();
+      closeTimer = setTimeout(function () {
+        closeTimer = null;
+        if (!overHover && !overTip) {
+          closeTip();
+        }
+      }, 120);
+    }
+
+    function scheduleLayout() {
+      if (raf != null) {
+        return;
+      }
+      raf = window.requestAnimationFrame(function () {
+        raf = null;
+        if (!hover.classList.contains("boss-table-img-hover--tip-active")) {
+          return;
+        }
+        layoutBossListImageTip(hover, tip, thumbEl);
+      });
+    }
+
+    function onWinScrollOrResize() {
+      scheduleLayout();
+    }
+
+    function openTip() {
+      cancelCloseTimer();
+      hover.classList.add("boss-table-img-hover--tip-active");
+      document.body.appendChild(tip);
+      tip.classList.add("boss-table-img-hover__tip--open");
+      layoutBossListImageTip(hover, tip, thumbEl);
+      if (!listenersAttached) {
+        listenersAttached = true;
+        window.addEventListener("scroll", onWinScrollOrResize, true);
+        window.addEventListener("resize", onWinScrollOrResize);
+      }
+    }
+
+    function closeTip() {
+      cancelCloseTimer();
+      overHover = false;
+      overTip = false;
+      hover.classList.remove("boss-table-img-hover--tip-active");
+      tip.classList.remove("boss-table-img-hover__tip--open");
+      hover.appendChild(tip);
+      tip.style.width = "";
+      tip.style.maxWidth = "";
+      tip.style.left = "";
+      tip.style.top = "";
+      tip.style.position = "";
+      tip.style.opacity = "";
+      tip.style.visibility = "";
+      if (big) {
+        big.style.width = "";
+        big.style.maxWidth = "";
+        big.style.height = "";
+        big.style.display = "";
+        big.style.objectFit = "";
+        big.style.boxSizing = "";
+      }
+      if (listenersAttached) {
+        listenersAttached = false;
+        window.removeEventListener("scroll", onWinScrollOrResize, true);
+        window.removeEventListener("resize", onWinScrollOrResize);
+      }
+      if (raf != null) {
+        window.cancelAnimationFrame(raf);
+        raf = null;
+      }
+    }
+
+    hover.addEventListener("mouseenter", function () {
+      overHover = true;
+      cancelCloseTimer();
+      if (!hover.classList.contains("boss-table-img-hover--tip-active")) {
+        openTip();
+      } else {
+        scheduleLayout();
+      }
+    });
+
+    hover.addEventListener("mouseleave", function () {
+      overHover = false;
+      scheduleMaybeClose();
+    });
+
+    hover.addEventListener("mousemove", scheduleLayout);
+
+    tip.addEventListener("mouseenter", function () {
+      overTip = true;
+      cancelCloseTimer();
+    });
+
+    tip.addEventListener("mouseleave", function () {
+      overTip = false;
+      scheduleMaybeClose();
+    });
+
+    if (big) {
+      big.addEventListener("load", function () {
+        if (hover.classList.contains("boss-table-img-hover--tip-active")) {
+          scheduleLayout();
+        }
+      });
+    }
+  }
+
+  /**
+   * Listing: bọc ảnh + tooltip preview (CSS .boss-table-img-hover).
+   */
+  function appendListingImageWithHoverPreview(parent, img) {
+    const hover = document.createElement("span");
+    hover.className = "boss-table-img-hover";
+    const tip = document.createElement("span");
+    tip.className = "boss-table-img-hover__tip";
+    const big = document.createElement("img");
+    big.src = img.src;
+    big.alt = img.alt || "";
+    big.decoding = "async";
+    big.loading = "lazy";
+    tip.appendChild(big);
+    hover.appendChild(img);
+    hover.appendChild(tip);
+    parent.appendChild(hover);
+    bindBossTableImageTip(hover, tip, img);
+  }
+
   /** Lowercase + bỏ dấu tiếng Việt (và đ/Đ → d) để so khớp ô search. */
   function foldVi(s) {
     return String(s)
@@ -509,7 +706,7 @@
             img.src = src;
             img.alt = "";
             img.loading = "lazy";
-            wrap.appendChild(img);
+            appendListingImageWithHoverPreview(wrap, img);
           });
           td.appendChild(wrap);
         } else if (spec && spec.type === "bossWithImage") {
@@ -533,7 +730,7 @@
               img.src = src;
               img.alt = text;
               img.loading = "lazy";
-              fig.appendChild(img);
+              appendListingImageWithHoverPreview(fig, img);
             });
             td.appendChild(fig);
           }

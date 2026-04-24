@@ -3137,6 +3137,7 @@ body.excel-boss-page table.excel-phu-ban th[data-col^="Boss "] {
 /* Phụ bản 5 — tên boss + ảnh bên dưới (giống layout Excel) */
 body.excel-boss-page table.excel-phu-ban td.cell-boss-with-img {
   vertical-align: top;
+  overflow: visible;
 }
 
 body.excel-boss-page table.excel-phu-ban .boss-cell__name {
@@ -3157,7 +3158,11 @@ body.excel-boss-page table.excel-phu-ban .boss-cell__fig {
 }
 
 /* Không flex-grow — viền ôm sát kích thước ảnh (tránh kéo giãn ô rỗng trong border) */
-body.excel-boss-page table.excel-phu-ban .boss-cell__fig img {
+body.excel-boss-page
+  table.excel-phu-ban
+  .boss-cell__fig
+  .boss-table-img-hover
+  > img {
   display: block;
   flex: 0 1 auto;
   min-width: 0;
@@ -3176,12 +3181,27 @@ body.excel-boss-page table.excel-phu-ban .boss-cell__fig img {
   backface-visibility: hidden;
 }
 
-body.excel-boss-page table.excel-phu-ban .boss-cell__fig img:only-child {
+body.excel-boss-page
+  table.excel-phu-ban
+  .boss-cell__fig
+  .boss-table-img-hover:only-of-type
+  > img {
   max-width: 100%;
 }
 
-body.excel-boss-page table.excel-phu-ban .boss-cell__fig img:not(:only-child) {
+body.excel-boss-page
+  table.excel-phu-ban
+  .boss-cell__fig
+  .boss-table-img-hover:not(:only-of-type) {
   max-width: calc(50% - 2px);
+}
+
+body.excel-boss-page
+  table.excel-phu-ban
+  .boss-cell__fig
+  .boss-table-img-hover:not(:only-of-type)
+  > img {
+  max-width: 100%;
 }
 
 /* Multiline cells (Kỹ năng, BOSS) — giữ xuống dòng như Excel */
@@ -3195,6 +3215,7 @@ body.excel-boss-page table.excel-ac-mong td.cell-images {
   padding: 3px 4px;
   line-height: 0;
   box-sizing: border-box;
+  overflow: visible;
 }
 
 body.excel-boss-page .boss-image-strip {
@@ -3208,7 +3229,7 @@ body.excel-boss-page .boss-image-strip {
 }
 
 /* Listing Ác mộng / Luyện ngục — ảnh full width strip (đã trừ padding ô) */
-body.excel-boss-page .boss-image-strip img {
+body.excel-boss-page .boss-image-strip .boss-table-img-hover > img {
   display: block;
   max-width: 100%;
   width: auto;
@@ -3223,6 +3244,65 @@ body.excel-boss-page .boss-image-strip img {
   background: transparent;
   transform: translateZ(0);
   backface-visibility: hidden;
+}
+
+body.excel-boss-page .boss-table-img-hover {
+  position: relative;
+  display: inline-block;
+  flex: 0 1 auto;
+  max-width: 100%;
+  line-height: 0;
+  vertical-align: top;
+}
+
+body.excel-boss-page .boss-image-strip .boss-table-img-hover {
+  display: block;
+  align-self: center;
+}
+
+/* Vị trí / kích thước ảnh: table-app.js; có thể port ra document.body */
+body.excel-boss-page .boss-table-img-hover__tip {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: auto;
+  max-width: min(calc(30vw + 12px), calc(100vw - 16px));
+  max-height: min(92vh, 920px);
+  padding: 4px;
+  overflow: auto;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #9aa8b8;
+  border-radius: 8px;
+  box-shadow:
+    0 10px 36px rgba(15, 23, 42, 0.22),
+    0 2px 8px rgba(15, 23, 42, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 100600;
+  transition:
+    opacity 0.14s ease,
+    visibility 0.14s ease;
+}
+
+body.excel-boss-page .boss-table-img-hover__tip.boss-table-img-hover__tip--open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+body.excel-boss-page .boss-table-img-hover__tip img {
+  display: block;
+  width: 30vw;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 5px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: #0f172a;
 }
 
 /* Cột %: bảng full width; ô chữ xuống dòng trong khung cột (tránh tràn ngang) */
