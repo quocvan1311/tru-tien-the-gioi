@@ -38,7 +38,7 @@ window.AC_MONG_10_TABLE_DATA = [
       "Huyết Tinh Tiễn",
       "U Tinh Thích Huyết",
     ],
-    "Độ khó": 550,
+    "Độ khó": 575,
     "Ghi chú": ["Thiên Sát Thánh Tượng", "Huyền Minh Thánh Tượng"],
     __images: [
       "phu ban 10/121 do ach thien sat.JPG",
@@ -387,7 +387,7 @@ window.AC_MONG_10_TABLE_DATA = [
       "Phần Tội Chúng Sinh",
       "Huyết Ngục Thương Kiếp Trận",
     ],
-    "Độ khó": 475,
+    "Độ khó": 495,
     __images: ["phu ban 10/311 hoa tu la.JPG"],
   },
   {
@@ -476,7 +476,10 @@ window.AC_MONG_10_TABLE_DATA = [
       "Lao Lung",
       "Như Lai Thần Chưởng",
     ],
-    __images: ["phu ban 10/341 nghich menh vo danh.JPG", "phu ban 10/341 nghich menh nhu lai.JPG"],
+    __images: [
+      "phu ban 10/341 nghich menh vo danh.JPG",
+      "phu ban 10/341 nghich menh nhu lai.JPG",
+    ],
   },
   {
     "No.": 22,
