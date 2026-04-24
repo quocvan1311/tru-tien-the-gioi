@@ -23,7 +23,7 @@
   }
 
   /**
-   * Tooltip preview: fixed, ảnh trong tip rộng đúng 25vw; neo bên phải thumbnail, kẹp vào viewport.
+   * Tooltip preview: fixed, ảnh trong tip rộng đúng 22vw; neo bên phải thumbnail, kẹp vào viewport.
    */
   function layoutBossListImageTip(hover, tip, thumbEl) {
     const vw = window.innerWidth;
@@ -198,11 +198,13 @@
   /**
    * Listing: bọc ảnh + tooltip preview (CSS .boss-table-img-hover).
    */
-  function appendListingImageWithHoverPreview(parent, img) {
+  function appendListingImageWithHoverPreview(parent, img, row) {
     const hover = document.createElement("span");
     hover.className = "boss-table-img-hover";
     const tip = document.createElement("span");
     tip.className = "boss-table-img-hover__tip";
+    tip.style.backgroundColor =
+      difficultyColumnBgAcMong(row["Độ khó"]) || "#000000";
     const big = document.createElement("img");
     big.src = img.src;
     big.alt = img.alt || "";
@@ -702,7 +704,7 @@
             img.src = src;
             img.alt = "";
             img.loading = "lazy";
-            appendListingImageWithHoverPreview(wrap, img);
+            appendListingImageWithHoverPreview(wrap, img, row);
           });
           td.appendChild(wrap);
         } else if (spec && spec.type === "bossWithImage") {
@@ -726,7 +728,7 @@
               img.src = src;
               img.alt = text;
               img.loading = "lazy";
-              appendListingImageWithHoverPreview(fig, img);
+              appendListingImageWithHoverPreview(fig, img, row);
             });
             td.appendChild(fig);
           }
