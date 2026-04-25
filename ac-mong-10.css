@@ -3296,6 +3296,7 @@ body.excel-boss-page .boss-table-img-hover__tip img {
   height: auto;
   max-height: min(55vh, 650px);
   object-fit: contain;
+  border-radius: 12px;
   margin: 0;
   padding: 0;
   border: none;

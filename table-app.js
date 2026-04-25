@@ -205,6 +205,8 @@
     tip.className = "boss-table-img-hover__tip";
     tip.style.borderColor =
       difficultyColumnBgAcMong(row["Độ khó"]) || "#000000";
+    tip.style.backgroundColor =
+      difficultyColumnBgAcMong(row["Độ khó"]) || "#000000";
     const big = document.createElement("img");
     big.src = img.src;
     big.alt = img.alt || "";
