@@ -1831,7 +1831,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img {
 .home-boss-stack--strip .home-boss-stack__img {
   width: clamp(4.15rem, 12.4vw, 7.05rem);
   height: clamp(4.15rem, 12.4vw, 7.05rem);
-  border-width: 4px;
+  border-width: 6px;
   box-shadow:
     0 6px 22px rgba(15, 23, 42, 0.26),
     0 0 0 1px rgba(15, 23, 42, 0.07);
@@ -1845,7 +1845,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img {
 .home-boss-stack--strip-dense .home-boss-stack__img {
   width: clamp(3.35rem, 9.2vw, 5.85rem);
   height: clamp(3.35rem, 9.2vw, 5.85rem);
-  border-width: 3px;
+  border-width: 5px;
 }
 
 .home-boss-stack--strip-dense:not(.home-boss-stack--cluster)
@@ -2189,7 +2189,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img {
   .home-boss-stack__img {
     width: clamp(3.35rem, 14vw, 4.25rem);
     height: clamp(3.35rem, 14vw, 4.25rem);
-    border-width: 2px;
+    border-width: 3px;
   }
 
   .home-boss-stack__img:not(:first-child) {
@@ -2199,7 +2199,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img {
   .home-boss-stack--strip .home-boss-stack__img {
     width: var(--boss-avatar-ref);
     height: var(--boss-avatar-ref);
-    border-width: 3px;
+    border-width: 5px;
   }
 
   .home-boss-stack--strip:not(.home-boss-stack--cluster)
@@ -2210,7 +2210,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img {
   .home-boss-stack--strip-dense .home-boss-stack__img {
     width: var(--boss-avatar-ref-dense);
     height: var(--boss-avatar-ref-dense);
-    border-width: 2px;
+    border-width: 3px;
   }
 
   .home-boss-stack--strip-dense:not(.home-boss-stack--cluster)
