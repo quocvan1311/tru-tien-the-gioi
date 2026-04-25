@@ -460,7 +460,7 @@ window.AC_MONG_10_TABLE_DATA = [
       "Vọng Niệm Tụ Bạo",
       "Vọng Nghiệt Lôi Phạt",
     ],
-    "Độ khó": 975,
+    "Độ khó": 1050,
     "Ghi chú": "Chỉ Dục Giới Sư",
     __images: ["phu ban 10/331 chi duc gioi su.JPG"],
   },
