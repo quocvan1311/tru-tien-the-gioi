@@ -384,12 +384,6 @@
     );
   }
 
-  function isTuanTieuDietMissing(row) {
-    const v = row["Tuần tiêu diệt"];
-    if (v == null) return true;
-    return String(v).trim() === "";
-  }
-
   /** Chưa có ngày tiêu diệt — bảng listing không hiển thị chip Độ khô */
   function isNgayTieuDietEmpty(row) {
     const v = row["Ngày tiêu diệt"];
@@ -398,7 +392,8 @@
   }
 
   function isDoKhoValueEmpty(raw) {
-    return parseDifficultyNumber(raw) == null;
+    const num = parseDifficultyNumber(raw);
+    return num == null || num === 999;
   }
 
   function makeAcMongNgucCellBgResolver(
@@ -431,7 +426,7 @@
           : "#eeeeee";
       if (colKey === "Ghi chú") return "#ffffff";
       /* Ác mộng 10: chưa nhập Tuần tiêu diệt → các ô ngày/tuần/số ngày trắng (chip Độ khó do renderTable) */
-      if (isTuanTieuDietMissing(row)) {
+      if (isNgayTieuDietEmpty(row)) {
         if (
           colKey === "Ngày tiêu diệt" ||
           colKey === "Tuần tiêu diệt" ||
@@ -737,7 +732,7 @@
           (cellBgMode === "ac-mong" || cellBgMode === "luyen-nguc")
         ) {
           /* Có ngày tiêu diệt + có độ khó mới hiển thị chip; không thì ô trống */
-          if (isNgayTieuDietEmpty(row) || isDoKhoValueEmpty(raw)) {
+          if (isDoKhoValueEmpty(raw)) {
             td.textContent = "";
           } else {
             const chip = document.createElement("span");

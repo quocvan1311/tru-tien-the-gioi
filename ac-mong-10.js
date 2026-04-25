@@ -456,7 +456,7 @@ window.AC_MONG_10_TABLE_DATA = [
       "Khôi Sinh Đồng Tù",
       "Chung Mạt Vạn Quân",
     ],
-    "Độ khó": 999,
+    "Độ khó": 975,
     "Ghi chú": "Chỉ Dục Giới Sư",
     __images: ["phu ban 10/331 chi duc gioi su.JPG"],
   },
