@@ -362,7 +362,7 @@ window.AC_MONG_10_TABLE_DATA = [
       "Thượng Cổ Thú Hồn",
       "Cửu Tiêu Lôi / Huyền Nguyên Nịch / Cương Phong Phược",
     ],
-    "Độ khó": 950,
+    "Độ khó": 975,
     __bossColor: "#ff0000",
     __images: ["phu ban 10/234 quy nguu dao quy nguu.JPG"],
   },
