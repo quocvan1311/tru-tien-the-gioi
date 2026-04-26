@@ -3113,7 +3113,7 @@ body.excel-boss-page
   tbody
   tr:hover
   td {
-  filter: brightness(1.05) saturate(1.05);
+  filter: brightness(1.06) saturate(1.01);
 }
 
 body.excel-boss-page table.excel-ac-mong thead th.sort-asc::after,

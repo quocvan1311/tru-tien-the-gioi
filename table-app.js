@@ -23,12 +23,12 @@
   }
 
   function adjustColor(hex, satDelta = 0, lightDelta = 0) {
-    // 1. Chuẩn hóa Hex và chuyển sang RGB
+    // 1. Convert Hex to RGB
     let r = parseInt(hex.slice(1, 3), 16) / 255;
     let g = parseInt(hex.slice(3, 5), 16) / 255;
     let b = parseInt(hex.slice(5, 7), 16) / 255;
 
-    // 2. Chuyển RGB sang HSL
+    // 2. Convert RGB to HSL
     let max = Math.max(r, g, b),
       min = Math.min(r, g, b);
     let h,
@@ -36,7 +36,7 @@
       l = (max + min) / 2;
 
     if (max === min) {
-      h = s = 0; // Không màu (xám)
+      h = s = 0;
     } else {
       let d = max - min;
       s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
@@ -54,13 +54,24 @@
       h /= 6;
     }
 
-    // 3. Áp dụng thay đổi (Delta)
-    // s + delta: Tăng/giảm độ tươi
-    // l + delta: Tăng/giảm độ sáng
-    s = Math.min(1, Math.max(0, s + satDelta / 100));
-    l = Math.min(1, Math.max(0, l + lightDelta / 100));
+    // 3. LOGIC THÔNG MINH (Smart Scaling)
+    // Thay vì cộng thẳng, ta tính toán dựa trên khoảng trống còn lại (Remaining Space)
+    let delta = lightDelta / 100;
 
-    // 4. Chuyển HSL ngược lại RGB
+    if (delta > 0) {
+      // Nếu làm sáng (Lighter): Càng sáng thì tăng càng ít
+      // Công thức: L_mới = L_cũ + (Khoảng_còn_lại_tới_trắng * %_muốn_tăng)
+      l = l + (1 - l) * delta;
+    } else {
+      // Nếu làm đậm (Bolder): Càng tối thì giảm càng ít
+      // Công thức: L_mới = L_cũ + (Khoảng_còn_lại_tới_đen * %_muốn_giảm)
+      l = l + l * delta;
+    }
+
+    // Điều chỉnh Saturation (giữ nguyên logic cũ hoặc áp dụng tương tự nếu muốn)
+    s = Math.min(1, Math.max(0, s + satDelta / 100));
+
+    // 4. Convert HSL back to RGB
     const hue2rgb = (p, q, t) => {
       if (t < 0) t += 1;
       if (t > 1) t -= 1;
@@ -76,7 +87,6 @@
     g = hue2rgb(p, q, h);
     b = hue2rgb(p, q, h - 1 / 3);
 
-    // 5. Chuyển RGB về Hex
     const toHex = x => {
       const val = Math.round(x * 255).toString(16);
       return val.length === 1 ? "0" + val : val;
@@ -268,8 +278,8 @@
     tip.className = "boss-table-img-hover__tip";
     const color = adjustColor(
       difficultyColumnBgAcMong(row["Độ khó"]) || "#000000",
-      80,
-      -20,
+      70,
+      -14,
     );
     tip.style.borderColor = color;
     tip.style.backgroundColor = color;
@@ -512,7 +522,7 @@
       }
       /* Độ khó: nền ô trắng; màu tier hiển thị bằng chip trong renderTable */
       if (colKey === "Độ khó") {
-        return adjustColor(difficultyColumnBgAcMong(row[colKey]), -15, 22);
+        return adjustColor(difficultyColumnBgAcMong(row[colKey]), -20, 55);
       }
       return seasonBg;
     };
