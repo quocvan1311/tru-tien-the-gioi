@@ -22,13 +22,13 @@
     return String(v);
   }
 
-  function makeColorBolder(hex, satBoost = 20, lightDrop = 15) {
-    // 1. Remove hash and convert hex to RGB
+  function adjustColor(hex, satDelta = 0, lightDelta = 0) {
+    // 1. Chuẩn hóa Hex và chuyển sang RGB
     let r = parseInt(hex.slice(1, 3), 16) / 255;
     let g = parseInt(hex.slice(3, 5), 16) / 255;
     let b = parseInt(hex.slice(5, 7), 16) / 255;
 
-    // 2. Convert RGB to HSL
+    // 2. Chuyển RGB sang HSL
     let max = Math.max(r, g, b),
       min = Math.min(r, g, b);
     let h,
@@ -36,7 +36,7 @@
       l = (max + min) / 2;
 
     if (max === min) {
-      h = s = 0; // achromatic
+      h = s = 0; // Không màu (xám)
     } else {
       let d = max - min;
       s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
@@ -54,11 +54,13 @@
       h /= 6;
     }
 
-    // 3. Apply "Bolder" logic
-    s = Math.min(1, s + satBoost / 100); // Increase intensity
-    l = Math.max(0, l - lightDrop / 100); // Make it deeper
+    // 3. Áp dụng thay đổi (Delta)
+    // s + delta: Tăng/giảm độ tươi
+    // l + delta: Tăng/giảm độ sáng
+    s = Math.min(1, Math.max(0, s + satDelta / 100));
+    l = Math.min(1, Math.max(0, l + lightDelta / 100));
 
-    // 4. Convert HSL back to RGB
+    // 4. Chuyển HSL ngược lại RGB
     const hue2rgb = (p, q, t) => {
       if (t < 0) t += 1;
       if (t > 1) t -= 1;
@@ -74,10 +76,10 @@
     g = hue2rgb(p, q, h);
     b = hue2rgb(p, q, h - 1 / 3);
 
-    // 5. Convert RGB back to Hex
+    // 5. Chuyển RGB về Hex
     const toHex = x => {
-      const hex = Math.round(x * 255).toString(16);
-      return hex.length === 1 ? "0" + hex : hex;
+      const val = Math.round(x * 255).toString(16);
+      return val.length === 1 ? "0" + val : val;
     };
 
     return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
@@ -264,9 +266,10 @@
     hover.className = "boss-table-img-hover";
     const tip = document.createElement("span");
     tip.className = "boss-table-img-hover__tip";
-    const color = makeColorBolder(
+    const color = adjustColor(
       difficultyColumnBgAcMong(row["Độ khó"]) || "#000000",
-      85,
+      80,
+      -20,
     );
     tip.style.borderColor = color;
     tip.style.backgroundColor = color;
@@ -509,7 +512,7 @@
       }
       /* Độ khó: nền ô trắng; màu tier hiển thị bằng chip trong renderTable */
       if (colKey === "Độ khó") {
-        return difficultyColumnBgAcMong(row[colKey]) + "33";
+        return adjustColor(difficultyColumnBgAcMong(row[colKey]), -15, 22);
       }
       return seasonBg;
     };
