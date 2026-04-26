@@ -3494,8 +3494,8 @@ body.boss-detail-page .boss-detail__main {
 
 /* Cuộn nội dung trong aside ảnh / cột phụ — không áp cho cột video (xem .boss-detail__aside--videos) */
 body.boss-detail-page .boss-detail__aside:not(.boss-detail__aside--videos) {
-  min-width: 0;
-  min-height: 0;
+  /* min-width: 0; */
+  /* min-height: 0; */
   overflow: auto;
   align-self: stretch;
   padding: 0.55rem 0.6rem 0.65rem;
@@ -3612,26 +3612,24 @@ body.boss-detail-page .boss-detail__gallery--inline img {
 body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   .boss-detail__layout {
   --boss-detail-section-min: 400px;
-  grid-template-rows: minmax(0, 1fr);
+  /* grid-template-rows: minmax(0, 1fr); */
   min-height: 0;
 }
 
 @media (min-width: 1150px) {
   body.boss-detail-page--luyen-detail
     .boss-detail__layout:not(.boss-detail__layout--no-video) {
-    grid-template-columns: minmax(490px, 1.2fr) minmax(0, max-content) minmax(
-        600px,
-        2.4fr
-      );
+    grid-template-columns:
+      minmax(460px, 1.2fr) minmax(240px, max-content)
+      minmax(600px, 2fr);
   }
 
   /* Cột video tối thiểu 680px khi chưa wrap (3 cột cùng hàng) */
   body.boss-detail-page--ac-mong-detail
     .boss-detail__layout:not(.boss-detail__layout--no-video) {
-    grid-template-columns: minmax(490px, 1.2fr) minmax(0, max-content) minmax(
-        680px,
-        2.4fr
-      );
+    grid-template-columns:
+      minmax(460px, 1.2fr) minmax(240px, max-content)
+      minmax(680px, 2fr);
   }
 }
 
@@ -3640,7 +3638,7 @@ body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   body.boss-detail-page--ac-mong-detail
     .boss-detail__layout--ac-mong-3col
     > .boss-detail__aside--videos {
-    width: min(100%, 100vw);
+    width: min(100%, calc(100vw - 2.55rem));
     max-width: 100%;
     min-width: 0;
   }
@@ -3658,7 +3656,7 @@ body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   .boss-detail__info-col,
 body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   .boss-detail__images-col {
-  min-height: 0;
+  min-height: 550px;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -3669,6 +3667,7 @@ body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   min-width: 0;
   --ac-detail-row-lh: 1.45;
   font-size: 11.25pt;
+  min-height: 550px;
 }
 
 body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
@@ -3812,9 +3811,10 @@ body.boss-detail-page .boss-detail__aside--videos {
 }
 
 body.boss-detail-page .boss-detail__video-boss-name {
-  font-family: "Pacifico", cursive;
+  font-family: "Calistoga", cursive;
   font-weight: 600;
   font-size: 1.375rem;
+  letter-spacing: 0.08em;
   margin-right: 1.5rem;
   display: none;
 }
@@ -4123,7 +4123,7 @@ body.boss-detail-page--phu-ban
   body.boss-detail-page--ac-mong-detail
     .boss-detail__layout--ac-mong-3col
     > .boss-detail__aside--videos:nth-child(3) {
-    width: min(100%, 100vw);
+    width: min(100%, calc(100vw - 2.55rem));
     max-width: 100%;
     min-width: 0;
   }
@@ -4145,7 +4145,7 @@ body.boss-detail-page--phu-ban
   body.boss-detail-page--ac-mong-detail
     .boss-detail__layout--ac-mong-3col
     > .boss-detail__aside--videos {
-    width: min(100%, 100vw);
+    width: min(100%, calc(100vw - 2.55rem));
     max-width: 100%;
     min-width: 0;
   }
