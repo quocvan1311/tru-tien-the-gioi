@@ -54,8 +54,8 @@ window.PHU_BAN_5_TABLE_DATA = [
         "phu ban 5/13 hoang tuyen boss 2 - manh ba.JPG"
       ],
       "Boss 3": [
+        "phu ban 5/13 hoang tuyen boss 3 - hac vo thuong.JPG",
         "phu ban 5/13 hoang tuyen boss 3 - bach vo thuong.JPG",
-        "phu ban 5/13 hoang tuyen boss 3 - hac vo thuong.JPG"
       ]
     }
   },
@@ -188,8 +188,8 @@ window.PHU_BAN_5_TABLE_DATA = [
         "phu ban 5/32 tay du boss 1 - tran nguyen tu.JPG"
       ],
       "Boss 2": [
+        "phu ban 5/32 tay du boss 2 - kim giac dai vuong.JPG",
         "phu ban 5/32 tay du boss 2 - ngan giac dai vuong.JPG",
-        "phu ban 5/32 tay du boss 2 - kim giac dai vuong.JPG"
       ],
       "Boss 3": [
         "phu ban 5/32 tay du boss 3 - nguu ma vuong.JPG"
