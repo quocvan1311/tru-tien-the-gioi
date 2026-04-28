@@ -166,7 +166,7 @@
         if (!overHover && !overTip) {
           closeTip();
         }
-      }, 100);
+      }, 75);
     }
 
     function scheduleLayout() {

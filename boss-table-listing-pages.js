@@ -74,6 +74,7 @@
           "Số ngày": { noWrap: true },
           "Độ khó": { noWrap: true },
           "Kỹ năng": { preWrap: true },
+          "Tên phụ bản": { preWrap: true },
           "Tên BOSS (Ác mộng)": { preWrap: true, bossExcel: true },
           "Ghi chú": { preWrap: true },
           Ảnh: { type: "images" },
