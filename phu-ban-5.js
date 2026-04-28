@@ -29,7 +29,8 @@ window.PHU_BAN_5_TABLE_DATA = [
     "Boss 3": "Huyễn Ma Âm Mị",
     "__bossImages": {
       "Boss 1": [
-        "phu ban 5/12 ho thap boss 1 - khoc huyet la sat.JPG"
+        "phu ban 5/12 ho thap boss 1 - khoc huyet la sat.JPG",
+        "phu ban 5/12 ho thap boss 1 - minh huyet la sat.JPG",
       ],
       "Boss 2": [
         "phu ban 5/12 ho thap boss 2 - cuu u huyet te.JPG"
@@ -68,7 +69,8 @@ window.PHU_BAN_5_TABLE_DATA = [
     "Boss 3": "Lôi Diệc",
     "__bossImages": {
       "Boss 1": [
-        "phu ban 5/14 ta tong boss 1 - ngao liet.JPG"
+        "phu ban 5/14 ta tong boss 1 - ngao liet.JPG",
+        "phu ban 5/14 ta tong boss 1 - ngao phan.JPG"
       ],
       "Boss 2": [
         "phu ban 5/14 ta tong boss 2 - quan phi hoa.JPG"
