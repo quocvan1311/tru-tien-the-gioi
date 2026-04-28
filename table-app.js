@@ -106,7 +106,7 @@
     const hr = thumbEl.getBoundingClientRect();
     const big = tip.querySelector("img");
 
-    const imgW = vw * 0.3;
+    const imgW = vw * 0.24;
     if (big) {
       big.style.maxWidth = imgW + "px";
       big.style.display = "block";
