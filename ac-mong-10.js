@@ -448,6 +448,9 @@ window.AC_MONG_10_TABLE_DATA = [
     "Tên BOSS (Ác mộng)": "Chu Kỳ",
     "Tên phụ bản": "Giải Xu Đoạn Vọng Nhai",
     "Ngày ra mắt": "2026-04-22T00:00:00",
+    "Ngày tiêu diệt": "2026-04-28T00:00:00",
+    "Tuần tiêu diệt": "Tuần 1, thứ 3",
+    "Số ngày": 6,
     "Kỹ năng": [
       "Thần Xu Dẫn Quát",
       "Phương Tấc Băng Giải",
