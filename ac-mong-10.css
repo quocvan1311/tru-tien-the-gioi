@@ -2941,7 +2941,8 @@ body.excel-boss-page table.excel-ac-mong td[data-col="Độ khó"] {
 
 body.excel-boss-page table td[data-col="No."],
 body.excel-boss-page table td[data-col="Index"],
-body.excel-boss-page table td[data-col="Độ khó"] {
+body.excel-boss-page table td[data-col="Độ khó"],
+body.excel-boss-page table td[data-col="Mùa"] {
   text-align: center;
 }
 

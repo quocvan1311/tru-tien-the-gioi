@@ -734,7 +734,7 @@
       if (sortState.key === k) {
         th.classList.add(sortState.dir === 1 ? "sort-asc" : "sort-desc");
       }
-      if (k === "No." || k === "Index" || k === "Độ khó") {
+      if (k === "No." || k === "Mùa" || k === "Index" || k === "Độ khó") {
         th.style.textAlign = "center";
       }
       trh.appendChild(th);

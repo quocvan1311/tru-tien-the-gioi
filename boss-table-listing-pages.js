@@ -139,12 +139,12 @@
   function initPhuBan5ListingTable() {
     var cols = ["No.", "Mùa", "Tên phụ bản", "Boss 1", "Boss 2", "Boss 3"];
     var w = {
-      "No.": "5%",
-      Mùa: "8%",
-      "Tên phụ bản": "20%",
-      "Boss 1": "22%",
-      "Boss 2": "22%",
-      "Boss 3": "23%",
+      "No.": "2%",
+      Mùa: "3%",
+      "Tên phụ bản": "16%",
+      "Boss 1": "26%",
+      "Boss 2": "26%",
+      "Boss 3": "26%",
     };
     global.initBossTable({
       data: global.PHU_BAN_5_TABLE_DATA,
