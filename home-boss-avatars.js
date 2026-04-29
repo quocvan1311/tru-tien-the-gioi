@@ -34,7 +34,7 @@
       w != null && w >= 1
         ? WEEK_BG_PALETTE[(w - 1) % WEEK_BG_PALETTE.length]
         : "#ffffff";
-    c.style.border = "4.5px solid transparent";
+    c.style.border = "5px solid transparent";
     c.style.backgroundImage = `linear-gradient(white, white), linear-gradient(to right, ${colors[dt]} 50%, ${weekBg} 50%)`;
     c.style.backgroundOrigin = "border-box";
     c.style.backgroundClip = "padding-box, border-box";

@@ -1343,7 +1343,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered {
   transform: none;
   box-sizing: border-box;
   padding-inline: clamp(0px, 0.35vw, 4px);
-  padding-bottom: clamp(1rem, 2vw, 2rem);
+  padding-bottom: clamp(2rem, 3vw, 4rem);
   margin-left: auto;
   margin-right: auto;
   justify-content: center;
