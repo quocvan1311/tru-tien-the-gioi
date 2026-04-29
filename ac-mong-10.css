@@ -540,7 +540,9 @@ body.home-page .home-card {
 }
 
 /* Hiệu năng: tab ẩn / chuyển tab → pause animation (home-boss-avatars.js gắn class) */
-html.home-index.home-page--avatars-paused .home-boss-deco .home-boss-stack__img-container,
+html.home-index.home-page--avatars-paused
+  .home-boss-deco
+  .home-boss-stack__img-container,
 html.home-index.home-page--avatars-paused
   .home-boss-strip
   .home-boss-stack__img-container,
@@ -1209,7 +1211,6 @@ html.home-index.home-page--avatars-paused .home-links > li {
     transform: translate(var(--repel-x, 0px), var(--repel-y, 0px)) scale(1.045);
     transition: transform 0.38s cubic-bezier(0.32, 1.05, 0.45, 1);
   }
-
 }
 
 @media (max-width: 1023px) and (hover: hover) and (pointer: fine) {
@@ -1372,7 +1373,9 @@ body.home-page .home-boss-strip--tiered {
 }
 
 /* Kích thước avatar: gần cố định theo base, chỉ tách bậc độ khó (--boss-tier-scale, chênh ~2%) */
-body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img-container {
+body.home-page
+  .home-boss-strip.home-boss-strip--tiered
+  .home-boss-stack__img-container {
   width: calc(var(--home-boss-avatar-base) * var(--boss-tier-scale, 1));
   height: calc(var(--home-boss-avatar-base) * var(--boss-tier-scale, 1));
 }
@@ -1830,7 +1833,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img-co
 .home-boss-stack--strip .home-boss-stack__img-container {
   width: clamp(4.15rem, 12.4vw, 7.05rem);
   height: clamp(4.15rem, 12.4vw, 7.05rem);
-  border-width: 5px;
+  border-width: 3px;
   box-shadow:
     0 6px 22px rgba(15, 23, 42, 0.26),
     0 0 0 1px rgba(15, 23, 42, 0.07);
@@ -1844,7 +1847,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img-co
 .home-boss-stack--strip-dense .home-boss-stack__img-container {
   width: clamp(3.35rem, 9.2vw, 5.85rem);
   height: clamp(3.35rem, 9.2vw, 5.85rem);
-  border-width: 4px;
+  border-width: 3px;
 }
 
 .home-boss-stack--strip-dense:not(.home-boss-stack--cluster)
@@ -1887,9 +1890,15 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img-co
 }
 
 /* Cùng kích thước strip khi section là slot mùa (data-boss-season) */
-.home-boss-tier--season-1 .home-boss-stack--strip .home-boss-stack__img-container,
-.home-boss-tier--season-2 .home-boss-stack--strip .home-boss-stack__img-container,
-.home-boss-tier--season-3 .home-boss-stack--strip .home-boss-stack__img-container {
+.home-boss-tier--season-1
+  .home-boss-stack--strip
+  .home-boss-stack__img-container,
+.home-boss-tier--season-2
+  .home-boss-stack--strip
+  .home-boss-stack__img-container,
+.home-boss-tier--season-3
+  .home-boss-stack--strip
+  .home-boss-stack__img-container {
   width: calc(var(--boss-avatar-inter) * var(--boss-tier-scale, 1));
   height: calc(var(--boss-avatar-inter) * var(--boss-tier-scale, 1));
 }
@@ -2194,7 +2203,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img-co
   .home-boss-stack--strip .home-boss-stack__img-container {
     width: var(--boss-avatar-ref);
     height: var(--boss-avatar-ref);
-    border-width: 4px;
+    border-width: 3px;
   }
 
   .home-boss-stack--strip:not(.home-boss-stack--cluster)
@@ -2405,10 +2414,14 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img-co
     );
   }
 
-  .home-boss-tier--t1000 .home-boss-stack--strip .home-boss-stack__img-container,
+  .home-boss-tier--t1000
+    .home-boss-stack--strip
+    .home-boss-stack__img-container,
   .home-boss-tier--t750 .home-boss-stack--strip .home-boss-stack__img-container,
   .home-boss-tier--t500 .home-boss-stack--strip .home-boss-stack__img-container,
-  .home-boss-tier--tlow .home-boss-stack--strip .home-boss-stack__img-container {
+  .home-boss-tier--tlow
+    .home-boss-stack--strip
+    .home-boss-stack__img-container {
     width: calc(clamp(3.5rem, 16vw, 5rem) * var(--boss-tier-scale, 1));
     height: calc(clamp(3.5rem, 16vw, 5rem) * var(--boss-tier-scale, 1));
   }
@@ -2429,9 +2442,15 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img-co
     height: calc(clamp(2.85rem, 8.5vw, 4.35rem) * var(--boss-tier-scale, 1));
   }
 
-  .home-boss-tier--season-1 .home-boss-stack--strip .home-boss-stack__img-container,
-  .home-boss-tier--season-2 .home-boss-stack--strip .home-boss-stack__img-container,
-  .home-boss-tier--season-3 .home-boss-stack--strip .home-boss-stack__img-container {
+  .home-boss-tier--season-1
+    .home-boss-stack--strip
+    .home-boss-stack__img-container,
+  .home-boss-tier--season-2
+    .home-boss-stack--strip
+    .home-boss-stack__img-container,
+  .home-boss-tier--season-3
+    .home-boss-stack--strip
+    .home-boss-stack__img-container {
     width: calc(clamp(3.45rem, 14.5vw, 5rem) * var(--boss-tier-scale, 1));
     height: calc(clamp(3.45rem, 14.5vw, 5rem) * var(--boss-tier-scale, 1));
   }

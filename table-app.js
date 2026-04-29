@@ -1299,4 +1299,7 @@
     );
     return base + s.replace(/^\//, "");
   };
+  window.parseTuanTieuDietWeek = parseTuanTieuDietWeek;
+  window.TUAN_TIEU_DIET_RE = TUAN_TIEU_DIET_RE;
+  window.WEEK_BG_PALETTE = WEEK_BG_PALETTE;
 })();

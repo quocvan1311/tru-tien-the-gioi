@@ -10,14 +10,13 @@
   function encPath(rel) {
     return rel.split("/").map(encodeURIComponent).join("/");
   }
-
   /**
    * Mỗi ảnh boss bọc trong .home-boss-stack__img-container — khung này giữ vai trò
    * "ô avatar" (border, shadow, nth-child layout, hover scale, repel transform);
    * ảnh con chỉ là media-filler 100%/100% bên trong. Truyền data-ac-detail-id và
    * animation-delay sang khung để CSS / điều hướng đọc đúng phần tử.
    */
-  function makeImgContainer(img) {
+  function makeImgContainer(img, bundle) {
     var c = document.createElement("div");
     c.className = "home-boss-stack__img-container";
     var did = img.getAttribute("data-ac-detail-id");
@@ -25,6 +24,13 @@
     if (img.style && img.style.animationDelay) {
       c.style.animationDelay = img.style.animationDelay;
     }
+    const w = parseTuanTieuDietWeek(bundle.row?.["Tuần tiêu diệt"]);
+    const weekBg =
+      w != null && w >= 1
+        ? WEEK_BG_PALETTE[(w - 1) % WEEK_BG_PALETTE.length]
+        : "#ffffff";
+    c.style.padding = "3px";
+    c.style.boxShadow = `inset 0 0 0 3px ${weekBg}`;
     c.appendChild(img);
     return c;
   }
@@ -367,6 +373,7 @@
       });
       if (!paths.length) return;
       seasons[col].push({
+        row,
         paths: paths,
         bossIndex: sortKeyFromStripRow(row),
         diffTier: tierIndex(parseDifficulty(row["Độ khó"])),
@@ -469,7 +476,7 @@
       if (isPhuBan10Path(rel) && pathToDetailId[rel]) {
         img.setAttribute("data-ac-detail-id", pathToDetailId[rel]);
       }
-      wrap.appendChild(makeImgContainer(img));
+      wrap.appendChild(makeImgContainer(img, bundle));
       globalIdx++;
     } else {
       rels.forEach(function (rel) {
@@ -484,7 +491,7 @@
         if (isPhuBan10Path(rel) && pathToDetailId[rel]) {
           img.setAttribute("data-ac-detail-id", pathToDetailId[rel]);
         }
-        wrap.appendChild(makeImgContainer(img));
+        wrap.appendChild(makeImgContainer(img, bundle));
         globalIdx++;
       });
     }
@@ -649,7 +656,7 @@
       if (isStrip) {
         img.style.animationDelay = (idx * 0.055).toFixed(3) + "s";
       }
-      stack.appendChild(makeImgContainer(img));
+      stack.appendChild(makeImgContainer(img, bundle));
     });
     parent.appendChild(stack);
   }
