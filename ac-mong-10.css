@@ -611,11 +611,11 @@ html.home-index.home-page--avatars-paused .home-links > li {
 }
 
 .home-boss-stack--diff-t1 {
-  --boss-tier-scale: 0.975;
+  --boss-tier-scale: 1;
 }
 
 .home-boss-stack--diff-t2 {
-  --boss-tier-scale: 0.925;
+  --boss-tier-scale: 0.95;
 }
 
 .home-boss-stack--diff-t3 {
@@ -1400,7 +1400,7 @@ body.home-page
 }
 
 .home-boss-tier--t750 {
-  --boss-tier-scale: 0.92;
+  --boss-tier-scale: 0.95;
 }
 
 .home-boss-tier--t500 {
@@ -1455,7 +1455,7 @@ body.home-page
 }
 
 .home-boss-strip--tiered .home-boss-stack--diff-t1 {
-  --boss-tier-scale: 0.98;
+  --boss-tier-scale: 1.05;
 }
 
 .home-boss-strip--tiered .home-boss-stack--diff-t2 {
@@ -1463,7 +1463,7 @@ body.home-page
 }
 
 .home-boss-strip--tiered .home-boss-stack--diff-t3 {
-  --boss-tier-scale: 0.96;
+  --boss-tier-scale: 0.95;
 }
 
 /* Độ khó tầng 500 / <500: animation strip-b — gắn theo bundle (không còn theo cột season) */
