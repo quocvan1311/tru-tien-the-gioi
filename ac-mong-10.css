@@ -1408,7 +1408,7 @@ body.home-page
 }
 
 .home-boss-tier--tlow {
-  --boss-tier-scale: 0.8;
+  --boss-tier-scale: 0.84;
 }
 
 .home-boss-tier .home-boss-stack--strip {
@@ -1459,11 +1459,11 @@ body.home-page
 }
 
 .home-boss-strip--tiered .home-boss-stack--diff-t2 {
-  --boss-tier-scale: 0.97;
+  --boss-tier-scale: 0.95;
 }
 
 .home-boss-strip--tiered .home-boss-stack--diff-t3 {
-  --boss-tier-scale: 0.95;
+  --boss-tier-scale: 0.935;
 }
 
 /* Độ khó tầng 500 / <500: animation strip-b — gắn theo bundle (không còn theo cột season) */

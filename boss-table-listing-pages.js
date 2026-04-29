@@ -47,16 +47,16 @@
     var w = {
       "No.": "2.5%",
       Index: "3.25%",
-      "Tên season": "10%",
+      "Tên season": "9.75%",
       "Ngày ra mắt": "6%",
       "Ngày tiêu diệt": "6%",
       "Tuần tiêu diệt": "5%",
       "Số ngày": "3%",
-      "Tên BOSS (Ác mộng)": "11.83%",
-      "Tên phụ bản": "12.87%",
-      "Kỹ năng": "14.09%",
+      "Tên BOSS (Ác mộng)": "13.12%",
+      "Tên phụ bản": "12.6%",
+      "Kỹ năng": "13.87%",
       "Độ khó": "4.85%",
-      "Ghi chú": "11.75%",
+      "Ghi chú": "11.2%",
       Ảnh: "8.9%",
     };
     global.initBossTable(
