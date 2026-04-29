@@ -189,7 +189,7 @@ body.home-page .home-shell {
 }
 
 body.home-page .home-header {
-  max-width: min(52rem, 100%);
+  max-width: min(56rem, 100%);
   margin-left: auto;
   margin-right: auto;
   width: 100%;
@@ -206,7 +206,7 @@ body.home-page .home-title {
 }
 
 body.home-page .home-links {
-  max-width: min(52rem, 100%);
+  max-width: min(56rem, 100%);
   margin-left: auto;
   margin-right: auto;
   width: 100%;
