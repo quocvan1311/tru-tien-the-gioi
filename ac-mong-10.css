@@ -2,6 +2,8 @@
  * Trang chủ index:
  * — Màn hẹp / xếp dọc: cuộn cả trang (html/body), đủ chỗ cho header + link + dải avatar.
  * — Màn rộng: khóa chiều cao viewport, chỉ cuộn trong .home-shell (tránh “lọt” scroll toàn trang).
+ *
+ * Viewport: widescreen = min-width 1024px; mobile = max-width 1023px (feature queries: hover, reduced-motion).
  */
 html.home-index {
   height: auto;
@@ -157,7 +159,7 @@ body.home-page {
   box-shadow: 0 2px 9px rgba(15, 23, 42, 0.1);
 }
 
-@media (max-width: 639px) {
+@media (max-width: 1023px) {
   .home-pb5-fill {
     --pb5-size: clamp(1.95rem, 6.2vw, 3rem);
     padding: clamp(0.4rem, 1.6vw, 0.75rem) clamp(0.85rem, 3.2vw, 1.35rem)
@@ -175,7 +177,7 @@ body.home-page {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  /* Màn hẹp: cuộn trang — không clip; màn rộng: overflow trong @media (min-width:1024px) */
+  /* Hẹp hơn 1024px: cuộn trang — không clip shell */
   overflow: visible;
 }
 
@@ -1196,13 +1198,14 @@ html.home-index.home-page--avatars-paused .home-links > li {
     transition: transform 0.38s cubic-bezier(0.32, 1.05, 0.45, 1);
   }
 
-  @media (max-width: 480px) {
-    .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--repel-active
-      .home-boss-bundle:not(:hover):not(.home-boss-bundle--detail-hover):not(
-        .home-boss-bundle--1
-      ) {
-      transform: translate(var(--repel-x, 0px), var(--repel-y, 0px)) scale(1.02);
-    }
+}
+
+@media (max-width: 1023px) and (hover: hover) and (pointer: fine) {
+  .home-boss-stack--strip.home-boss-stack--cluster.home-boss-stack--cluster-wrap.home-boss-stack--repel-active
+    .home-boss-bundle:not(:hover):not(.home-boss-bundle--detail-hover):not(
+      .home-boss-bundle--1
+    ) {
+    transform: translate(var(--repel-x, 0px), var(--repel-y, 0px)) scale(1.02);
   }
 }
 
@@ -1259,22 +1262,6 @@ html.home-index.home-page--avatars-paused .home-links > li {
   justify-items: stretch;
   justify-content: center;
   gap: clamp(1px, 0.14vw, 3px);
-}
-
-@media (max-width: 1024px) {
-  .home-boss-strip--tiered {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    justify-content: center;
-    gap: clamp(1px, 0.18vw, 3px);
-  }
-}
-
-@media (max-width: 480px) {
-  .home-boss-strip--tiered {
-    grid-template-columns: minmax(0, 1fr);
-    justify-content: center;
-    gap: clamp(1px, 0.22vw, 4px);
-  }
 }
 
 body.home-page .home-boss-tier {
@@ -1355,15 +1342,15 @@ body.home-page .home-boss-strip--tiered {
   justify-items: center;
 }
 
-@media (max-width: 1024px) {
-  body.home-page .home-boss-strip--tiered {
-    grid-template-columns: repeat(2, auto);
+@media (max-width: 1023px) {
+  .home-boss-strip--tiered {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 11.5rem), 1fr));
+    justify-content: center;
+    gap: clamp(1px, 0.2vw, 4px);
   }
-}
 
-@media (max-width: 480px) {
   body.home-page .home-boss-strip--tiered {
-    grid-template-columns: max-content;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), auto));
     justify-items: center;
   }
 
@@ -1954,12 +1941,6 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img {
   transform-origin: center center;
 }
 
-@media (max-width: 480px) {
-  .home-boss-bundle:not(.home-boss-bundle--1) {
-    transform: scale(1.02);
-  }
-}
-
 .home-boss-stack--bundles .home-boss-stack__img:not(:first-child) {
   margin-left: 0;
 }
@@ -2167,13 +2148,15 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img {
 }
 
 @media (max-width: 1023px) {
+  .home-boss-bundle:not(.home-boss-bundle--1) {
+    transform: scale(1.02);
+  }
+
   .home-boss-stack--ml,
   .home-boss-stack--mr {
     display: none;
   }
-}
 
-@media (max-width: 639px) {
   /* Strip / cluster dùng var(--boss-avatar-*) — thu nhỏ so với desktop */
   :root {
     --boss-avatar-ref: clamp(3.35rem, 15vw, 4.75rem);
@@ -2533,7 +2516,7 @@ body.home-page .home-boss-strip.home-boss-strip--tiered .home-boss-stack__img {
   flex-shrink: 0;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1024px) {
   .home-links {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -3516,13 +3499,6 @@ body.boss-detail-page .boss-detail__fields-inner {
   align-content: start;
 }
 
-@media (min-width: 1180px) {
-  body.boss-detail-page:not(.boss-detail-page--phu-ban)
-    .boss-detail__fields-inner {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
 body.boss-detail-page .boss-detail__field {
   display: grid;
   grid-template-columns: minmax(6.5rem, 9.5rem) minmax(0, 1fr);
@@ -3617,7 +3593,12 @@ body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   min-height: 0;
 }
 
-@media (min-width: 1150px) {
+@media (min-width: 1024px) {
+  body.boss-detail-page:not(.boss-detail-page--phu-ban)
+    .boss-detail__fields-inner {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   body.boss-detail-page--luyen-detail
     .boss-detail__layout:not(.boss-detail__layout--no-video) {
     grid-template-columns:
@@ -3634,8 +3615,8 @@ body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   }
 }
 
-/* Viewport hẹp: không còn 3 cột cố định — video rộng theo 100% / tối đa viewport */
-@media (max-width: 1149px) {
+/* Không widescreen: video full chiều ngang theo viewport */
+@media (max-width: 1023px) {
   body.boss-detail-page--ac-mong-detail
     .boss-detail__layout--ac-mong-3col
     > .boss-detail__aside--videos {
@@ -4152,55 +4133,6 @@ body.boss-detail-page--phu-ban
   }
 }
 
-@media (max-width: 1000px) {
-  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
-    .boss-detail__images-col {
-    max-height: min(48vh, 420px);
-  }
-}
-
-/* Rất hẹp: mỗi field = nhãn một dòng, giá trị dòng dưới full width */
-@media (max-width: 720px) {
-  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
-    .boss-detail__info-col {
-    font-size: 10.75pt;
-  }
-
-  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
-    .boss-detail__info-col
-    .boss-detail__field,
-  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
-    .boss-detail__info-col
-    .boss-detail__field--wide {
-    grid-template-columns: 1fr;
-    column-gap: 0;
-    row-gap: 0.2rem;
-    align-items: start;
-    padding: 0.42rem 0;
-  }
-
-  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
-    .boss-detail__info-col
-    .boss-detail__field
-    dt {
-    text-align: left;
-  }
-
-  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
-    .boss-detail__info-col
-    .boss-detail__field
-    dd {
-    overflow-wrap: break-word;
-    word-break: normal;
-  }
-
-  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
-    .boss-detail__info-col
-    dd.boss-detail__pre {
-    overflow-wrap: break-word;
-  }
-}
-
 /* Chi tiết Phụ bản 5 — một cột, meta + 3 boss ngang */
 body.boss-detail-page--phu-ban .boss-detail__layout {
   grid-template-columns: 1fr;
@@ -4435,7 +4367,51 @@ body.boss-detail-page--phu-ban
   backface-visibility: hidden;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1023px) {
+  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
+    .boss-detail__images-col {
+    max-height: min(48vh, 420px);
+  }
+
+  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
+    .boss-detail__info-col {
+    font-size: 10.75pt;
+  }
+
+  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
+    .boss-detail__info-col
+    .boss-detail__field,
+  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
+    .boss-detail__info-col
+    .boss-detail__field--wide {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: 0.2rem;
+    align-items: start;
+    padding: 0.42rem 0;
+  }
+
+  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
+    .boss-detail__info-col
+    .boss-detail__field
+    dt {
+    text-align: left;
+  }
+
+  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
+    .boss-detail__info-col
+    .boss-detail__field
+    dd {
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
+    .boss-detail__info-col
+    dd.boss-detail__pre {
+    overflow-wrap: break-word;
+  }
+
   html:has(body.boss-detail-page) {
     height: auto;
   }
@@ -4468,7 +4444,6 @@ body.boss-detail-page--phu-ban
     order: -1;
   }
 
-  /* Luyện ngục: mobile — nội dung trước, ảnh, rồi video (cùng cấu trúc 3 cột Ác mộng) */
   body.boss-detail-page--luyen-detail .boss-detail__info-col {
     order: 1;
   }
@@ -4479,11 +4454,6 @@ body.boss-detail-page--phu-ban
 
   body.boss-detail-page--luyen-detail .boss-detail__aside--videos {
     order: 3;
-  }
-
-  /* Phụ bản 5: mobile — nội dung trước, video sau */
-  body.boss-detail-page--phu-ban .boss-detail__main {
-    order: 1;
   }
 
   body.boss-detail-page--phu-ban .boss-detail__aside--videos {
@@ -4509,12 +4479,14 @@ body.boss-detail-page--phu-ban
   }
 
   body.boss-detail-page--phu-ban .boss-detail__main {
+    order: 1;
     display: flex;
     flex-direction: column;
     flex: 0 1 auto;
     min-height: min-content;
     height: auto;
     overflow: visible;
+    max-height: none;
   }
 
   body.boss-detail-page--phu-ban .boss-detail__fields-inner--phu-ban {
@@ -4526,20 +4498,19 @@ body.boss-detail-page--phu-ban
   body.boss-detail-page--phu-ban .boss-detail__phu-bosses {
     flex: 0 1 auto;
     min-height: min-content;
+    max-height: none;
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    overflow-x: hidden;
+    overflow-y: visible;
   }
 
-  /* Không giới hạn max-height — ảnh dọc cần chiều cao theo tỉ lệ × width */
   body.boss-detail-page--phu-ban .boss-detail__phu-img-scroll {
     min-height: 0;
     max-height: none;
+    overflow: visible;
   }
-}
 
-/*
- * Phụ bản 5 detail: khi main + video đã wrap (không đủ ~520+400+gap) —
- * mỗi cột full width (video không còn max 400px).
- */
-@media (max-width: 940px) {
   body.boss-detail-page--phu-ban
     .boss-detail__layout:not(.boss-detail__layout--no-video)
     > .boss-detail__main {
@@ -4558,40 +4529,9 @@ body.boss-detail-page--phu-ban
     min-width: 0;
     align-self: stretch;
   }
-}
-
-@media (max-width: 900px) {
-  body.boss-detail-page--phu-ban .boss-detail__phu-bosses {
-    grid-template-columns: 1fr;
-    grid-template-rows: none;
-  }
 
   body.boss-detail-page--phu-ban .boss-detail__field--phu-meta:last-child {
     flex: 1 1 100%;
-  }
-}
-
-/* Phụ bản 5 detail: màn <1550px — chỉ cuộn trang, không cuộn trong main / boss / ảnh */
-@media (max-width: 1549px) {
-  body.boss-detail-page--phu-ban .boss-detail__main {
-    overflow: visible;
-    max-height: none;
-  }
-
-  body.boss-detail-page--phu-ban .boss-detail__fields-inner--phu-ban {
-    overflow: visible;
-  }
-
-  body.boss-detail-page--phu-ban .boss-detail__phu-bosses {
-    flex: 0 1 auto;
-    min-height: min-content;
-    max-height: none;
-    overflow-x: hidden;
-    overflow-y: visible;
-  }
-
-  body.boss-detail-page--phu-ban .boss-detail__phu-img-scroll {
-    overflow: visible;
   }
 }
 
