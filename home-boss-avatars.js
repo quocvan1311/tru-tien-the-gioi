@@ -24,13 +24,20 @@
     if (img.style && img.style.animationDelay) {
       c.style.animationDelay = img.style.animationDelay;
     }
+    var dt =
+      bundle.diffTier != null && bundle.diffTier >= 0 && bundle.diffTier <= 3
+        ? bundle.diffTier | 0
+        : 3;
+    const colors = ["#ff7c80", "#5b9ae8", "#e6e655", "#8fd4a0"];
     const w = parseTuanTieuDietWeek(bundle.row?.["Tuần tiêu diệt"]);
     const weekBg =
       w != null && w >= 1
         ? WEEK_BG_PALETTE[(w - 1) % WEEK_BG_PALETTE.length]
         : "#ffffff";
-    c.style.padding = "3px";
-    c.style.boxShadow = `inset 0 0 0 3px ${weekBg}`;
+    c.style.border = "4.5px solid transparent";
+    c.style.backgroundImage = `linear-gradient(white, white), linear-gradient(to right, ${colors[dt]} 50%, ${weekBg} 50%)`;
+    c.style.backgroundOrigin = "border-box";
+    c.style.backgroundClip = "padding-box, border-box";
     c.appendChild(img);
     return c;
   }
