@@ -11,6 +11,37 @@
     return rel.split("/").map(encodeURIComponent).join("/");
   }
 
+  /**
+   * Mỗi ảnh boss bọc trong .home-boss-stack__img-container — khung này giữ vai trò
+   * "ô avatar" (border, shadow, nth-child layout, hover scale, repel transform);
+   * ảnh con chỉ là media-filler 100%/100% bên trong. Truyền data-ac-detail-id và
+   * animation-delay sang khung để CSS / điều hướng đọc đúng phần tử.
+   */
+  function makeImgContainer(img) {
+    var c = document.createElement("div");
+    c.className = "home-boss-stack__img-container";
+    var did = img.getAttribute("data-ac-detail-id");
+    if (did) c.setAttribute("data-ac-detail-id", did);
+    if (img.style && img.style.animationDelay) {
+      c.style.animationDelay = img.style.animationDelay;
+    }
+    c.appendChild(img);
+    return c;
+  }
+
+  /** Phần tử "ô avatar" tương ứng với ảnh — khung bọc (nếu có), nếu không thì chính ảnh. */
+  function avatarBoxOf(img) {
+    var p = img && img.parentElement;
+    if (
+      p &&
+      p.classList &&
+      p.classList.contains("home-boss-stack__img-container")
+    ) {
+      return p;
+    }
+    return img;
+  }
+
   /** Khoảng cách từ điểm đến biên hình chữ nhật (0 nếu điểm nằm trong). */
   function distPointToRect(px, py, rect) {
     var cx = Math.min(Math.max(px, rect.left), rect.right);
@@ -64,7 +95,7 @@
     var j;
     for (j = 0; j < standaloneImgs.length; j++) {
       var img = standaloneImgs[j];
-      var ir = img.getBoundingClientRect();
+      var ir = avatarBoxOf(img).getBoundingClientRect();
       if (ir.width < 1 || ir.height < 1) continue;
       var d2 = distPointToRect(clientX, clientY, ir);
       if (d2 < bestD) {
@@ -161,10 +192,13 @@
       }
       location.href = url;
     }
+    var IMG_OR_BOX_SEL =
+      ".home-boss-stack__img-container[data-ac-detail-id]," +
+      ".home-boss-stack__img[data-ac-detail-id]";
     document.body.addEventListener("click", function (e) {
-      var img = e.target.closest(".home-boss-stack__img[data-ac-detail-id]");
-      if (img) {
-        go(e, img.getAttribute("data-ac-detail-id"));
+      var hit = e.target.closest(IMG_OR_BOX_SEL);
+      if (hit) {
+        go(e, hit.getAttribute("data-ac-detail-id"));
         return;
       }
       var b = e.target.closest(".home-boss-bundle[data-ac-detail-id]");
@@ -174,8 +208,8 @@
     });
     document.body.addEventListener("auxclick", function (e) {
       if (e.button !== 1) return;
-      var img = e.target.closest(".home-boss-stack__img[data-ac-detail-id]");
-      var el = img || e.target.closest(".home-boss-bundle[data-ac-detail-id]");
+      var hit = e.target.closest(IMG_OR_BOX_SEL);
+      var el = hit || e.target.closest(".home-boss-bundle[data-ac-detail-id]");
       var id = el && el.getAttribute("data-ac-detail-id");
       if (!id) return;
       e.preventDefault();
@@ -435,7 +469,7 @@
       if (isPhuBan10Path(rel) && pathToDetailId[rel]) {
         img.setAttribute("data-ac-detail-id", pathToDetailId[rel]);
       }
-      wrap.appendChild(img);
+      wrap.appendChild(makeImgContainer(img));
       globalIdx++;
     } else {
       rels.forEach(function (rel) {
@@ -450,7 +484,7 @@
         if (isPhuBan10Path(rel) && pathToDetailId[rel]) {
           img.setAttribute("data-ac-detail-id", pathToDetailId[rel]);
         }
-        wrap.appendChild(img);
+        wrap.appendChild(makeImgContainer(img));
         globalIdx++;
       });
     }
@@ -615,7 +649,7 @@
       if (isStrip) {
         img.style.animationDelay = (idx * 0.055).toFixed(3) + "s";
       }
-      stack.appendChild(img);
+      stack.appendChild(makeImgContainer(img));
     });
     parent.appendChild(stack);
   }
@@ -880,7 +914,7 @@
     var i;
     var br;
     for (i = 0; i < imgList.length; i++) {
-      br = imgList[i].getBoundingClientRect();
+      br = avatarBoxOf(imgList[i]).getBoundingClientRect();
       if (br.width < 1 || br.height < 1) continue;
       if (!r) {
         r = { left: br.left, right: br.right, top: br.top, bottom: br.bottom };
@@ -973,8 +1007,9 @@
         b.style.removeProperty("--repel-y");
       });
       Array.prototype.forEach.call(imgs, function (img) {
-        img.style.removeProperty("--repel-x");
-        img.style.removeProperty("--repel-y");
+        var box = avatarBoxOf(img);
+        box.style.removeProperty("--repel-x");
+        box.style.removeProperty("--repel-y");
       });
     }
 
@@ -984,8 +1019,9 @@
         b.style.removeProperty("--repel-y");
       });
       Array.prototype.forEach.call(imgs, function (img) {
-        img.style.removeProperty("--repel-x");
-        img.style.removeProperty("--repel-y");
+        var box = avatarBoxOf(img);
+        box.style.removeProperty("--repel-x");
+        box.style.removeProperty("--repel-y");
       });
       void strip.offsetHeight;
 
@@ -1057,8 +1093,9 @@
           img = list[j];
           var bundleEl = img.closest && img.closest(".home-boss-bundle");
           if (!bundleEl) {
-            img.style.setProperty("--repel-x", out.x.toFixed(2) + "px");
-            img.style.setProperty("--repel-y", out.y.toFixed(2) + "px");
+            var box = avatarBoxOf(img);
+            box.style.setProperty("--repel-x", out.x.toFixed(2) + "px");
+            box.style.setProperty("--repel-y", out.y.toFixed(2) + "px");
             continue;
           }
           var bid =
@@ -1192,30 +1229,35 @@
         lastRepelTarget = null;
         stack.classList.remove("home-boss-stack--repel-active");
         Array.prototype.forEach.call(imgs, function (img) {
-          img.style.removeProperty("--repel-x");
-          img.style.removeProperty("--repel-y");
+          var box = avatarBoxOf(img);
+          box.style.removeProperty("--repel-x");
+          box.style.removeProperty("--repel-y");
         });
       }
 
       function applyRepel(hovered) {
-        var hr = hovered.getBoundingClientRect();
+        var hoverBox = hovered.classList.contains("home-boss-stack__img")
+          ? avatarBoxOf(hovered)
+          : hovered;
+        var hr = hoverBox.getBoundingClientRect();
         if (hr.width < 1 || hr.height < 1) return;
         var hx = hr.left + hr.width * 0.5;
         var hy = hr.top + hr.height * 0.5;
         stack.classList.add("home-boss-stack--repel-active");
         Array.prototype.forEach.call(imgs, function (img) {
+          var box = avatarBoxOf(img);
           if (bundleMode) {
             if (hovered.contains(img)) {
-              img.style.removeProperty("--repel-x");
-              img.style.removeProperty("--repel-y");
+              box.style.removeProperty("--repel-x");
+              box.style.removeProperty("--repel-y");
               return;
             }
           } else if (img === hovered) {
-            img.style.removeProperty("--repel-x");
-            img.style.removeProperty("--repel-y");
+            box.style.removeProperty("--repel-x");
+            box.style.removeProperty("--repel-y");
             return;
           }
-          var ir = img.getBoundingClientRect();
+          var ir = box.getBoundingClientRect();
           if (ir.width < 1 || ir.height < 1) return;
           var ix = ir.left + ir.width * 0.5;
           var iy = ir.top + ir.height * 0.5;
@@ -1232,8 +1274,8 @@
           }
           var tx = (dx / len) * boost;
           var ty = (dy / len) * boost;
-          img.style.setProperty("--repel-x", tx.toFixed(2) + "px");
-          img.style.setProperty("--repel-y", ty.toFixed(2) + "px");
+          box.style.setProperty("--repel-x", tx.toFixed(2) + "px");
+          box.style.setProperty("--repel-y", ty.toFixed(2) + "px");
         });
       }
 
