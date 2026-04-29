@@ -611,7 +611,7 @@ html.home-index.home-page--avatars-paused .home-links > li {
 }
 
 .home-boss-stack--diff-t1 {
-  --boss-tier-scale: 0.95;
+  --boss-tier-scale: 0.975;
 }
 
 .home-boss-stack--diff-t2 {
@@ -619,7 +619,7 @@ html.home-index.home-page--avatars-paused .home-links > li {
 }
 
 .home-boss-stack--diff-t3 {
-  --boss-tier-scale: 0.92;
+  --boss-tier-scale: 0.9;
 }
 
 .home-boss-stack--diff-t0 .home-boss-stack__img-container,
@@ -884,7 +884,7 @@ html.home-index.home-page--avatars-paused .home-links > li {
     animation-play-state: paused !important;
     transform: scale(1.14);
     z-index: 999999;
-    filter: brightness(1.06) saturate(1.05);
+    filter: brightness(1.08) saturate(1.05);
     box-shadow:
       0 10px 28px rgba(15, 23, 42, 0.32),
       0 0 0 1px rgba(15, 23, 42, 0.08);

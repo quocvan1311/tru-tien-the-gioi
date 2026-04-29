@@ -521,8 +521,12 @@
         return weekBg;
       }
       /* Độ khó: nền ô trắng; màu tier hiển thị bằng chip trong renderTable */
-      if (colKey === "Độ khó") {
-        return adjustColor(difficultyColumnBgAcMong(row[colKey]), -20, 55);
+      if (
+        colKey === "Độ khó" ||
+        colKey === "Ảnh" ||
+        colKey === "Tên BOSS (Ác mộng)"
+      ) {
+        return adjustColor(difficultyColumnBgAcMong(row["Độ khó"]), -25, 50);
       }
       return seasonBg;
     };
