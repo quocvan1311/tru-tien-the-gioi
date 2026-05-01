@@ -414,8 +414,8 @@
   function difficultyColumnBgAcMong(v) {
     const n = parseDifficultyNumber(v);
     if (n == null) return "#ffffff";
-    if (n >= 1000) return "#ff7c80";
-    if (n >= 750) return "#a8d4ff";
+    if (n >= 1000) return "#fe666a";
+    if (n >= 750) return "#83bbf5";
     if (n >= 500) return "#ffff99";
     return "#ccffcc";
   }
