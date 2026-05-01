@@ -583,6 +583,9 @@
       } else {
         dd.textContent = text;
       }
+      if (spec?.bold) {
+        dd.style.fontWeight = 600
+      }
       wrap.appendChild(dt);
       wrap.appendChild(dd);
       fieldsInner.appendChild(wrap);
@@ -654,6 +657,7 @@
     "Ngày tiêu diệt": { type: "date" },
     "Kỹ năng": { preWrap: true },
     "Tên BOSS (Ác mộng)": { preWrap: true, bossExcel: true },
+    "Tên phụ bản": { preWrap: true, bold: true },
     "Ghi chú": { preWrap: true },
     Ảnh: { type: "images" },
   };
@@ -677,7 +681,7 @@
     "Ngày ra mắt": { type: "date" },
     "Ngày tiêu diệt": { type: "date" },
     "Tên BOSS (Ác mộng)": { preWrap: true, bossExcel: true },
-    "Tên phụ bản": { preWrap: true },
+    "Tên phụ bản": { preWrap: true, bold: true },
     "Ghi chú": { preWrap: true },
     Ảnh: { type: "images" },
   };
