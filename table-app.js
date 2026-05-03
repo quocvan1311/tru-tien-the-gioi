@@ -422,44 +422,7 @@
 
   /** Viền chip cùng tông với nền, đậm hơn một chút (không dùng xám trung tính cố định). */
   function bossChipBorderForBackground(bg) {
-    const s = String(bg ?? "").trim();
-    let r;
-    let g;
-    let b;
-    const hex = s.match(/^#([\da-f]{3}|[\da-f]{6})$/i);
-    if (hex) {
-      let h = hex[1];
-      if (h.length === 3) {
-        h = h
-          .split("")
-          .map(function (c) {
-            return c + c;
-          })
-          .join("");
-      }
-      r = parseInt(h.slice(0, 2), 16);
-      g = parseInt(h.slice(2, 4), 16);
-      b = parseInt(h.slice(4, 6), 16);
-    } else {
-      const m = s.match(/^rgba?\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i);
-      if (m) {
-        r = +m[1];
-        g = +m[2];
-        b = +m[3];
-      } else {
-        return s;
-      }
-    }
-    const t = 0.72;
-    return (
-      "rgb(" +
-      Math.max(0, Math.min(255, Math.round(r * t))) +
-      "," +
-      Math.max(0, Math.min(255, Math.round(g * t))) +
-      "," +
-      Math.max(0, Math.min(255, Math.round(b * t))) +
-      ")"
-    );
+    return adjustColor(bg, 75, -48);
   }
 
   /** Chưa có ngày tiêu diệt — bảng listing không hiển thị chip Độ khô */
@@ -822,7 +785,7 @@
             chip.textContent = text;
             const tierBg = difficultyColumnBgAcMong(raw);
             chip.style.backgroundColor = tierBg;
-            chip.style.borderColor = adjustColor(tierBg, 75, -48);
+            chip.style.borderColor = bossChipBorderForBackground(tierBg);
             chip.style.boxShadow = `
               inset 0 2px 2px rgba(255, 255, 255, 0.4),
               0 1px 0 ${adjustColor(tierBg, 50, -18)},
