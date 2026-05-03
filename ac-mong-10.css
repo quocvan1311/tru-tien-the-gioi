@@ -2926,15 +2926,15 @@ body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   justify-content: center;
   width: fit-content;
   max-width: 100%;
-  padding: 0.16rem 0.48rem 0.18rem;
+  padding: 0.16rem 0.48rem;
   border-radius: 999px;
   border-width: 1px;
   border-style: solid;
   /* border-color do JS (BOSS_TABLE_BOSS_CHIP_BORDER_FOR_BG) theo nền chip */
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.75),
-    inset 0 2px 4px rgba(255, 255, 255, 0.42),
-    inset 0 -1px 0 rgba(15, 23, 42, 0.12);
+    0 3px 6px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 1px 1px rgba(255, 255, 255, 0.7) inset;
   font-size: inherit;
   line-height: var(--ac-detail-row-lh, 1.45);
   color: #141820;

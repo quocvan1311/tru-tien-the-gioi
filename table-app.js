@@ -415,7 +415,7 @@
     const n = parseDifficultyNumber(v);
     if (n == null) return "#ffffff";
     if (n >= 1000) return "#fe666a";
-    if (n >= 750) return "#4fa5ff";
+    if (n >= 750) return "#5abbff";
     if (n >= 500) return "#ffff99";
     return "#ccffcc";
   }
@@ -526,7 +526,7 @@
         colKey === "Ảnh" ||
         colKey === "Tên BOSS (Ác mộng)"
       ) {
-        return adjustColor(difficultyColumnBgAcMong(row["Độ khó"]), -25, 50);
+        return adjustColor(difficultyColumnBgAcMong(row["Độ khó"]), -28, 55);
       }
       return seasonBg;
     };
