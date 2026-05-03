@@ -788,8 +788,8 @@
             chip.style.borderColor = bossChipBorderForBackground(tierBg);
             chip.style.boxShadow = `
               inset 0 2px 2px rgba(255, 255, 255, 0.4),
-              0 1px 0 ${adjustColor(tierBg, 50, -18)},
-              0 3px 1px ${adjustColor(tierBg, 85, -50)}
+              -1px 1px 0.5px ${adjustColor(tierBg, 60, -28)},
+              -0.5px 3px 1px ${adjustColor(tierBg, 75, -50)}
             `;
             chip.style.letterSpacing = "0.0375em";
             td.appendChild(chip);
