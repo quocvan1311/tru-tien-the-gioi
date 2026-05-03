@@ -822,7 +822,12 @@
             chip.textContent = text;
             const tierBg = difficultyColumnBgAcMong(raw);
             chip.style.backgroundColor = tierBg;
-            chip.style.borderColor = bossChipBorderForBackground(tierBg);
+            chip.style.borderColor = adjustColor(tierBg, 75, -48);
+            chip.style.boxShadow = `
+              inset 0 2px 2px rgba(255, 255, 255, 0.4),
+              0 1px 0 ${adjustColor(tierBg, 50, -18)},
+              0 3px 1px ${adjustColor(tierBg, 85, -50)}
+            `;
             chip.style.letterSpacing = "0.0375em";
             td.appendChild(chip);
           }
