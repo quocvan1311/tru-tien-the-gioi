@@ -3633,16 +3633,16 @@ body:is(.boss-detail-page--ac-mong-detail, .boss-detail-page--luyen-detail)
   body.boss-detail-page--luyen-detail
     .boss-detail__layout:not(.boss-detail__layout--no-video) {
     grid-template-columns:
-      minmax(460px, 1.2fr) minmax(240px, max-content)
-      minmax(600px, 2fr);
+      minmax(460px, 1fr) minmax(240px, max-content)
+      minmax(600px, 2.5fr);
   }
 
   /* Cột video tối thiểu 680px khi chưa wrap (3 cột cùng hàng) */
   body.boss-detail-page--ac-mong-detail
     .boss-detail__layout:not(.boss-detail__layout--no-video) {
     grid-template-columns:
-      minmax(460px, 1.2fr) minmax(240px, max-content)
-      minmax(680px, 2fr);
+      minmax(460px, 1fr) minmax(240px, max-content)
+      minmax(680px, 2.5fr);
   }
 }
 
