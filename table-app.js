@@ -416,8 +416,8 @@
     if (n == null) return "#ffffff";
     if (n >= 1000) return "#fe666a";
     if (n >= 750) return "#5abbff";
-    if (n >= 500) return "#ffff99";
-    return "#ccffcc";
+    if (n >= 500) return "#fafa6f";
+    return "#9bf29b";
   }
 
   /** Viền chip cùng tông với nền, đậm hơn một chút (không dùng xám trung tính cố định). */
