@@ -52,11 +52,11 @@
       "Ngày tiêu diệt": "6%",
       "Tuần tiêu diệt": "5%",
       "Số ngày": "3%",
-      "Tên BOSS (Ác mộng)": "13.12%",
+      "Tên BOSS (Ác mộng)": "13.32%",
       "Tên phụ bản": "12.6%",
-      "Kỹ năng": "13.87%",
+      "Kỹ năng": "13.5%",
       "Độ khó": "4.85%",
-      "Ghi chú": "11.2%",
+      "Ghi chú": "11.37%",
       Ảnh: "8.9%",
     };
     global.initBossTable(

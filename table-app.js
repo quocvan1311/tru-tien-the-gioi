@@ -422,7 +422,7 @@
 
   /** Viền chip cùng tông với nền, đậm hơn một chút (không dùng xám trung tính cố định). */
   function bossChipBorderForBackground(bg) {
-    return adjustColor(bg, 75, -48);
+    return adjustColor(bg, 78, -38);
   }
 
   /** Chưa có ngày tiêu diệt — bảng listing không hiển thị chip Độ khô */
@@ -788,8 +788,8 @@
             chip.style.borderColor = bossChipBorderForBackground(tierBg);
             chip.style.boxShadow = `
               inset 0 2px 2px rgba(255, 255, 255, 0.4),
-              0px 1px 0.5px ${adjustColor(tierBg, 60, -28)},
-              0.5px 3px 1px ${adjustColor(tierBg, 75, -50)}
+              0px 1px 0.5px ${adjustColor(tierBg, 72, -40)},
+              0.5px 3px 1px ${adjustColor(tierBg, 82, -50)}
             `;
             chip.style.letterSpacing = "0.0375em";
             td.appendChild(chip);
